@@ -27,5 +27,10 @@ module.exports = {
     tsconfigRootDir: __dirname
   },
   plugins: ['prettier', 'react', '@typescript-eslint'],
-  rules: {}
+  rules: {},
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  }
 }
