@@ -19,9 +19,7 @@ export default function LoginPage(): JSX.Element {
   return (
     <>
       {/* eslint-disable @typescript-eslint/no-unsafe-assignment */}
-      <img
-        src={bgImg}
-        alt=""
+      <div
         style={{
           position: 'fixed',
           left: 0,
@@ -29,12 +27,22 @@ export default function LoginPage(): JSX.Element {
           top: 0,
           bottom: 0,
           width: '100vw',
-          // height: '100vh',
-          objectFit: 'contain',
-          objectPosition: 'center',
-          margin: '0 auto'
+          height: '100vh',
+          margin: '0 auto',
+          padding: 0
         }}
-      />
+      >
+        <img
+          src={bgImg}
+          alt=""
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'center',
+            width: '100%',
+            height: '100%'
+          }}
+        />
+      </div>
       <div
         style={{
           position: 'fixed',
@@ -46,7 +54,6 @@ export default function LoginPage(): JSX.Element {
           padding: '25px',
           width: '400px',
           height: '300px',
-          minHeight: '300px',
           backgroundColor: 'rgba(255, 255, 255, 0.75)',
           borderRadius: '10px',
           boxShadow: '5px 5px 10px rgba(255, 255, 255, 0.5)'
@@ -55,7 +62,6 @@ export default function LoginPage(): JSX.Element {
         <div
           style={{
             fontSize: '20px',
-            fontWeight: 'bold',
             letterSpacing: '2px',
             color: 'rgb(15, 15, 65)'
           }}
@@ -64,7 +70,7 @@ export default function LoginPage(): JSX.Element {
         </div>
         <div
           style={{
-            margin: '10px 0'
+            margin: '20px 0'
           }}
         >
           <Input placeholder="请输入用户名" prefix={<IdcardFilled />} value={user} onChange={e => setUser(e.target.value)} />
@@ -89,7 +95,7 @@ export default function LoginPage(): JSX.Element {
         </div>
         <div
           style={{
-            margin: '10px 0'
+            margin: '20px 0 10px'
           }}
         >
           <button
@@ -98,7 +104,9 @@ export default function LoginPage(): JSX.Element {
               width: '10em',
               backgroundImage: 'linear-gradient(135deg, rgb(70, 100, 230), rgb(70, 100, 190) 50%, rgb(40, 50, 150))',
               color: 'white',
-              fontSize: '18px'
+              fontSize: '18px',
+              border: 'none',
+              outline: 'none'
             }}
           >
             登录
