@@ -14,7 +14,9 @@ export default function App(): JSX.Element {
       <Router>
         <Routes>
           {routes.map(v => {
-            return (
+            return v.path === '/' ? (
+              <Route key={v.path} path={v.path} element={v.element} />
+            ) : (
               <Route
                 key={v.path}
                 path={v.path}
@@ -23,7 +25,8 @@ export default function App(): JSX.Element {
                     <Sider
                       style={{
                         overflow: 'auto',
-                        height: '100vh'
+                        height: '100vh',
+                        padding: '50px 0'
                       }}
                     >
                       <SideBar />
