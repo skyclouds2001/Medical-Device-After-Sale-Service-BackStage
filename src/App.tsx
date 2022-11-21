@@ -2,8 +2,9 @@ import React from 'react'
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
 import { ConfigProvider, Layout } from 'antd'
 import zhCN from 'antd/es/locale/zh_CN'
-import routes from './router'
-import './App.css'
+import routes from '@/router'
+import '@/App.css'
+import SideBar from '@/components/SideBar'
 
 const { Sider, Content } = Layout
 
@@ -25,7 +26,7 @@ export default function App(): JSX.Element {
                         height: '100vh'
                       }}
                     >
-                      sidebar
+                      <SideBar />
                     </Sider>
                     <Content
                       style={{
