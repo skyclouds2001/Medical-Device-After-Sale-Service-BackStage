@@ -2,7 +2,7 @@ import instance from '@/service'
 import Network from '@/model/network'
 
 /**
- * 管理员登录接口返回数据格式
+ * 管理员登录接口返回数据结构
  */
 interface AdminLoginResponse {
   /** 管理员名称 */
