@@ -8,14 +8,7 @@ module.exports = {
     'shared-node-browser': true,
     worker: true
   },
-  extends: [
-    'eslint:recommended',
-    'standard-with-typescript',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'plugin:prettier/recommended'
-  ],
+  extends: ['eslint:recommended', 'standard-with-typescript', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended', 'plugin:@typescript-eslint/recommended-requiring-type-checking', 'plugin:prettier/recommended'],
   overrides: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
