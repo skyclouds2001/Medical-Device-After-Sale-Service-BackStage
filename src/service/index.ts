@@ -1,8 +1,9 @@
 import axios from 'axios'
+import { BASE_URL, NETWORK_TIMEOUT } from '@/config'
 
 const instance = axios.create({
-  baseURL: 'http://localhost',
-  timeout: 10000
+  baseURL: BASE_URL,
+  timeout: NETWORK_TIMEOUT
 })
 
 instance.interceptors.request.use(
