@@ -12,7 +12,7 @@ interface GetDepartmentsAndStaffs {
 }
 
 /**
- * 获取企业微信中的部门和成员接口
+ * 获取企业微信中部门和成员接口
  * @param departmentId 部门id，页面初始化时传入 id 为0
  */
 export const getDepartmentsAndStaffs = async (departmentId: number): Promise<Network<GetDepartmentsAndStaffs>> => {
