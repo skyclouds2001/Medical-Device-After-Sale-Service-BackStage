@@ -28,7 +28,7 @@ export const getCompanyInfo = async (isFirstQuery: boolean, pageNum: number): Pr
  * @param companyName 企业名称
  */
 export const addCompanyInfo = async (companyName: string): Promise<Network<void>> => {
-  const res = await instance.post<Network<void>>(`/wizz/aftersale/account/company/add`, {
+  const res = await instance.post<Network<void>>('/wizz/aftersale/account/company/add', {
     company_name: companyName
   })
   console.log(res)

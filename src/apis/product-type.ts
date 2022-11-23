@@ -49,7 +49,7 @@ export const updateProductType = async (typeId: number, typeName: string): Promi
  * 删除产品大类接口
  * @param productTypeId 产品大类id
  */
-export const removeCompanyInfo = async (productTypeId: number): Promise<Network<void>> => {
+export const removeProductType = async (productTypeId: number): Promise<Network<void>> => {
   const res = await instance.post<Network<void>>('/wizz/aftersale/product-type/delete', {
     productTypeId
   })
@@ -65,7 +65,7 @@ type GetAllProductTypeResponse = ProductType[]
 /**
  * 查询所有产品大类接口
  */
-export const getAllProductType = async (): Promise<Network<GetAllProductTypeResponse>> => {
+export const getAllProductTypes = async (): Promise<Network<GetAllProductTypeResponse>> => {
   const res = await instance.get<Network<GetAllProductTypeResponse>>('/wizz/aftersale/product-type/all')
   console.log(res)
   return res.data
