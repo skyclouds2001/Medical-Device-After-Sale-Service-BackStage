@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Input, Checkbox, message } from 'antd'
 import { IdcardFilled, LockFilled } from '@ant-design/icons'
 import { adminLogin } from '@/apis'
+import { DEFAULT_REDIRECT_PATH } from '@/config'
 import Storage from '@/utils/storage'
 import bgImg from '@/assets/bg-img-login.png'
 
@@ -13,9 +15,13 @@ interface LoginStorageConfig {
 
 export default function LoginPage(): JSX.Element {
   const [messageApi, contextHolder] = message.useMessage()
+  const navigate = useNavigate()
 
+  /** 用户名 */
   const [user, setUser] = useState('')
+  /** 密码 */
   const [password, setPassword] = useState('')
+  /** 是否记住密码 */
   const [remember, setRemember] = useState(false)
 
   useEffect(() => {
@@ -43,6 +49,7 @@ export default function LoginPage(): JSX.Element {
             password: remember ? password : undefined,
             remember
           })
+          navigate(DEFAULT_REDIRECT_PATH)
         } else {
           void messageApi.error({
             content: res.data
@@ -63,10 +70,15 @@ export default function LoginPage(): JSX.Element {
 
   return (
     <>
+      {/* AntD Message 组件 */}
       {contextHolder}
+
+      {/* 背景图片 */}
       <div className="fixed inset-0 mx-auto my-0 p-0 w-screen h-screen">
         <img src={bgImg as string} alt="" className="object-cover object-center w-full h-full" />
       </div>
+
+      {/* 登录表单 */}
       <div
         className="fixed inset-0 p-6 mx-auto my-48 w-96 h-80 bg-white opacity-75 rounded-lg"
         style={{
