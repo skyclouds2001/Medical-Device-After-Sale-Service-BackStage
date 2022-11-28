@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import type { MenuProps } from 'antd'
 import { Menu } from 'antd'
+import type { MenuProps } from 'antd'
 
 const items: MenuProps['items'] = [
   {

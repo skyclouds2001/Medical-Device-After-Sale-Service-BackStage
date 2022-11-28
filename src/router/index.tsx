@@ -1,5 +1,5 @@
 import React from 'react'
-import { RouteProps } from 'react-router-dom'
+import type { RouteProps } from 'react-router-dom'
 import LoginPage from '@/pages/LoginPage'
 import ProductManage from '@/pages/ProductManage'
 import CustomerManage from '@/pages/CustomerManage'
