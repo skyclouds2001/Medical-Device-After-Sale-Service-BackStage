@@ -7,7 +7,7 @@ import type Customer from '@/model/customer'
  */
 interface GetCustomerInfoResponse {
   /** 客户信息列表 */
-  admin_name: Customer[]
+  customer_list: Customer[]
   /** 当前查询条件下的页码总数,从1开始 */
   total_page_num: number
 }
