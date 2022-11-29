@@ -2,17 +2,33 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Input, Checkbox, message, Modal } from 'antd'
 import { IdcardFilled, LockFilled } from '@ant-design/icons'
-import { adminLogin, resetPassword } from '@/apis'
+import { adminLogin, resetPassword, manageCustomerService, getDepartmentsAndStaffs } from '@/apis'
 import { DEFAULT_REDIRECT_PATH } from '@/config'
 import Storage from '@/utils/storage'
 import bgImg from '@/assets/bg-img-login.png'
+import type { LoginStorage } from '@/model/login-storage'
 
-interface LoginStorageConfig {
-  user: string
-  password?: string
-  remember: boolean
-  uuid?: string
-  token?: string
+const initManager = (): void => {
+  getDepartmentsAndStaffs(0)
+    .then(res => {
+      console.log(res)
+      if (res.code === 0) {
+        const { element_list: lists } = res.data
+        const ids = lists.filter(v => v.type === 'person').map(v => (v.type === 'person' ? v.user_id : v.department_id))
+        manageCustomerService(-1, ids)
+          .then(res => {
+            console.log(res)
+          })
+          .catch(err => {
+            console.error(err)
+          })
+      } else {
+        throw new Error('', { cause: res })
+      }
+    })
+    .catch(err => {
+      console.error(err)
+    })
 }
 
 export default function LoginPage(): JSX.Element {
@@ -32,7 +48,7 @@ export default function LoginPage(): JSX.Element {
   const [encryptedPassword, setEncryptedPassword] = useState('')
 
   useEffect(() => {
-    const configs = Storage.getItem<LoginStorageConfig>('login')
+    const configs = Storage.getItem<LoginStorage>('login')
     if (configs != null) {
       setUser(configs.user)
       setPassword(configs.password ?? '')
@@ -44,7 +60,7 @@ export default function LoginPage(): JSX.Element {
    * 执行登录操作方法
    */
   const handleLogin = (): void => {
-    const configs: LoginStorageConfig = {
+    const configs: LoginStorage = {
       user,
       password,
       remember
@@ -56,23 +72,22 @@ export default function LoginPage(): JSX.Element {
             content: '登录成功'
           })
           const { admin_uuid: uuid, has_set_general_kf: isSet, jwt_token: token } = res.data
-          configs.uuid = uuid
-          configs.token = token
           Storage.setItem('login', configs)
-          navigate(DEFAULT_REDIRECT_PATH)
+          Storage.setItem('uuid', uuid)
+          if (configs.remember) configs.password = undefined
+          Storage.setItem('token', token)
           if (!isSet) {
-            console.log('todo') // todo
+            initManager()
           }
+          navigate(DEFAULT_REDIRECT_PATH)
         } else {
           void messageApi.error({
             content: res.data
           })
         }
       })
-      .catch(() => {
-        void messageApi.error({
-          content: '登录失败'
-        })
+      .catch(err => {
+        console.error(err)
       })
   }
 
@@ -95,12 +110,8 @@ export default function LoginPage(): JSX.Element {
           setNewPassword('')
         }
       })
-      .catch(() => {
-        void messageApi.error({
-          content: '操作失败'
-        })
-        setEncryptedPassword('')
-        setNewPassword('')
+      .catch(err => {
+        console.error(err)
       })
   }
 
