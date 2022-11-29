@@ -19,7 +19,6 @@ interface GetCustomerInfoResponse {
  */
 export const getCustomerInfo = async (isFirstQuery: boolean, pageNum: number): Promise<Network<GetCustomerInfoResponse>> => {
   const res = await instance.get<Network<GetCustomerInfoResponse>>(`/wizz/aftersale/account/customer/query/${isFirstQuery.toString()}/${pageNum}`)
-  console.log(res)
   return res.data
 }
 
@@ -35,7 +34,6 @@ export const addCustomerInfo = async (companyId: number, customerName: string, m
     customer_name: customerName,
     mobile
   })
-  console.log(res)
   return res.data
 }
 
@@ -53,7 +51,6 @@ export const updateCustomerInfo = async (companyId: number, customerId: number, 
     customer_name: customerName,
     mobile
   })
-  console.log(res)
   return res.data
 }
 
@@ -63,6 +60,5 @@ export const updateCustomerInfo = async (companyId: number, customerId: number, 
  */
 export const removeCustomerInfo = async (customerId: number): Promise<Network<void>> => {
   const res = await instance.delete<Network<void>>(`/wizz/aftersale/account/customer/delete/${customerId}`)
-  console.log(res)
   return res.data
 }

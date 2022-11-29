@@ -17,7 +17,6 @@ interface GetDepartmentsAndStaffs {
  */
 export const getDepartmentsAndStaffs = async (departmentId: number): Promise<Network<GetDepartmentsAndStaffs>> => {
   const res = await instance.get<Network<GetDepartmentsAndStaffs>>(`/wizz/aftersale/account/kf/getDepartmentsAndStaffs/${departmentId}`)
-  console.log(res)
   return res.data
 }
 
@@ -35,7 +34,6 @@ interface GetSingleServerResponse {
  */
 export const getSingleServer = async (productModelId: number): Promise<Network<GetSingleServerResponse>> => {
   const res = await instance.get<Network<GetSingleServerResponse>>(`/wizz/aftersale/account/kf/removeKf/${productModelId}`)
-  console.log(res)
   return res.data
 }
 
@@ -45,7 +43,6 @@ export const getSingleServer = async (productModelId: number): Promise<Network<G
  */
 export const removeSingleServer = async (productModelId: number): Promise<Network<void>> => {
   const res = await instance.delete<Network<void>>(`/wizz/aftersale/account/kf/removeKfByModelId/${productModelId}`)
-  console.log(res)
   return res.data
 }
 
@@ -59,7 +56,6 @@ export const manageCustomerService = async (productModelId: number, userIdList: 
     product_model_id: productModelId,
     user_id_list: userIdList
   })
-  console.log(res)
   return res.data
 }
 
@@ -69,6 +65,5 @@ export const manageCustomerService = async (productModelId: number, userIdList: 
  */
 export const removeCustomerService = async (productTypeId: number): Promise<Network<void>> => {
   const res = await instance.delete<Network<void>>(`/wizz/aftersale/account/kf/removeKfByTypeId/${productTypeId}`)
-  console.log(res)
   return res.data
 }

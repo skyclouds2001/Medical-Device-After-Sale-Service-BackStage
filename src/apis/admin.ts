@@ -25,7 +25,6 @@ export const adminLogin = async (admin: string, password: string): Promise<Netwo
     admin_name: admin,
     password
   })
-  console.log(res)
   return res.data
 }
 
@@ -41,6 +40,5 @@ export const resetPassword = async (admin: string, encrypt: string, newPw: strin
     encrypted_password: encrypt,
     new_password: newPw
   })
-  console.log(res)
   return res.data
 }

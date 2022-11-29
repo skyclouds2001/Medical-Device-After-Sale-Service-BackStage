@@ -15,7 +15,6 @@ export const getProductType = async (productTypeId: number): Promise<Network<Get
   const res = await instance.get<Network<GetProductTypeResponse>>('/wizz/aftersale/product-type/get', {
     params: { productTypeId }
   })
-  console.log(res)
   return res.data
 }
 
@@ -27,7 +26,6 @@ export const addProductType = async (typeName: string): Promise<Network<void>> =
   const res = await instance.post<Network<void>>('/wizz/aftersale/product-type/add', {
     type_name: typeName
   })
-  console.log(res)
   return res.data
 }
 
@@ -41,7 +39,6 @@ export const updateProductType = async (typeId: number, typeName: string): Promi
     type_id: typeId,
     type_name: typeName
   })
-  console.log(res)
   return res.data
 }
 
@@ -53,7 +50,6 @@ export const removeProductType = async (productTypeId: number): Promise<Network<
   const res = await instance.post<Network<void>>('/wizz/aftersale/product-type/delete', {
     productTypeId
   })
-  console.log(res)
   return res.data
 }
 
@@ -67,6 +63,5 @@ type GetAllProductTypeResponse = ProductType[]
  */
 export const getAllProductTypes = async (): Promise<Network<GetAllProductTypeResponse>> => {
   const res = await instance.get<Network<GetAllProductTypeResponse>>('/wizz/aftersale/product-type/all')
-  console.log(res)
   return res.data
 }

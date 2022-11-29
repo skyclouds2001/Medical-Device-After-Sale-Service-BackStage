@@ -19,7 +19,6 @@ interface GetCompanyInfoResponse {
  */
 export const getCompanyInfo = async (isFirstQuery: boolean, pageNum: number): Promise<Network<GetCompanyInfoResponse>> => {
   const res = await instance.get<Network<GetCompanyInfoResponse>>(`/wizz/aftersale/account/company/query/${isFirstQuery.toString()}/${pageNum}`)
-  console.log(res)
   return res.data
 }
 
@@ -31,7 +30,6 @@ export const addCompanyInfo = async (companyName: string): Promise<Network<void>
   const res = await instance.post<Network<void>>('/wizz/aftersale/account/company/add', {
     company_name: companyName
   })
-  console.log(res)
   return res.data
 }
 
@@ -45,7 +43,6 @@ export const updateCompanyInfo = async (companyId: number, companyName: string):
     company_id: companyId,
     company_name: companyName
   })
-  console.log(res)
   return res.data
 }
 
@@ -55,6 +52,5 @@ export const updateCompanyInfo = async (companyId: number, companyName: string):
  */
 export const removeCompanyInfo = async (companyId: number): Promise<Network<void>> => {
   const res = await instance.delete<Network<void>>(`/wizz/aftersale/account/company/delete/${companyId}`)
-  console.log(res)
   return res.data
 }
