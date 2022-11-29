@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { message, Table } from 'antd'
+import { message, Table, Button } from 'antd'
 import { getCustomerInfo } from '@/apis'
 import type Customer from '@/model/customer'
 
@@ -8,8 +8,6 @@ const { Column } = Table
 export default function CustomerManage(): JSX.Element {
   const [messageApi, contextHolder] = message.useMessage()
 
-  const [currentPageNum, setCurrentPageNum] = useState(1)
-  const [totalPageNum, setTotalPageNum] = useState(1)
   const [tableData, setTableData] = useState<Customer[]>([])
   const [isLoading, setLoading] = useState(false)
 
@@ -17,13 +15,17 @@ export default function CustomerManage(): JSX.Element {
     void loadCustomer(true, 1)
   }, [])
 
+  /**
+   * 加载客户信息
+   * @param isFirst 是否首次加载
+   * @param num 客户数量
+   */
   const loadCustomer = async (isFirst: boolean, num: number): Promise<void> => {
     setLoading(true)
     try {
       const res = await getCustomerInfo(isFirst, num)
       if (res.code === 0) {
         setTableData(res.data.customer_list)
-        if (isFirst) setTotalPageNum(res.data.total_page_num)
       } else {
         void messageApi.error({
           content: res.data
@@ -37,18 +39,35 @@ export default function CustomerManage(): JSX.Element {
     }, 250)
   }
 
+  /**
+   * 提交编辑的客户信息
+   * @param customer 客户
+   */
+  const editCustomerInfo = (customer: Customer): void => {
+    console.log('show', customer)
+  }
+
+  /**
+   * 更新客户信息
+   * @param customer 客户
+   */
+  const removeCustomerInfo = (customer: Customer): void => {
+    console.log('delete', customer)
+  }
+
   return (
     <>
       {/* AntD Message 动态组件 */}
       {contextHolder}
 
+      {/* 客户信息表格 */}
       <Table
         dataSource={tableData}
         bordered
         rowKey="customer_id"
         loading={isLoading}
         onChange={pagination => {
-          void loadCustomer(false, pagination.current ?? 0)
+          void loadCustomer(false, pagination.current ?? 1)
         }}
       >
         <Column title="用户名称" dataIndex="customer_name" key="customer_name" />
@@ -59,7 +78,12 @@ export default function CustomerManage(): JSX.Element {
           key="action"
           render={(_, record: Customer) => (
             <>
-              <div>ccc</div>
+              <Button type="link" onClick={() => editCustomerInfo(record)}>
+                编辑
+              </Button>
+              <Button type="link" danger onClick={() => removeCustomerInfo(record)}>
+                删除
+              </Button>
             </>
           )}
         />
