@@ -54,7 +54,7 @@ export const removeSingleServer = async (productModelId: number): Promise<Networ
  * @param productModelId 产品型号id（如果传入 -1，则管理的是【通用客服】的接待人员）
  * @param userIdList 要被指定为接待人员的员工的 id 列表。列表中元素个数最少为 1，最多为 100
  */
-export const manageCustomerService = async (productModelId: number, userIdList: string[]): Promise<Network<void>> => {
+export const manageCustomerService = async (productModelId: number, userIdList: number[]): Promise<Network<void>> => {
   const res = await instance.post<Network<void>>('/wizz/aftersale/account/kf/setKfByModelId', {
     product_model_id: productModelId,
     user_id_list: userIdList
