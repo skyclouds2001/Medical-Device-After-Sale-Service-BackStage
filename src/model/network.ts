@@ -7,5 +7,5 @@ export default interface Network<T = unknown> {
   /** 笼统的提示信息 */
   msg: string
   /** 请求成功返回的数据 or 请求失败返回的可以呈现给用户的报错字符串 */
-  data: string | T
+  data: T
 }
