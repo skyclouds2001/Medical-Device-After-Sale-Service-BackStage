@@ -1,5 +1,5 @@
 import instance from '@/service'
-import Network from '@/model/network'
+import type Network from '@/model/network'
 
 /**
  * 管理员登录接口返回数据结构

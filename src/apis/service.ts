@@ -1,8 +1,8 @@
 import instance from '@/service'
-import Network from '@/model/network'
-import Service from '@/model/service'
-import Department from '@/model/department'
-import User from '@/model/user'
+import type Network from '@/model/network'
+import type Service from '@/model/service'
+import type Department from '@/model/department'
+import type User from '@/model/user'
 
 /**
  * 获取企业微信中部门和成员接口返回数据结构

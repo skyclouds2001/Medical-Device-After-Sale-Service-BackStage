@@ -1,6 +1,6 @@
 import instance from '@/service'
-import Network from '@/model/network'
-import Company from '@/model/company'
+import type Network from '@/model/network'
+import type Company from '@/model/company'
 
 /**
  * 查询企业信息接口返回数据结构
