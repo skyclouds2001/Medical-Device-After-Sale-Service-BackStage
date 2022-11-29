@@ -22,24 +22,10 @@ export default function App(): JSX.Element {
                 path={v.path}
                 element={
                   <Layout hasSider>
-                    <Sider
-                      style={{
-                        overflow: 'auto',
-                        height: '100vh',
-                        padding: '50px 0'
-                      }}
-                    >
+                    <Sider className="overflow-auto h-screen py-12">
                       <SideBar />
                     </Sider>
-                    <Content
-                      style={{
-                        margin: '25px 20px 0',
-                        minHeight: 'calc(100vh - 25px)',
-                        backgroundColor: 'white',
-                        borderTopLeftRadius: '10px',
-                        borderTopRightRadius: '10px'
-                      }}
-                    >
+                    <Content className="bg-white mt-6 mb-0 mx-5 p-6 rounded-t-xl" style={{ minHeight: 'calc(100vh - 25px)' }}>
                       {v.element}
                     </Content>
                   </Layout>
