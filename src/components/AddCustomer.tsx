@@ -5,7 +5,7 @@ interface AddCustomerProps {
   crf: ReturnType<typeof useRef>
 }
 
-export default forwardRef(function AddCustomer(props: AddCustomerProps, ref): JSX.Element {
+export default forwardRef(function AddCustomer(props: AddCustomerProps, _ref): JSX.Element {
   const [name, setName] = useState('')
   const [mobile, setMobile] = useState('')
   const [company, setCompany] = useState(0)

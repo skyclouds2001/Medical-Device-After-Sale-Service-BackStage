@@ -144,7 +144,7 @@ export default function CustomerManage(): JSX.Element {
       {contextHolder}
 
       {/* 添加客户信息按钮区域 */}
-      <div className="my-5">
+      <div className="my-5 text-right">
         <Button className="text-blue-500" type="primary" onClick={() => addCustomer()}>
           添加客户
         </Button>

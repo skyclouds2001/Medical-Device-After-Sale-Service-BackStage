@@ -7,7 +7,7 @@ interface EditCustomerProps {
   crf: ReturnType<typeof useRef>
 }
 
-export default forwardRef(function EditCustomer(props: EditCustomerProps, ref): JSX.Element {
+export default forwardRef(function EditCustomer(props: EditCustomerProps, _ref): JSX.Element {
   const [name, setName] = useState('')
   const [mobile, setMobile] = useState('')
   const [company, setCompany] = useState(0)
