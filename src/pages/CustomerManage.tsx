@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { message, Table, Button, Modal } from 'antd'
 import { getCustomerInfo, updateCustomerInfo, removeCustomerInfo } from '@/apis'
 import type Customer from '@/model/customer'
@@ -8,6 +8,8 @@ const { Column } = Table
 
 export default function CustomerManage(): JSX.Element {
   const [messageApi, contextHolder] = message.useMessage()
+
+  const ref = useRef<ReturnType<typeof EditCustomer>>(null)
 
   const [tableData, setTableData] = useState<Customer[]>([])
   const [isLoading, setLoading] = useState(false)
@@ -40,39 +42,42 @@ export default function CustomerManage(): JSX.Element {
     }, 250)
   }
 
+  const addCustomer = (): void => {
+    console.log()
+  }
+
   /**
    * 更新客户信息
    * @param customer 客户信息
    */
   const editCustomer = (customer: Customer): void => {
-    const update = async (customer: Customer): Promise<void> => {
-      const { customer_id: id, customer_name: name, company_id: company, mobile } = customer
-      try {
-        const res = await updateCustomerInfo(company, id, name, mobile)
-        if (res.code === 0) {
-          void messageApi.success({
-            content: '更新成功'
-          })
-        } else {
-          void messageApi.error({
-            content: res.data
-          })
-        }
-      } catch (err) {
-        console.error(err)
-      }
-    }
-
     Modal.confirm({
       title: '修改客户信息',
-      content: <EditCustomer customer={customer} onUpdate={update} />,
+      content: <EditCustomer ref={ref} crf={ref} customer={customer} />,
       closable: true,
       okButtonProps: {
         className: 'text-black'
       },
-      onOk: () => {
-        // todo
-        console.log('ok')
+      onOk: async () => {
+        const cus = (
+          ref.current as unknown as {
+            getCustomer: () => { name: string; mobile: string; company: number }
+          }
+        ).getCustomer()
+        try {
+          const res = await updateCustomerInfo(cus.company, customer.customer_id, cus.name, cus.mobile)
+          if (res.code === 0) {
+            void messageApi.success({
+              content: '更新成功'
+            })
+          } else {
+            void messageApi.error({
+              content: res.data
+            })
+          }
+        } catch (err) {
+          console.error(err)
+        }
       }
     })
   }
@@ -110,6 +115,11 @@ export default function CustomerManage(): JSX.Element {
     <>
       {/* AntD Message 动态组件 */}
       {contextHolder}
+
+      {/* 添加客户信息按钮区域 */}
+      <div>
+        <Button onClick={() => addCustomer()}>添加客户</Button>
+      </div>
 
       {/* 客户信息表格 */}
       <Table

@@ -1,11 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react'
 import { Form, Input } from 'antd'
-import Customer from '@/model/customer'
+import type Customer from '@/model/customer'
 
-export default function EditCustomer(props: { customer: Customer; onUpdate: (customer: Customer) => Promise<void> }): JSX.Element {
+interface EditCustomerProps {
+  customer: Customer
+  crf: ReturnType<typeof useRef>
+}
+
+export default forwardRef(function EditCustomer(props: EditCustomerProps): JSX.Element {
   const [name, setName] = useState('')
   const [mobile, setMobile] = useState('')
   const [company, setCompany] = useState(0)
+
+  useImperativeHandle(props.crf, () => ({
+    getCustomer: () => ({
+      name,
+      mobile,
+      company
+    })
+  }))
 
   return (
     <Form labelCol={{ span: 6 }}>
@@ -20,4 +33,4 @@ export default function EditCustomer(props: { customer: Customer; onUpdate: (cus
       </Form.Item>
     </Form>
   )
-}
+})
