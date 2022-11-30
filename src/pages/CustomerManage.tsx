@@ -45,9 +45,27 @@ export default function CustomerManage(): JSX.Element {
    * @param customer 客户信息
    */
   const editCustomer = (customer: Customer): void => {
+    const update = async (customer: Customer): Promise<void> => {
+      const { customer_id: id, customer_name: name, company_id: company, mobile } = customer
+      try {
+        const res = await updateCustomerInfo(company, id, name, mobile)
+        if (res.code === 0) {
+          void messageApi.success({
+            content: '更新成功'
+          })
+        } else {
+          void messageApi.error({
+            content: res.data
+          })
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
     Modal.confirm({
       title: '修改客户信息',
-      content: <EditCustomer customer={customer} />,
+      content: <EditCustomer customer={customer} onUpdate={update} />,
       closable: true,
       okButtonProps: {
         className: 'text-black'
