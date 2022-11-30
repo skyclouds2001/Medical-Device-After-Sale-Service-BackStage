@@ -56,7 +56,7 @@ export default function CustomerManage(): JSX.Element {
       content: <EditCustomer ref={ref} crf={ref} customer={customer} />,
       closable: true,
       okButtonProps: {
-        className: 'text-black'
+        className: 'text-blue-500'
       },
       onOk: async () => {
         const cus = (
@@ -93,9 +93,6 @@ export default function CustomerManage(): JSX.Element {
       okText: '删除',
       okType: 'danger',
       closable: true,
-      okButtonProps: {
-        className: 'text-black'
-      },
       onOk: async () => {
         const res = await removeCustomerInfo(customer.customer_id)
         if (res.code === 0) {
@@ -117,8 +114,10 @@ export default function CustomerManage(): JSX.Element {
       {contextHolder}
 
       {/* 添加客户信息按钮区域 */}
-      <div>
-        <Button onClick={() => addCustomer()}>添加客户</Button>
+      <div className="my-5">
+        <Button className="text-blue-500" type="primary" onClick={() => addCustomer()}>
+          添加客户
+        </Button>
       </div>
 
       {/* 客户信息表格 */}
