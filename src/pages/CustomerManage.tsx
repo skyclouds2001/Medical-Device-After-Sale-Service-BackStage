@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { message, Table, Button, Modal } from 'antd'
-import { getCustomerInfo, updateCustomerInfo, removeCustomerInfo } from '@/apis'
+import { getCustomerInfo, updateCustomerInfo, removeCustomerInfo, addCustomerInfo } from '@/apis'
 import type Customer from '@/model/customer'
+import AddCustomer from '@/components/AddCustomer'
 import EditCustomer from '@/components/EditCustomer'
 
 const { Column } = Table
@@ -9,7 +10,8 @@ const { Column } = Table
 export default function CustomerManage(): JSX.Element {
   const [messageApi, contextHolder] = message.useMessage()
 
-  const ref = useRef<ReturnType<typeof EditCustomer>>(null)
+  const addRef = useRef<ReturnType<typeof AddCustomer>>(null)
+  const editRef = useRef<ReturnType<typeof EditCustomer>>(null)
 
   const [tableData, setTableData] = useState<Customer[]>([])
   const [isLoading, setLoading] = useState(false)
@@ -43,7 +45,35 @@ export default function CustomerManage(): JSX.Element {
   }
 
   const addCustomer = (): void => {
-    console.log()
+    Modal.confirm({
+      title: '添加客户信息',
+      content: <AddCustomer ref={addRef} crf={addRef} />,
+      closable: true,
+      okButtonProps: {
+        className: 'text-blue-500'
+      },
+      onOk: async () => {
+        const cus = (
+          addRef.current as unknown as {
+            getCustomer: () => { name: string; mobile: string; company: number }
+          }
+        ).getCustomer()
+        try {
+          const res = await addCustomerInfo(cus.company, cus.name, cus.mobile)
+          if (res.code === 0) {
+            void messageApi.success({
+              content: '更新成功'
+            })
+          } else {
+            void messageApi.error({
+              content: res.data
+            })
+          }
+        } catch (err) {
+          console.error(err)
+        }
+      }
+    })
   }
 
   /**
@@ -53,14 +83,14 @@ export default function CustomerManage(): JSX.Element {
   const editCustomer = (customer: Customer): void => {
     Modal.confirm({
       title: '修改客户信息',
-      content: <EditCustomer ref={ref} crf={ref} customer={customer} />,
+      content: <EditCustomer ref={editRef} crf={editRef} customer={customer} />,
       closable: true,
       okButtonProps: {
         className: 'text-blue-500'
       },
       onOk: async () => {
         const cus = (
-          ref.current as unknown as {
+          editRef.current as unknown as {
             getCustomer: () => { name: string; mobile: string; company: number }
           }
         ).getCustomer()
