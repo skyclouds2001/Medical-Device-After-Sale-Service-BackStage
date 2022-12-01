@@ -1,35 +1,26 @@
 import React from 'react'
-import Main from '@/pages/main'
-import Products from '@/pages/products'
-import CustomerServices from '@/pages/customerServices'
-import Acceptances from '@/pages/acceptances'
-import Clients from '@/pages/clients'
+import type { RouteProps } from 'react-router-dom'
+import LoginPage from '@/pages/LoginPage'
+import ProductManage from '@/pages/ProductManage'
+import CustomerManage from '@/pages/CustomerManage'
+import CustomerServiceManage from '@/pages/CustomerServiceManage'
 
-interface Route {
-  path: string
-  component: JSX.Element
-}
-
-const routes: Route[] = [
+const routes: RouteProps[] = [
   {
     path: '/',
-    component: <Main />
+    element: <LoginPage />
   },
   {
-    path: '/products',
-    component: <Products />
+    path: '/customer',
+    element: <CustomerManage />
   },
   {
-    path: '/customer-services',
-    component: <CustomerServices />
+    path: '/service',
+    element: <CustomerServiceManage />
   },
   {
-    path: '/acceptances',
-    component: <Acceptances />
-  },
-  {
-    path: '/clients',
-    component: <Clients />
+    path: '/product',
+    element: <ProductManage />
   }
 ]
 

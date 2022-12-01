@@ -1,24 +1,15 @@
 {
-  "name": "vite-react-template-sky",
+  "name": "medical-device-after-sale-service-backstage",
   "private": true,
   "version": "0.0.0",
-  "description": "A template project of React-Vite",
+  "description": "客服工单系统",
   "keywords": [
-    "template",
-    "project",
-    "vite",
-    "react",
-    "react-router",
-    "ant-design",
-    "typescript",
-    "eslint",
-    "prettier",
-    "stylelint",
-    "commitlint"
+    "客服工单系统",
+    "MedicalDeviceAfterSaleServiceBackstage"
   ],
-  "homepage": "https://github.com/skyclouds2001/vite-react-template-sky#readme",
+  "homepage": "https://github.com/skyclouds2001/MedicalDeviceAfterSaleServiceBackstage#readme",
   "bugs": {
-    "url": "https://github.com/skyclouds2001/vite-react-template-sky/issues",
+    "url": "https://github.com/skyclouds2001/MedicalDeviceAfterSaleServiceBackstage/issues",
     "email": "skyclouds2001@163.com"
   },
   "license": "MIT",
@@ -38,11 +29,11 @@
   "main": "src/main.tsx",
   "repository": {
     "type": "git",
-    "url": "https://github.com/skyclouds2001/vite-react-template-sky.git"
+    "url": "https://github.com/skyclouds2001/MedicalDeviceAfterSaleServiceBackstage.git"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "cross-env NODE_ENV=development vite",
+    "build": "cross-env NODE_ENV=production tsc && vite build",
     "preview": "vite preview",
     "prepare": "husky install"
   },
@@ -71,6 +62,7 @@
     "@vitejs/plugin-legacy": "^2.2.0",
     "@vitejs/plugin-react": "^2.1.0",
     "autoprefixer": "^10.4.12",
+    "cross-env": "^7.0.3",
     "cssnano": "^5.1.13",
     "eslint": "^8.24.0",
     "eslint-config-prettier": "^8.5.0",
