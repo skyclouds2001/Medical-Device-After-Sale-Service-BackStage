@@ -1,12 +1,22 @@
 import axios from 'axios'
+import { BASE_URL, NETWORK_TIMEOUT } from '@/config'
+import Storage from '@/utils/storage'
 
 const instance = axios.create({
-  baseURL: 'http://localhost',
-  timeout: 10000
+  baseURL: BASE_URL,
+  timeout: NETWORK_TIMEOUT
 })
 
 instance.interceptors.request.use(
-  config => config,
+  config => {
+    const token = Storage.getItem<string>('token')
+    if (token != null && config.url != null && !['/wizz/aftersale/account/admin/login', '/wizz/aftersale/account/admin/resetPassword'].includes(config.url)) {
+      config.headers = {
+        Authorization: token
+      }
+    }
+    return config
+  },
   async error => await Promise.reject(error)
 )
 

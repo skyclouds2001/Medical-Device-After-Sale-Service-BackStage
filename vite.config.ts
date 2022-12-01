@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [react(), legacy(), eslint(), stylelint()],
   css: {
     postcss: '.postcssrc.js',
-    devSourcemap: process.env.NODE_ENV === 'production'
+    devSourcemap: true
   },
   resolve: {
     alias: {
