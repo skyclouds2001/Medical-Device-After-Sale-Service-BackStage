@@ -54,3 +54,20 @@ export const removeCompanyInfo = async (companyId: number): Promise<Network<void
   const res = await instance.delete<Network<void>>(`/wizz/aftersale/account/company/delete/${companyId}`)
   return res.data
 }
+
+/**
+ * 查询全部企业信息合成方法
+ */
+export const getAllCompanyInfo = async (): Promise<Company[]> => {
+  const res = await getCompanyInfo(true, 1)
+  const { total_page_num: num } = res.data
+  const pros = []
+  for (let i = 1; i <= num; ++i) {
+    pros.push(getCompanyInfo(false, i))
+  }
+  const result = await Promise.allSettled(pros)
+  return result
+    .filter(v => v.status === 'fulfilled')
+    .map(v => (v.status === 'fulfilled' ? v.value.data.company_list : []))
+    .reduce((pre, cur) => [...pre, ...cur], [])
+}

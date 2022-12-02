@@ -1,7 +1,7 @@
 import React, { useState, forwardRef, useImperativeHandle, useRef, useEffect } from 'react'
 import { Form, Input, Select } from 'antd'
 import type Customer from '@/model/customer'
-import { getCompanyInfo } from '@/apis'
+import { getAllCompanyInfo } from '@/apis'
 import type Company from '@/model/company'
 
 interface EditCustomerProps {
@@ -24,23 +24,13 @@ export default forwardRef(function EditCustomer(props: EditCustomerProps, _ref):
   }))
 
   useEffect(() => {
-    const loadCompany = async (): Promise<void> => {
-      const res = await getCompanyInfo(true, 1)
-      setCompanies([...res.data.company_list])
-      const num = res.data.total_page_num
-      const pros = []
-      for (let i = 2; i <= num; ++i) {
-        pros.push(getCompanyInfo(false, i))
-      }
-      const result = await Promise.allSettled(pros)
-      result.forEach(v => {
-        if (v.status !== 'rejected') {
-          setCompanies([...companies, ...v.value.data.company_list])
-        }
+    getAllCompanyInfo()
+      .then(res => {
+        setCompanies(res)
       })
-    }
-
-    void loadCompany()
+      .catch(err => {
+        console.error(err)
+      })
   }, [])
 
   return (
