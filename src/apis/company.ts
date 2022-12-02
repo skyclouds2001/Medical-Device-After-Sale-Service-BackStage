@@ -7,7 +7,7 @@ import type Company from '@/model/company'
  */
 interface GetCompanyInfoResponse {
   /** 企业信息列表 */
-  admin_name: Company[]
+  company_list: Company[]
   /** 当前查询条件下的页码总数,从1开始 */
   total_page_num: number
 }
