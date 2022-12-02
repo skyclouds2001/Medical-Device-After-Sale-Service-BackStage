@@ -16,6 +16,7 @@ export default function CustomerManage(): JSX.Element {
   const editRef = useRef<ReturnType<typeof EditCustomer>>(null)
 
   const [customers, setCustomers] = useState<Customer[]>([])
+  const [total, setTotal] = useState(0)
   const [isLoading, setLoading] = useState(false)
   const [pageNum, setPageNum] = useState(1)
 
@@ -38,6 +39,7 @@ export default function CustomerManage(): JSX.Element {
       const res = await getCustomerInfo(isFirst, num)
       if (res.code === 0) {
         setCustomers(res.data.customer_list)
+        if (isFirst) setTotal(res.data.total_num)
       } else {
         void messageApi.error({
           content: res.data
@@ -168,6 +170,7 @@ export default function CustomerManage(): JSX.Element {
         loading={isLoading}
         pagination={{
           current: pageNum,
+          total,
           pageSize: DEFAULT_PAGE_SIZE
         }}
         onChange={pagination => setPageNum(pagination.current ?? 1)}

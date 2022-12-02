@@ -8,8 +8,8 @@ import type Customer from '@/model/customer'
 interface GetCustomerInfoResponse {
   /** 客户信息列表 */
   customer_list: Customer[]
-  /** 当前查询条件下的页码总数,从1开始 */
-  total_page_num: number
+  /** 客户总数 */
+  total_num: number
 }
 
 /**
