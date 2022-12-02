@@ -7,6 +7,8 @@ import EditCustomer from '@/components/EditCustomer'
 
 const { Column } = Table
 
+const DEFAULT_PAGE_SIZE = 10
+
 export default function CustomerManage(): JSX.Element {
   const [messageApi, contextHolder] = message.useMessage()
 
@@ -15,6 +17,7 @@ export default function CustomerManage(): JSX.Element {
 
   const [tableData, setTableData] = useState<Customer[]>([])
   const [isLoading, setLoading] = useState(false)
+  const [pageNum, setPageNum] = useState(1)
 
   useEffect(() => {
     void loadCustomer(true, 1)
@@ -64,6 +67,7 @@ export default function CustomerManage(): JSX.Element {
             void messageApi.success({
               content: '更新成功'
             })
+            void loadCustomer(false, pageNum)
           } else {
             void messageApi.error({
               content: res.data
@@ -100,6 +104,7 @@ export default function CustomerManage(): JSX.Element {
             void messageApi.success({
               content: '更新成功'
             })
+            void loadCustomer(false, pageNum)
           } else {
             void messageApi.error({
               content: res.data
@@ -129,6 +134,7 @@ export default function CustomerManage(): JSX.Element {
           void messageApi.success({
             content: '删除成功'
           })
+          void loadCustomer(false, pageNum)
         } else {
           void messageApi.error({
             content: res.data
@@ -156,6 +162,11 @@ export default function CustomerManage(): JSX.Element {
         bordered
         rowKey="customer_id"
         loading={isLoading}
+        pagination={{
+          current: pageNum,
+          pageSize: DEFAULT_PAGE_SIZE,
+          onChange: (current, _size) => setPageNum(current)
+        }}
         onChange={pagination => {
           void loadCustomer(false, pagination.current ?? 1)
         }}
