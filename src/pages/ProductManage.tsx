@@ -46,14 +46,17 @@ export default function ProductManage(): JSX.Element {
       {/* AntD Message 动态组件 */}
       {messageContextHolder}
 
-      {/* 添加产品大类按钮区域 */}
+      {/* 添加产品及大类按钮区域 */}
       <div className="my-5 text-right">
         <Button className="text-blue-500" type="primary" onClick={() => 1}>
-          添加产品大类
+          添加产品 {/* todo */}
+        </Button>
+        <Button className="text-blue-500" type="primary" onClick={() => 1}>
+          添加产品大类 {/* todo */}
         </Button>
       </div>
 
-      {/* 产品大类对应产品类型列表 */}
+      {/* 产品大类对应产品类型列表弹窗 */}
       <Modal destroyOnClose open={isShow} closable={true} title={`产品-${current?.type_name ?? ''}`} footer={null} okButtonProps={{ className: 'text-blue-500' }} onCancel={() => setShow(false)}>
         <ProductDetail id={current?.type_id} />
       </Modal>
@@ -87,10 +90,10 @@ export default function ProductManage(): JSX.Element {
                 查看
               </Button>
               <Button type="link" onClick={() => 1}>
-                编辑
+                编辑 {/* todo */}
               </Button>
               <Button type="link" danger onClick={() => 1}>
-                删除
+                删除 {/* todo */}
               </Button>
             </>
           )}

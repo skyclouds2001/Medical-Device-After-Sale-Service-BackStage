@@ -71,10 +71,10 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
           render={(_, record: ProductModel) => (
             <>
               <Button type="link" onClick={() => 1}>
-                编辑
+                编辑 {/* todo */}
               </Button>
               <Button type="link" danger onClick={() => 1}>
-                删除
+                删除 {/* todo */}
               </Button>
             </>
           )}
