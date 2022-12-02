@@ -54,7 +54,7 @@ export default function ProductManage(): JSX.Element {
       </div>
 
       {/* 产品大类对应产品类型列表 */}
-      <Modal open={isShow} closable={true} title={`产品类型-${current?.type_name ?? ''}`} okButtonProps={{ className: 'text-blue-500' }} onCancel={() => setShow(false)}>
+      <Modal destroyOnClose open={isShow} closable={true} title={`产品-${current?.type_name ?? ''}`} footer={null} okButtonProps={{ className: 'text-blue-500' }} onCancel={() => setShow(false)}>
         <ProductDetail id={current?.type_id} />
       </Modal>
 
