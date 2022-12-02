@@ -15,13 +15,17 @@ export default function CustomerManage(): JSX.Element {
   const addRef = useRef<ReturnType<typeof AddCustomer>>(null)
   const editRef = useRef<ReturnType<typeof EditCustomer>>(null)
 
-  const [tableData, setTableData] = useState<Customer[]>([])
+  const [customers, setCustomers] = useState<Customer[]>([])
   const [isLoading, setLoading] = useState(false)
   const [pageNum, setPageNum] = useState(1)
 
   useEffect(() => {
     void loadCustomer(true, 1)
   }, [])
+
+  useEffect(() => {
+    void loadCustomer(false, pageNum)
+  }, [pageNum])
 
   /**
    * 加载客户信息
@@ -33,7 +37,7 @@ export default function CustomerManage(): JSX.Element {
     try {
       const res = await getCustomerInfo(isFirst, num)
       if (res.code === 0) {
-        setTableData(res.data.customer_list)
+        setCustomers(res.data.customer_list)
       } else {
         void messageApi.error({
           content: res.data
@@ -158,18 +162,15 @@ export default function CustomerManage(): JSX.Element {
 
       {/* 客户信息表格 */}
       <Table
-        dataSource={tableData}
+        dataSource={customers}
         bordered
         rowKey="customer_id"
         loading={isLoading}
         pagination={{
           current: pageNum,
-          pageSize: DEFAULT_PAGE_SIZE,
-          onChange: (current, _size) => setPageNum(current)
+          pageSize: DEFAULT_PAGE_SIZE
         }}
-        onChange={pagination => {
-          void loadCustomer(false, pagination.current ?? 1)
-        }}
+        onChange={pagination => setPageNum(pagination.current ?? 1)}
       >
         <Column align="center" title="用户名称" dataIndex="customer_name" key="customer_name" />
         <Column align="center" title="企业名称" dataIndex="company_id" key="company_id" />
