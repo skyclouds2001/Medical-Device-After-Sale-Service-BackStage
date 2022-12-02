@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Button, message, Table } from 'antd'
+import { Button, message, Table, Modal } from 'antd'
+import ProductDetail from '@/components/ProductDetail'
 import { getAllProductTypes } from '@/apis'
 import type ProductType from '@/model/product_type'
 
@@ -8,11 +9,14 @@ const { Column } = Table
 const DEFAULT_PAGE_SIZE = 10
 
 export default function ProductManage(): JSX.Element {
-  const [messageApi, contextHolder] = message.useMessage()
+  const [messageApi, messageContextHolder] = message.useMessage()
 
   const [productTypes, setProductTypes] = useState<ProductType[]>([])
   const [isLoading, setLoading] = useState(false)
   const [pageNum, setPageNum] = useState(1)
+
+  const [isShow, setShow] = useState(false)
+  const [current, updateCurrent] = useState<ProductType>()
 
   useEffect(() => {
     void loadProductTypes()
@@ -40,7 +44,7 @@ export default function ProductManage(): JSX.Element {
   return (
     <>
       {/* AntD Message 动态组件 */}
-      {contextHolder}
+      {messageContextHolder}
 
       {/* 添加产品大类按钮区域 */}
       <div className="my-5 text-right">
@@ -49,7 +53,12 @@ export default function ProductManage(): JSX.Element {
         </Button>
       </div>
 
-      {/* 产品列表 */}
+      {/* 产品大类对应产品类型列表 */}
+      <Modal open={isShow} closable={true} title={`产品类型-${current?.type_name ?? ''}`} okButtonProps={{ className: 'text-blue-500' }} onCancel={() => setShow(false)}>
+        <ProductDetail id={current?.type_id} />
+      </Modal>
+
+      {/* 产品大类列表 */}
       <Table
         dataSource={productTypes}
         bordered
@@ -68,7 +77,13 @@ export default function ProductManage(): JSX.Element {
           key="action"
           render={(_, record: ProductType) => (
             <>
-              <Button type="link" onClick={() => 1}>
+              <Button
+                type="link"
+                onClick={() => {
+                  setShow(true)
+                  updateCurrent(record)
+                }}
+              >
                 查看
               </Button>
               <Button type="link" onClick={() => 1}>
