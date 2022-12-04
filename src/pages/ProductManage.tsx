@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Button, message, Table, Modal, Form, Input, Select } from 'antd'
 import ProductDetail from '@/components/ProductDetail'
-import { addProductModel, addProductType, getAllProductTypes, getDepartmentsAndStaffs, manageCustomerService } from '@/apis'
+import { addProductModel, addProductType, getAllProductTypes, getDepartmentsAndStaffs, manageCustomerService, updateProductType } from '@/apis'
 import type ProductType from '@/model/product_type'
 import type User from '@/model/user'
 
@@ -155,6 +155,37 @@ export default function ProductManage(): JSX.Element {
     })
   }
 
+  const editProductType = (type: ProductType): void => {
+    let name = ''
+    Modal.confirm({
+      title: '',
+      content: (
+        <Form labelCol={{ span: 8 }} colon={false}>
+          <Form.Item label="产品大类名称" name="name">
+            <Input className="rounded-xl mx-2" placeholder="请输入产品大类名称" value={name} onChange={e => (name = e.target.value)} />
+          </Form.Item>
+        </Form>
+      ),
+      closable: true,
+      okButtonProps: {
+        className: 'text-blue-500'
+      },
+      onOk: async () => {
+        const res = await updateProductType(type.type_id, name)
+        if (res.code === 0) {
+          void messageApi.success({
+            content: '更新成功'
+          })
+          void loadProductTypes()
+        } else {
+          void messageApi.error({
+            content: res.data
+          })
+        }
+      }
+    })
+  }
+
   return (
     <>
       {/* AntD Message 动态组件 */}
@@ -203,8 +234,8 @@ export default function ProductManage(): JSX.Element {
               >
                 查看
               </Button>
-              <Button type="link" onClick={() => 1}>
-                编辑 {/* todo */}
+              <Button type="link" onClick={() => editProductType(record)}>
+                编辑
               </Button>
               <Button type="link" danger onClick={() => 1}>
                 删除 {/* todo */}

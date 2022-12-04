@@ -65,6 +65,7 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
           void messageApi.success({
             content: '更新成功'
           })
+          void loadProductModels()
         } else {
           void messageApi.error({
             content: res.data
