@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Input, message, Modal, Table } from 'antd'
-import { getProductModelByType, updateProductModel } from '@/apis'
+import { getProductModelByType, removeProductModel, removeSingleServer, updateProductModel } from '@/apis'
 import type ProductModel from '@/model/product_model'
 
 interface ProductDetailProps {
@@ -75,6 +75,51 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
     })
   }
 
+  const removeProductDetail = (product: ProductModel): void => {
+    Modal.confirm({
+      title: '',
+      content: '确认移除当前产品？',
+      closable: true,
+      okButtonProps: {
+        className: 'text-blue-500'
+      },
+      onOk: () => {
+        removeProductModel(product.model_id)
+          .then(res => {
+            if (res.code === 0) {
+              void messageApi.success({
+                content: '删除成功'
+              })
+              void loadProductModels()
+            } else {
+              void messageApi.error({
+                content: res.data
+              })
+            }
+          })
+          .catch(err => {
+            console.error(err)
+          })
+        removeSingleServer(product.model_id)
+          .then(res => {
+            if (res.code === 0) {
+              void messageApi.success({
+                content: '删除成功'
+              })
+              void loadProductModels()
+            } else {
+              void messageApi.error({
+                content: res.data
+              })
+            }
+          })
+          .catch(err => {
+            console.error(err)
+          })
+      }
+    })
+  }
+
   return (
     <>
       {/* AntD Message 动态组件 */}
@@ -104,8 +149,8 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
               <Button type="link" onClick={() => editProductModel(record)}>
                 编辑
               </Button>
-              <Button type="link" danger onClick={() => 1}>
-                删除 {/* todo */}
+              <Button type="link" danger onClick={() => removeProductDetail(record)}>
+                删除
               </Button>
             </>
           )}
