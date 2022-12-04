@@ -9,7 +9,7 @@ interface GetCompanyInfoResponse {
   /** 企业信息列表 */
   company_list: Company[]
   /** 当前查询条件下的页码总数,从1开始 */
-  total_page_num: number
+  total_num: number
 }
 
 /**
@@ -60,9 +60,9 @@ export const removeCompanyInfo = async (companyId: number): Promise<Network<void
  */
 export const getAllCompanyInfo = async (): Promise<Company[]> => {
   const res = await getCompanyInfo(true, 1)
-  const { total_page_num: num } = res.data
+  const { total_num: num } = res.data
   const pros = []
-  for (let i = 1; i <= num; ++i) {
+  for (let i = 1; i <= num / 10; ++i) {
     pros.push(getCompanyInfo(false, i))
   }
   const result = await Promise.allSettled(pros)
