@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Button, message, Table, Modal, Form, Input } from 'antd'
+import { Button, message, Table, Modal, Form, Input, Select } from 'antd'
 import ProductDetail from '@/components/ProductDetail'
-import { addProductType, getAllProductTypes } from '@/apis'
+import { addProductModel, addProductType, getAllProductTypes, getDepartmentsAndStaffs, manageCustomerService } from '@/apis'
 import type ProductType from '@/model/product_type'
+import type User from '@/model/user'
 
 const { Column } = Table
 
@@ -44,7 +45,7 @@ export default function ProductManage(): JSX.Element {
   const addProductTypes = (): void => {
     let name = ''
     Modal.confirm({
-      title: '',
+      title: '添加产品大类',
       content: (
         <Form labelCol={{ span: 8 }} colon={false}>
           <Form.Item label="产品大类名称" name="name">
@@ -59,10 +60,9 @@ export default function ProductManage(): JSX.Element {
       onOk: async () => {
         try {
           const res = await addProductType(name)
-          console.log(res)
           if (res.code === 0) {
             void messageApi.success({
-              content: '更新成功'
+              content: '添加成功'
             })
             void loadProductTypes()
           } else {
@@ -77,6 +77,84 @@ export default function ProductManage(): JSX.Element {
     })
   }
 
+  const addProductModels = (): void => {
+    let name = ''
+    let id = 0
+    let service: number[] = []
+    let services: User[] = []
+    getDepartmentsAndStaffs(0)
+      .then(res => {
+        services = res.data.element_list.filter(v => v.type === 'person') as User[]
+      })
+      .catch(err => {
+        console.error(err)
+      })
+    Modal.confirm({
+      title: '添加产品',
+      content: (
+        <Form labelCol={{ span: 8 }} colon={false}>
+          <Form.Item label="产品名称" name="name">
+            <Input className="rounded-xl mx-2" placeholder="请输入产品名称" value={name} onChange={e => (name = e.target.value)} />
+          </Form.Item>
+          <Form.Item label="产品所属大类" name="type">
+            <Select className="rounded-sm mx-2" placeholder="请选择产品所属大类" onChange={(value: number) => (id = value)}>
+              {productTypes.map(v => (
+                <Select.Option key={v.type_id} value={v.type_id}>
+                  {v.type_name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item label="产品所属客服" name="service">
+            <Select className="rounded-sm mx-2" mode="multiple" allowClear placeholder="请选择产品所属客服" onChange={(value: number[]) => (service = value)}>
+              {services.map(v => (
+                <Select.Option key={v.user_id} value={v.user_id}>
+                  {v.user_name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </Form>
+      ),
+      closable: true,
+      okButtonProps: {
+        className: 'text-blue-500'
+      },
+      onOk: () => {
+        addProductModel(name, id)
+          .then(res => {
+            if (res.code === 0) {
+              void messageApi.success({
+                content: '添加成功'
+              })
+            } else {
+              void messageApi.error({
+                content: res.data
+              })
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+        manageCustomerService(id, service)
+          .then(res => {
+            if (res.code === 0) {
+              void messageApi.success({
+                content: '添加成功'
+              })
+            } else {
+              void messageApi.error({
+                content: res.data
+              })
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+    })
+  }
+
   return (
     <>
       {/* AntD Message 动态组件 */}
@@ -84,8 +162,8 @@ export default function ProductManage(): JSX.Element {
 
       {/* 添加产品及大类按钮区域 */}
       <div className="my-5 text-right">
-        <Button className="text-blue-500" type="primary" onClick={() => 1}>
-          添加产品 {/* todo */}
+        <Button className="text-blue-500" type="primary" onClick={() => addProductModels()}>
+          添加产品
         </Button>
         <Button className="text-blue-500" type="primary" onClick={() => addProductTypes()}>
           添加产品大类
