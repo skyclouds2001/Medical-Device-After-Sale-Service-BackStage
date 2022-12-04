@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Button, message, Table } from 'antd'
+import { Button, Form, Input, message, Modal, Table } from 'antd'
+import { getProductModelByType, updateProductModel } from '@/apis'
 import type ProductModel from '@/model/product_model'
-import { getProductModelByType } from '@/apis'
 
 interface ProductDetailProps {
   id?: number
@@ -44,6 +44,36 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
     }, 250)
   }
 
+  const editProductModel = (product: ProductModel): void => {
+    let name = ''
+    Modal.confirm({
+      title: '',
+      content: (
+        <Form labelCol={{ span: 8 }} colon={false}>
+          <Form.Item label="产品名称" name="name">
+            <Input className="rounded-xl mx-2" placeholder="请输入产品名称" value={name} onChange={e => (name = e.target.value)} />
+          </Form.Item>
+        </Form>
+      ),
+      closable: true,
+      okButtonProps: {
+        className: 'text-blue-500'
+      },
+      onOk: async () => {
+        const res = await updateProductModel(product.model_id, name, product.type_id)
+        if (res.code === 0) {
+          void messageApi.success({
+            content: '更新成功'
+          })
+        } else {
+          void messageApi.error({
+            content: res.data
+          })
+        }
+      }
+    })
+  }
+
   return (
     <>
       {/* AntD Message 动态组件 */}
@@ -70,8 +100,8 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
           key="action"
           render={(_, record: ProductModel) => (
             <>
-              <Button type="link" onClick={() => 1}>
-                编辑 {/* todo */}
+              <Button type="link" onClick={() => editProductModel(record)}>
+                编辑
               </Button>
               <Button type="link" danger onClick={() => 1}>
                 删除 {/* todo */}
