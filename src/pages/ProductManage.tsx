@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Button, message, Table, Modal, Form, Input, Select } from 'antd'
 import ProductDetail from '@/components/ProductDetail'
-import { addProductModel, addProductType, getAllProductTypes, getDepartmentsAndStaffs, manageCustomerService, updateProductType } from '@/apis'
+import { addProductModel, addProductType, getAllProductTypes, getDepartmentsAndStaffs, manageCustomerService, removeCustomerService, removeProductType, updateProductType } from '@/apis'
 import type ProductType from '@/model/product_type'
 import type User from '@/model/user'
 
@@ -186,6 +186,51 @@ export default function ProductManage(): JSX.Element {
     })
   }
 
+  const removeProductRange = (product: ProductType): void => {
+    Modal.confirm({
+      title: '',
+      content: '确认移除当前产品大类及其产品？',
+      closable: true,
+      okButtonProps: {
+        className: 'text-blue-500'
+      },
+      onOk: () => {
+        removeProductType(product.type_id)
+          .then(res => {
+            if (res.code === 0) {
+              void messageApi.success({
+                content: '删除成功'
+              })
+              void loadProductTypes()
+            } else {
+              void messageApi.error({
+                content: res.data
+              })
+            }
+          })
+          .catch(err => {
+            console.error(err)
+          })
+        removeCustomerService(product.type_id)
+          .then(res => {
+            if (res.code === 0) {
+              void messageApi.success({
+                content: '删除成功'
+              })
+              void loadProductTypes()
+            } else {
+              void messageApi.error({
+                content: res.data
+              })
+            }
+          })
+          .catch(err => {
+            console.error(err)
+          })
+      }
+    })
+  }
+
   return (
     <>
       {/* AntD Message 动态组件 */}
@@ -237,8 +282,8 @@ export default function ProductManage(): JSX.Element {
               <Button type="link" onClick={() => editProductType(record)}>
                 编辑
               </Button>
-              <Button type="link" danger onClick={() => 1}>
-                删除 {/* todo */}
+              <Button type="link" danger onClick={() => removeProductRange(record)}>
+                删除
               </Button>
             </>
           )}
