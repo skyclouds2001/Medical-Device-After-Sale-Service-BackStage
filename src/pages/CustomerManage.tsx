@@ -1,23 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { message, Table, Button, Modal } from 'antd'
 import { getCustomerInfo, updateCustomerInfo, removeCustomerInfo, addCustomerInfo } from '@/apis'
-import type Customer from '@/model/customer'
+import { DEFAULT_PAGE_SIZE } from '@/config'
 import AddCustomer from '@/components/AddCustomer'
 import EditCustomer from '@/components/EditCustomer'
+import type Customer from '@/model/customer'
 
 const { Column } = Table
-
-const DEFAULT_PAGE_SIZE = 10
 
 export default function CustomerManage(): JSX.Element {
   const [messageApi, contextHolder] = message.useMessage()
 
+  /** 添加客户表单 ref 引用 */
   const addRef = useRef<ReturnType<typeof AddCustomer>>(null)
+  /** 编辑客户表单 ref 引用 */
   const editRef = useRef<ReturnType<typeof EditCustomer>>(null)
 
+  /** 客户列表 */
   const [customers, setCustomers] = useState<Customer[]>([])
+  /** 客户总数 */
   const [total, setTotal] = useState(0)
+  /** 标记客户列表是否处于加载状态 */
   const [isLoading, setLoading] = useState(false)
+  /** 客户列表当前页数 */
   const [pageNum, setPageNum] = useState(1)
 
   useEffect(() => {
@@ -31,7 +36,7 @@ export default function CustomerManage(): JSX.Element {
   /**
    * 加载客户信息
    * @param isFirst 是否首次加载
-   * @param num 客户数量
+   * @param num 当前页数
    */
   const loadCustomer = async (isFirst: boolean, num: number): Promise<void> => {
     setLoading(true)
@@ -53,6 +58,9 @@ export default function CustomerManage(): JSX.Element {
     }, 250)
   }
 
+  /**
+   * 添加客户
+   */
   const addCustomer = (): void => {
     Modal.confirm({
       title: '添加客户信息',
@@ -88,7 +96,7 @@ export default function CustomerManage(): JSX.Element {
 
   /**
    * 更新客户信息
-   * @param customer 客户信息
+   * @param customer 需更新的客户信息
    */
   const editCustomer = (customer: Customer): void => {
     Modal.confirm({
