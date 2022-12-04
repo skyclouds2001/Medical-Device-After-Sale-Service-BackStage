@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { message, Table, Button, Modal } from 'antd'
+import { message, Table, Button, Modal, Form, Input } from 'antd'
 import { getCompanyInfo, addCompanyInfo, updateCompanyInfo, removeCompanyInfo } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type Company from '@/model/company'
@@ -55,16 +55,23 @@ export default function CompanyManage(): JSX.Element {
    * 添加企业
    */
   const addCompany = (): void => {
+    let name = ''
     Modal.confirm({
       title: '添加企业信息',
-      content: '', // todo
+      content: (
+        <Form labelCol={{ span: 8 }} colon={false}>
+          <Form.Item label="产品大类名称" name="name">
+            <Input className="rounded-xl mx-2" placeholder="请输入企业名称" value={name} onChange={e => (name = e.target.value)} />
+          </Form.Item>
+        </Form>
+      ),
       closable: true,
       okButtonProps: {
         className: 'text-blue-500'
       },
       onOk: async () => {
         try {
-          const res = await addCompanyInfo('') // todo
+          const res = await addCompanyInfo(name)
           if (res.code === 0) {
             void messageApi.success({
               content: '添加成功'
@@ -87,16 +94,23 @@ export default function CompanyManage(): JSX.Element {
    * @param company 需更新的企业信息
    */
   const editCompany = (company: Company): void => {
+    let name = ''
     Modal.confirm({
       title: '修改企业信息',
-      content: '', // todo
+      content: (
+        <Form labelCol={{ span: 8 }} colon={false}>
+          <Form.Item label="产品大类名称" name="name">
+            <Input className="rounded-xl mx-2" placeholder="请输入企业名称" value={name} onChange={e => (name = e.target.value)} />
+          </Form.Item>
+        </Form>
+      ),
       closable: true,
       okButtonProps: {
         className: 'text-blue-500'
       },
       onOk: async () => {
         try {
-          const res = await updateCompanyInfo(0, '') // todo
+          const res = await updateCompanyInfo(company.company_id, name)
           if (res.code === 0) {
             void messageApi.success({
               content: '更新成功'
