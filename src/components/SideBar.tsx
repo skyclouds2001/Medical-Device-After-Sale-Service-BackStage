@@ -1,8 +1,7 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Menu } from 'antd'
 import type { MenuProps } from 'antd'
-import { DEFAULT_REDIRECT_PATH } from '@/config'
 
 const items: MenuProps['items'] = [
   {
@@ -21,10 +20,11 @@ const items: MenuProps['items'] = [
 
 export default function SideBar(): JSX.Element {
   const navigate = useNavigate()
+  const location = useLocation()
 
   return (
     <>
-      <Menu theme="dark" defaultSelectedKeys={[DEFAULT_REDIRECT_PATH.replaceAll('/', '')]} items={items} onClick={e => navigate(`/${e.key}`)} />
+      <Menu theme="dark" defaultSelectedKeys={[location.pathname.replaceAll('/', '')]} items={items} onClick={e => navigate(`/${e.key}`)} />
     </>
   )
 }
