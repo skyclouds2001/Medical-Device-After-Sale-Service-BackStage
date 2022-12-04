@@ -47,7 +47,7 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
   const editProductModel = (product: ProductModel): void => {
     let name = ''
     Modal.confirm({
-      title: '',
+      title: '编辑产品信息',
       content: (
         <Form labelCol={{ span: 8 }} colon={false}>
           <Form.Item label="产品名称" name="name">
@@ -77,7 +77,7 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
 
   const removeProductDetail = (product: ProductModel): void => {
     Modal.confirm({
-      title: '',
+      title: '警告',
       content: '确认移除当前产品？',
       closable: true,
       okButtonProps: {

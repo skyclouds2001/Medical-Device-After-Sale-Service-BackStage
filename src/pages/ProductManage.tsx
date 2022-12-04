@@ -158,7 +158,7 @@ export default function ProductManage(): JSX.Element {
   const editProductType = (type: ProductType): void => {
     let name = ''
     Modal.confirm({
-      title: '',
+      title: '编辑产品大类信息',
       content: (
         <Form labelCol={{ span: 8 }} colon={false}>
           <Form.Item label="产品大类名称" name="name">
@@ -188,7 +188,7 @@ export default function ProductManage(): JSX.Element {
 
   const removeProductRange = (product: ProductType): void => {
     Modal.confirm({
-      title: '',
+      title: '警告',
       content: '确认移除当前产品大类及其产品？',
       closable: true,
       okButtonProps: {
