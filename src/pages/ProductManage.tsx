@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Button, message, Table, Modal } from 'antd'
+import { Button, message, Table, Modal, Form, Input } from 'antd'
 import ProductDetail from '@/components/ProductDetail'
-import { getAllProductTypes } from '@/apis'
+import { addProductType, getAllProductTypes } from '@/apis'
 import type ProductType from '@/model/product_type'
 
 const { Column } = Table
@@ -41,6 +41,42 @@ export default function ProductManage(): JSX.Element {
     }, 250)
   }
 
+  const addProductTypes = (): void => {
+    let name = ''
+    Modal.confirm({
+      title: '',
+      content: (
+        <Form labelCol={{ span: 8 }} colon={false}>
+          <Form.Item label="产品大类名称" name="name">
+            <Input className="rounded-xl mx-2" placeholder="请输入产品大类名称" value={name} onChange={e => (name = e.target.value)} />
+          </Form.Item>
+        </Form>
+      ),
+      closable: true,
+      okButtonProps: {
+        className: 'text-blue-500'
+      },
+      onOk: async () => {
+        try {
+          const res = await addProductType(name)
+          console.log(res)
+          if (res.code === 0) {
+            void messageApi.success({
+              content: '更新成功'
+            })
+            void loadProductTypes()
+          } else {
+            void messageApi.error({
+              content: res.data
+            })
+          }
+        } catch (err) {
+          console.error(err)
+        }
+      }
+    })
+  }
+
   return (
     <>
       {/* AntD Message 动态组件 */}
@@ -51,8 +87,8 @@ export default function ProductManage(): JSX.Element {
         <Button className="text-blue-500" type="primary" onClick={() => 1}>
           添加产品 {/* todo */}
         </Button>
-        <Button className="text-blue-500" type="primary" onClick={() => 1}>
-          添加产品大类 {/* todo */}
+        <Button className="text-blue-500" type="primary" onClick={() => addProductTypes()}>
+          添加产品大类
         </Button>
       </div>
 
