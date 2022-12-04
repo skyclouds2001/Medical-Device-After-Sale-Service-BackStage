@@ -4,6 +4,8 @@
 export default interface Customer {
   /** 所属企业id */
   company_id: number
+  /** 所属企业名称 */
+  company_name: string
   /** 客户id */
   customer_id: number
   /** 客户名称 */

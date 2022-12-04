@@ -184,7 +184,7 @@ export default function CustomerManage(): JSX.Element {
         onChange={pagination => setPageNum(pagination.current ?? 1)}
       >
         <Column align="center" title="用户名称" dataIndex="customer_name" key="customer_name" />
-        <Column align="center" title="企业名称" dataIndex="company_id" key="company_id" />
+        <Column align="center" title="企业名称" dataIndex="company_name" key="company_name" />
         <Column align="center" title="联系方式" dataIndex="mobile" key="mobile" />
         <Column
           align="center"
