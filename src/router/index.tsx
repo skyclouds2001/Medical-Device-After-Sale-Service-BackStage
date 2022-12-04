@@ -4,6 +4,7 @@ import LoginPage from '@/pages/LoginPage'
 import ProductManage from '@/pages/ProductManage'
 import CustomerManage from '@/pages/CustomerManage'
 import CustomerServiceManage from '@/pages/CustomerServiceManage'
+import CompanyManage from '@/pages/CompanyManage'
 
 const routes: RouteProps[] = [
   {
@@ -13,6 +14,10 @@ const routes: RouteProps[] = [
   {
     path: '/customer',
     element: <CustomerManage />
+  },
+  {
+    path: '/company',
+    element: <CompanyManage />
   },
   {
     path: '/service',

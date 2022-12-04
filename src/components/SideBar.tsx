@@ -9,6 +9,10 @@ const items: MenuProps['items'] = [
     key: 'customer'
   },
   {
+    label: '企业管理',
+    key: 'company'
+  },
+  {
     label: '客服管理',
     key: 'service'
   },
