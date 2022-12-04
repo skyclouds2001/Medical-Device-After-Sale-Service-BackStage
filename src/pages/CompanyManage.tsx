@@ -77,6 +77,7 @@ export default function CompanyManage(): JSX.Element {
               content: '添加成功'
             })
             void loadCompany(false, pageNum)
+            setPageNum(pageNum + 1)
           } else {
             void messageApi.error({
               content: res.data
@@ -146,6 +147,7 @@ export default function CompanyManage(): JSX.Element {
             content: '删除成功'
           })
           void loadCompany(false, pageNum)
+          setPageNum(pageNum - 1)
         } else {
           void messageApi.error({
             content: res.data
