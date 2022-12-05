@@ -43,7 +43,11 @@ export default function CustomerServiceManage(): JSX.Element {
           products.forEach(v => (v.services = []))
           setAllProducts(products)
           setTotalNum(products.length)
-          void loadProductModels(products)
+          loadProductModels(products).finally(() => {
+            setTimeout(() => {
+              setLoading(false)
+            }, 250)
+          })
         } else {
           void messageApi.error({
             content: res.data
@@ -52,11 +56,6 @@ export default function CustomerServiceManage(): JSX.Element {
       })
       .catch(err => {
         console.error(err)
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setLoading(false)
-        }, 250)
       })
   }
 
