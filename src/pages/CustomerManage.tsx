@@ -82,7 +82,7 @@ export default function CustomerManage(): JSX.Element {
               content: '更新成功'
             })
             void loadCustomer(false, pageNum)
-            setPageNum(pageNum + 1)
+            setTotal(total + 1)
           } else {
             void messageApi.error({
               content: res.data
@@ -150,7 +150,7 @@ export default function CustomerManage(): JSX.Element {
             content: '删除成功'
           })
           void loadCustomer(false, pageNum)
-          setPageNum(pageNum - 1)
+          setTotal(total - 1)
         } else {
           void messageApi.error({
             content: res.data
