@@ -47,8 +47,11 @@ export const updateProductType = async (typeId: number, typeName: string): Promi
  * @param productTypeId 产品大类id
  */
 export const removeProductType = async (productTypeId: number): Promise<Network<void>> => {
-  const res = await instance.post<Network<void>>('/wizz/aftersale/product-type/delete', {
-    productTypeId
+  const res = await instance.delete<Network<void>>('/wizz/aftersale/product-type/delete', {
+    data: `productTypeId=${productTypeId}`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
   })
   return res.data
 }
