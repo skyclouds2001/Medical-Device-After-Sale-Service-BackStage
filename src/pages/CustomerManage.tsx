@@ -6,8 +6,6 @@ import AddCustomer from '@/components/AddCustomer'
 import EditCustomer from '@/components/EditCustomer'
 import type Customer from '@/model/customer'
 
-const { Column } = Table
-
 export default function CustomerManage(): JSX.Element {
   const [messageApi, contextHolder] = message.useMessage()
 
@@ -166,7 +164,7 @@ export default function CustomerManage(): JSX.Element {
       {contextHolder}
 
       {/* 添加客户信息按钮区域 */}
-      <div className="my-5 text-right">
+      <div className="my-5 text-right" style={{ width: '800px' }}>
         <Button className="text-blue-500" type="primary" onClick={() => addCustomer()}>
           添加客户
         </Button>
@@ -184,11 +182,13 @@ export default function CustomerManage(): JSX.Element {
           pageSize: DEFAULT_PAGE_SIZE
         }}
         onChange={pagination => setPageNum(pagination.current ?? 1)}
+        style={{ width: '800px' }}
       >
-        <Column align="center" title="用户名称" dataIndex="customer_name" key="customer_name" />
-        <Column align="center" title="企业名称" dataIndex="company_name" key="company_name" />
-        <Column align="center" title="联系方式" dataIndex="mobile" key="mobile" />
-        <Column
+        <Table.Column width="200px" align="center" title="用户名称" dataIndex="customer_name" key="customer_name" />
+        <Table.Column width="200px" align="center" title="企业名称" dataIndex="company_name" key="company_name" />
+        <Table.Column width="200px" align="center" title="联系方式" dataIndex="mobile" key="mobile" />
+        <Table.Column
+          width="200px"
           align="center"
           title="操作"
           key="action"

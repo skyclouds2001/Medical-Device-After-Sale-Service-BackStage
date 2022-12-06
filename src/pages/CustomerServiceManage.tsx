@@ -152,10 +152,12 @@ export default function CustomerServiceManage(): JSX.Element {
           pageSize: DEFAULT_PAGE_SIZE
         }}
         onChange={pagination => setPageNum(pagination.current ?? 1)}
+        style={{ width: '800px' }}
       >
-        <Table.Column align="center" title="产品名称" dataIndex="model_name" key="model_name" />
-        <Table.Column align="center" title="所属大类" dataIndex="type_name" key="type_name" />
+        <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
+        <Table.Column width="200px" align="center" title="所属大类" dataIndex="type_name" key="type_name" />
         <Table.Column
+          width="200px"
           align="center"
           title="对应客服"
           key="customer-service"
@@ -168,6 +170,7 @@ export default function CustomerServiceManage(): JSX.Element {
           )}
         />
         <Table.Column
+          width="200px"
           align="center"
           title="操作"
           key="action"

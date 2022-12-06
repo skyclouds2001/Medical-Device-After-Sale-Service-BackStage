@@ -4,8 +4,6 @@ import { getCompanyInfo, addCompanyInfo, updateCompanyInfo, removeCompanyInfo } 
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type Company from '@/model/company'
 
-const { Column } = Table
-
 export default function CompanyManage(): JSX.Element {
   const [messageApi, contextHolder] = message.useMessage()
 
@@ -163,7 +161,7 @@ export default function CompanyManage(): JSX.Element {
       {contextHolder}
 
       {/* 添加企业信息按钮区域 */}
-      <div className="my-5 text-right">
+      <div className="my-5 text-right" style={{ width: '400px' }}>
         <Button className="text-blue-500" type="primary" onClick={() => addCompany()}>
           添加企业
         </Button>
@@ -181,9 +179,11 @@ export default function CompanyManage(): JSX.Element {
           pageSize: DEFAULT_PAGE_SIZE
         }}
         onChange={pagination => setPageNum(pagination.current ?? 1)}
+        style={{ width: '400px' }}
       >
-        <Column align="center" title="企业名称" dataIndex="company_name" key="company_name" />
-        <Column
+        <Table.Column width="200px" align="center" title="企业名称" dataIndex="company_name" key="company_name" />
+        <Table.Column
+          width="200px"
           align="center"
           title="操作"
           key="action"

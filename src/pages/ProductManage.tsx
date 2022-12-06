@@ -5,8 +5,6 @@ import { addProductModel, addProductType, getAllProductTypes, getDepartmentsAndS
 import type ProductType from '@/model/product_type'
 import type User from '@/model/user'
 
-const { Column } = Table
-
 const DEFAULT_PAGE_SIZE = 10
 
 export default function ProductManage(): JSX.Element {
@@ -237,7 +235,7 @@ export default function ProductManage(): JSX.Element {
       {messageContextHolder}
 
       {/* 添加产品及大类按钮区域 */}
-      <div className="my-5 text-right">
+      <div className="my-5 text-right" style={{ width: '500px' }}>
         <Button className="text-blue-500" type="primary" onClick={() => addProductModels()}>
           添加产品
         </Button>
@@ -262,9 +260,11 @@ export default function ProductManage(): JSX.Element {
           pageSize: DEFAULT_PAGE_SIZE
         }}
         onChange={pagination => setPageNum(pagination.current ?? 1)}
+        style={{ width: '500px' }}
       >
-        <Column align="center" title="产品大类名称" dataIndex="type_name" key="type_name" />
-        <Column
+        <Table.Column width="200px" align="center" title="产品大类名称" dataIndex="type_name" key="type_name" />
+        <Table.Column
+          width="300px"
           align="center"
           title="操作"
           key="action"
