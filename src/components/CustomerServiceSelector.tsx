@@ -15,29 +15,29 @@ interface CustomerServiceSelectorProps {
 export default function CustomerServiceSelector(props: CustomerServiceSelectorProps): JSX.Element {
   const [options, setOptions] = useState<Option[]>([])
 
-  useEffect(() => {
-    const transform = async (id: number): Promise<Option[]> => {
-      const res = await getDepartmentsAndStaffs(id)
-      const result: Option[] = []
-      for (const v of res.data.element_list) {
-        if (v.type === 'department') {
-          const res = await transform(v.department_id)
-          result.push({
-            label: v.department_name,
-            value: v.department_id,
-            children: res
-          })
-        } else {
-          result.push({
-            label: v.user_name,
-            value: v.user_id,
-            children: undefined
-          })
-        }
+  const transform = async (id: number): Promise<Option[]> => {
+    const res = await getDepartmentsAndStaffs(id)
+    const result: Option[] = []
+    for (const v of res.data.element_list) {
+      if (v.type === 'department') {
+        const res = await transform(v.department_id)
+        result.push({
+          label: v.department_name,
+          value: v.department_id,
+          children: res
+        })
+      } else {
+        result.push({
+          label: v.user_name,
+          value: v.user_id,
+          children: undefined
+        })
       }
-      return result
     }
+    return result
+  }
 
+  useEffect(() => {
     const initOptions = async (): Promise<void> => {
       const options = await transform(0)
       setOptions(options)
@@ -46,13 +46,18 @@ export default function CustomerServiceSelector(props: CustomerServiceSelectorPr
     void initOptions()
   }, [])
 
-  const onChange = (value: Array<string | number>): void => {
-    props.onSelect?.(value.map(v => (typeof v === 'string' ? parseInt(v) : v)))
+  const onChange = (value: Array<Array<string | number>>): void => {
+    props.onSelect?.(
+      value
+        .map(v => v.at(-1))
+        .filter(v => v !== undefined)
+        .map(v => (typeof v === 'string' ? parseInt(v) : (v as number)))
+    )
   }
 
   return (
     <>
-      <Cascader options={options} onChange={onChange} placeholder="" />
+      <Cascader options={options} onChange={onChange} placeholder="" multiple maxTagCount="responsive" />
     </>
   )
 }
