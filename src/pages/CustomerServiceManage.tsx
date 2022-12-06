@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Button, message, Modal, Table } from 'antd'
-import { getAllProductModels, getSingleServer, removeCustomerService } from '@/apis'
+import { Button, Form, message, Modal, Table } from 'antd'
+import CustomerServiceSelector from '@/components/CustomerServiceSelector'
+import { getAllProductModels, getSingleServer, manageCustomerService, removeCustomerService } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type ProductModel from '@/model/product_model'
 import type Service from '@/model/service'
@@ -71,6 +72,42 @@ export default function CustomerServiceManage(): JSX.Element {
     setProducts(products)
   }
 
+  const editService = (product: ProductModelWithServer): void => {
+    let services: number[] = []
+    Modal.confirm({
+      title: '修改产品客服',
+      content: (
+        <Form labelCol={{ span: 8 }} colon={false}>
+          <Form.Item label="客服" name="customer_service">
+            <CustomerServiceSelector onSelect={v => (services = v)} />
+          </Form.Item>
+        </Form>
+      ),
+      closable: true,
+      okButtonProps: {
+        className: 'text-blue-500'
+      },
+      onOk: async () => {
+        try {
+          const res = await manageCustomerService(product.model_id, services)
+          console.log(res)
+          if (res.code === 0) {
+            void messageApi.success({
+              content: '修改成功'
+            })
+            void loadAllProductModels()
+          } else {
+            void messageApi.error({
+              content: res.data
+            })
+          }
+        } catch (err) {
+          console.error(err)
+        }
+      }
+    })
+  }
+
   /**
    * 移除产品对应客服
    * @param product 产品
@@ -136,8 +173,8 @@ export default function CustomerServiceManage(): JSX.Element {
           key="action"
           render={(_, record: ProductModelWithServer) => (
             <>
-              <Button type="link" onClick={() => 1}>
-                编辑 {/* todo */}
+              <Button type="link" onClick={() => editService(record)}>
+                编辑
               </Button>
               <Button type="link" danger onClick={() => removeService(record)}>
                 删除
