@@ -7,9 +7,9 @@ import type Company from '@/model/company'
  */
 interface GetCompanyInfoResponse {
   /** 企业信息列表 */
-  admin_name: Company[]
+  company_list: Company[]
   /** 当前查询条件下的页码总数,从1开始 */
-  total_page_num: number
+  total_num: number
 }
 
 /**
@@ -53,4 +53,21 @@ export const updateCompanyInfo = async (companyId: number, companyName: string):
 export const removeCompanyInfo = async (companyId: number): Promise<Network<void>> => {
   const res = await instance.delete<Network<void>>(`/wizz/aftersale/account/company/delete/${companyId}`)
   return res.data
+}
+
+/**
+ * 查询全部企业信息合成方法
+ */
+export const getAllCompanyInfo = async (): Promise<Company[]> => {
+  const res = await getCompanyInfo(true, 1)
+  const { total_num: num } = res.data
+  const pros = []
+  for (let i = 1; i <= num / 10; ++i) {
+    pros.push(getCompanyInfo(false, i))
+  }
+  const result = await Promise.allSettled(pros)
+  return result
+    .filter(v => v.status === 'fulfilled')
+    .map(v => (v.status === 'fulfilled' ? v.value.data.company_list : []))
+    .reduce((pre, cur) => [...pre, ...cur], [])
 }
