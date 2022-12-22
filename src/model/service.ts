@@ -3,7 +3,7 @@
  */
 export default interface Service {
   /** 接待人员名称 */
-  company_id: number
+  server_name: string
   /** 接待人员的 userid */
   user_id: string
 }

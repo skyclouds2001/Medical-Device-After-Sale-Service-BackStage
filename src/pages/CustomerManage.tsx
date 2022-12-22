@@ -1,36 +1,48 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { message, Table, Button, Modal } from 'antd'
 import { getCustomerInfo, updateCustomerInfo, removeCustomerInfo, addCustomerInfo } from '@/apis'
-import type Customer from '@/model/customer'
+import { DEFAULT_PAGE_SIZE } from '@/config'
 import AddCustomer from '@/components/AddCustomer'
 import EditCustomer from '@/components/EditCustomer'
-
-const { Column } = Table
+import type Customer from '@/model/customer'
 
 export default function CustomerManage(): JSX.Element {
   const [messageApi, contextHolder] = message.useMessage()
 
+  /** 添加客户表单 ref 引用 */
   const addRef = useRef<ReturnType<typeof AddCustomer>>(null)
+  /** 编辑客户表单 ref 引用 */
   const editRef = useRef<ReturnType<typeof EditCustomer>>(null)
 
-  const [tableData, setTableData] = useState<Customer[]>([])
+  /** 客户列表 */
+  const [customers, setCustomers] = useState<Customer[]>([])
+  /** 客户总数 */
+  const [total, setTotal] = useState(0)
+  /** 标记客户列表是否处于加载状态 */
   const [isLoading, setLoading] = useState(false)
+  /** 客户列表当前页数 */
+  const [pageNum, setPageNum] = useState(1)
 
   useEffect(() => {
     void loadCustomer(true, 1)
   }, [])
 
+  useEffect(() => {
+    void loadCustomer(false, pageNum)
+  }, [pageNum])
+
   /**
    * 加载客户信息
    * @param isFirst 是否首次加载
-   * @param num 客户数量
+   * @param num 当前页数
    */
   const loadCustomer = async (isFirst: boolean, num: number): Promise<void> => {
     setLoading(true)
     try {
       const res = await getCustomerInfo(isFirst, num)
       if (res.code === 0) {
-        setTableData(res.data.customer_list)
+        setCustomers(res.data.customer_list)
+        if (isFirst) setTotal(res.data.total_num)
       } else {
         void messageApi.error({
           content: res.data
@@ -44,6 +56,9 @@ export default function CustomerManage(): JSX.Element {
     }, 250)
   }
 
+  /**
+   * 添加客户
+   */
   const addCustomer = (): void => {
     Modal.confirm({
       title: '添加客户信息',
@@ -64,6 +79,8 @@ export default function CustomerManage(): JSX.Element {
             void messageApi.success({
               content: '更新成功'
             })
+            void loadCustomer(false, pageNum)
+            setTotal(total + 1)
           } else {
             void messageApi.error({
               content: res.data
@@ -78,7 +95,7 @@ export default function CustomerManage(): JSX.Element {
 
   /**
    * 更新客户信息
-   * @param customer 客户信息
+   * @param customer 需更新的客户信息
    */
   const editCustomer = (customer: Customer): void => {
     Modal.confirm({
@@ -100,6 +117,7 @@ export default function CustomerManage(): JSX.Element {
             void messageApi.success({
               content: '更新成功'
             })
+            void loadCustomer(false, pageNum)
           } else {
             void messageApi.error({
               content: res.data
@@ -129,6 +147,8 @@ export default function CustomerManage(): JSX.Element {
           void messageApi.success({
             content: '删除成功'
           })
+          void loadCustomer(false, pageNum)
+          setTotal(total - 1)
         } else {
           void messageApi.error({
             content: res.data
@@ -144,7 +164,7 @@ export default function CustomerManage(): JSX.Element {
       {contextHolder}
 
       {/* 添加客户信息按钮区域 */}
-      <div className="my-5 text-right">
+      <div className="my-5 text-right" style={{ width: '800px' }}>
         <Button className="text-blue-500" type="primary" onClick={() => addCustomer()}>
           添加客户
         </Button>
@@ -152,18 +172,23 @@ export default function CustomerManage(): JSX.Element {
 
       {/* 客户信息表格 */}
       <Table
-        dataSource={tableData}
+        dataSource={customers}
         bordered
         rowKey="customer_id"
         loading={isLoading}
-        onChange={pagination => {
-          void loadCustomer(false, pagination.current ?? 1)
+        pagination={{
+          current: pageNum,
+          total,
+          pageSize: DEFAULT_PAGE_SIZE
         }}
+        onChange={pagination => setPageNum(pagination.current ?? 1)}
+        style={{ width: '800px' }}
       >
-        <Column align="center" title="用户名称" dataIndex="customer_name" key="customer_name" />
-        <Column align="center" title="企业名称" dataIndex="company_id" key="company_id" />
-        <Column align="center" title="联系方式" dataIndex="mobile" key="mobile" />
-        <Column
+        <Table.Column width="200px" align="center" title="用户名称" dataIndex="customer_name" key="customer_name" />
+        <Table.Column width="200px" align="center" title="企业名称" dataIndex="company_name" key="company_name" />
+        <Table.Column width="200px" align="center" title="联系方式" dataIndex="mobile" key="mobile" />
+        <Table.Column
+          width="200px"
           align="center"
           title="操作"
           key="action"

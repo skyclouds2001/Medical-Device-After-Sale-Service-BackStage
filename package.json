@@ -38,6 +38,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@ant-design/colors": "^6.0.0",
     "@ant-design/icons": "^4.7.0",
     "@reduxjs/toolkit": "^1.8.5",
     "antd": "^4.23.4",
