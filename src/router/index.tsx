@@ -6,6 +6,7 @@ import ProductManage from '@/pages/ProductManage'
 import UserManage from '@/pages/UserManage'
 import CustomerServiceManage from '@/pages/CustomerServiceManage'
 import CompanyManage from '@/pages/CompanyManage'
+import CustomerManage from '@/pages/CustomerManage'
 
 const Routes: React.FC = () => {
   return useRoutes([
@@ -19,11 +20,17 @@ const Routes: React.FC = () => {
       children: [
         {
           path: '/customer',
-          element: <UserManage />
-        },
-        {
-          path: '/company',
-          element: <CompanyManage />
+          element: <CustomerManage />,
+          children: [
+            {
+              path: '/customer/user',
+              element: <UserManage />
+            },
+            {
+              path: '/customer/company',
+              element: <CompanyManage />
+            }
+          ]
         },
         {
           path: '/service',
