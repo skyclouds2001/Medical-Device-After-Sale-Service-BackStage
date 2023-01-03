@@ -6,7 +6,7 @@ import AddCustomer from '@/components/AddCustomer'
 import EditCustomer from '@/components/EditCustomer'
 import type Customer from '@/model/customer'
 
-export default function CustomerManage(): JSX.Element {
+export default function UserManage(): JSX.Element {
   const { message } = App.useApp()
 
   /** 添加客户表单 ref 引用 */

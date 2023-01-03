@@ -3,7 +3,7 @@ import { useRoutes } from 'react-router-dom'
 import BasePage from '@/pages/BasePage'
 import LoginPage from '@/pages/LoginPage'
 import ProductManage from '@/pages/ProductManage'
-import CustomerManage from '@/pages/CustomerManage'
+import UserManage from '@/pages/UserManage'
 import CustomerServiceManage from '@/pages/CustomerServiceManage'
 import CompanyManage from '@/pages/CompanyManage'
 
@@ -19,7 +19,7 @@ const Routes: React.FC = () => {
       children: [
         {
           path: '/customer',
-          element: <CustomerManage />
+          element: <UserManage />
         },
         {
           path: '/company',
