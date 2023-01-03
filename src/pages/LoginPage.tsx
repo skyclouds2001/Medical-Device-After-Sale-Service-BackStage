@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Input, Checkbox, message, Modal } from 'antd'
+import { Input, Checkbox, Modal, App } from 'antd'
 import { IdcardFilled, LockFilled } from '@ant-design/icons'
 import { adminLogin, resetPassword, manageCustomerService, getDepartmentsAndStaffs } from '@/apis'
 import { DEFAULT_REDIRECT_PATH } from '@/config'
@@ -32,8 +32,9 @@ const initManager = (): void => {
 }
 
 export default function LoginPage(): JSX.Element {
-  const [messageApi, contextHolder] = message.useMessage()
+  const { message } = App.useApp()
   const navigate = useNavigate()
+
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   /** 用户名 */
@@ -68,7 +69,7 @@ export default function LoginPage(): JSX.Element {
     adminLogin(user, password)
       .then(res => {
         if (res.code === 0) {
-          void messageApi.success({
+          void message.success({
             content: '登录成功'
           })
           const { admin_uuid: uuid, has_set_general_kf: isSet, jwt_token: token } = res.data
@@ -81,7 +82,7 @@ export default function LoginPage(): JSX.Element {
           }
           navigate(DEFAULT_REDIRECT_PATH)
         } else {
-          void messageApi.error({
+          void message.error({
             content: res.data
           })
         }
@@ -98,12 +99,12 @@ export default function LoginPage(): JSX.Element {
     resetPassword(user, encryptedPassword, newPassword)
       .then(res => {
         if (res.code === 0) {
-          void messageApi.success({
+          void message.success({
             content: '操作成功'
           })
           setIsModalOpen(false)
         } else {
-          void messageApi.error({
+          void message.error({
             content: res.data
           })
           setEncryptedPassword('')
@@ -117,12 +118,9 @@ export default function LoginPage(): JSX.Element {
 
   return (
     <>
-      {/* AntD Message 动态组件 */}
-      {contextHolder}
-
       {/* 背景图片 */}
       <div className="fixed inset-0 mx-auto my-0 p-0 w-screen h-screen">
-        <img src={bgImg as string} alt="" className="object-cover object-center w-full h-full" />
+        <img src={bgImg} alt="" className="object-cover object-center w-full h-full" />
       </div>
 
       {/* 重设密码表单 */}

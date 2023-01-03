@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Form, message, Modal, Table } from 'antd'
+import { App, Button, Form, Modal, Table } from 'antd'
 import CustomerServiceSelector from '@/components/CustomerServiceSelector'
 import { getAllProductModels, getSingleServer, manageCustomerService, removeCustomerService } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
@@ -11,7 +11,7 @@ interface ProductModelWithServer extends ProductModel {
 }
 
 export default function CustomerServiceManage(): JSX.Element {
-  const [messageApi, contextHolder] = message.useMessage()
+  const { message } = App.useApp()
 
   /** 所有产品列表 */
   const [allProducts, setAllProducts] = useState<ProductModelWithServer[]>([])
@@ -50,7 +50,7 @@ export default function CustomerServiceManage(): JSX.Element {
             }, 250)
           })
         } else {
-          void messageApi.error({
+          void message.error({
             content: res.data
           })
         }
@@ -92,12 +92,12 @@ export default function CustomerServiceManage(): JSX.Element {
           const res = await manageCustomerService(product.model_id, services)
           console.log(res)
           if (res.code === 0) {
-            void messageApi.success({
+            void message.success({
               content: '修改成功'
             })
             void loadAllProductModels()
           } else {
-            void messageApi.error({
+            void message.error({
               content: res.data
             })
           }
@@ -122,12 +122,12 @@ export default function CustomerServiceManage(): JSX.Element {
       onOk: async () => {
         const res = await removeCustomerService(product.model_id)
         if (res.code === 0) {
-          void messageApi.success({
+          void message.success({
             content: '删除成功'
           })
           void loadAllProductModels()
         } else {
-          void messageApi.error({
+          void message.error({
             content: res.data
           })
         }
@@ -137,9 +137,6 @@ export default function CustomerServiceManage(): JSX.Element {
 
   return (
     <>
-      {/* AntD Message 动态组件 */}
-      {contextHolder}
-
       {/* 产品信息表格 */}
       <Table
         dataSource={products}

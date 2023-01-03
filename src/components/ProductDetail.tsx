@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Form, Input, message, Modal, Table } from 'antd'
+import { Button, Form, Input, Modal, Table, App } from 'antd'
 import { getProductModelByType, removeProductModel, removeSingleServer, updateProductModel } from '@/apis'
 import type ProductModel from '@/model/product_model'
 
@@ -12,7 +12,7 @@ const { Column } = Table
 const DEFAULT_PAGE_SIZE = 10
 
 export default function ProductDetail(props: ProductDetailProps): JSX.Element {
-  const [messageApi, messageContextHolder] = message.useMessage()
+  const { message } = App.useApp()
 
   const [products, setProducts] = useState<ProductModel[]>([])
   const [isLoading, setLoading] = useState(false)
@@ -32,7 +32,7 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
         setProducts(res.data)
         setTotal(res.data.length)
       } else {
-        void messageApi.error({
+        void message.error({
           content: res.data
         })
       }
@@ -62,12 +62,12 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
       onOk: async () => {
         const res = await updateProductModel(product.model_id, name, product.type_id)
         if (res.code === 0) {
-          void messageApi.success({
+          void message.success({
             content: '更新成功'
           })
           void loadProductModels()
         } else {
-          void messageApi.error({
+          void message.error({
             content: res.data
           })
         }
@@ -87,12 +87,12 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
         removeProductModel(product.model_id)
           .then(res => {
             if (res.code === 0) {
-              void messageApi.success({
+              void message.success({
                 content: '删除成功'
               })
               void loadProductModels()
             } else {
-              void messageApi.error({
+              void message.error({
                 content: res.data
               })
             }
@@ -103,12 +103,12 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
         removeSingleServer(product.model_id)
           .then(res => {
             if (res.code === 0) {
-              void messageApi.success({
+              void message.success({
                 content: '删除成功'
               })
               void loadProductModels()
             } else {
-              void messageApi.error({
+              void message.error({
                 content: res.data
               })
             }
@@ -122,9 +122,6 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
 
   return (
     <>
-      {/* AntD Message 动态组件 */}
-      {messageContextHolder}
-
       {/* 产品类型列表 */}
       <Table
         dataSource={products}

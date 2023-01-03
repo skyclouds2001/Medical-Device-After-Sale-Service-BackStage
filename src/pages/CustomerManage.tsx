@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { message, Table, Button, Modal } from 'antd'
+import { Table, Button, Modal, App } from 'antd'
 import { getCustomerInfo, updateCustomerInfo, removeCustomerInfo, addCustomerInfo } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import AddCustomer from '@/components/AddCustomer'
@@ -7,7 +7,7 @@ import EditCustomer from '@/components/EditCustomer'
 import type Customer from '@/model/customer'
 
 export default function CustomerManage(): JSX.Element {
-  const [messageApi, contextHolder] = message.useMessage()
+  const { message } = App.useApp()
 
   /** 添加客户表单 ref 引用 */
   const addRef = useRef<ReturnType<typeof AddCustomer>>(null)
@@ -44,7 +44,7 @@ export default function CustomerManage(): JSX.Element {
         setCustomers(res.data.customer_list)
         if (isFirst) setTotal(res.data.total_num)
       } else {
-        void messageApi.error({
+        void message.error({
           content: res.data
         })
       }
@@ -76,13 +76,13 @@ export default function CustomerManage(): JSX.Element {
         try {
           const res = await addCustomerInfo(cus.company, cus.name, cus.mobile)
           if (res.code === 0) {
-            void messageApi.success({
+            void message.success({
               content: '更新成功'
             })
             void loadCustomer(false, pageNum)
             setTotal(total + 1)
           } else {
-            void messageApi.error({
+            void message.error({
               content: res.data
             })
           }
@@ -114,12 +114,12 @@ export default function CustomerManage(): JSX.Element {
         try {
           const res = await updateCustomerInfo(cus.company, customer.customer_id, cus.name, cus.mobile)
           if (res.code === 0) {
-            void messageApi.success({
+            void message.success({
               content: '更新成功'
             })
             void loadCustomer(false, pageNum)
           } else {
-            void messageApi.error({
+            void message.error({
               content: res.data
             })
           }
@@ -144,13 +144,13 @@ export default function CustomerManage(): JSX.Element {
       onOk: async () => {
         const res = await removeCustomerInfo(customer.customer_id)
         if (res.code === 0) {
-          void messageApi.success({
+          void message.success({
             content: '删除成功'
           })
           void loadCustomer(false, pageNum)
           setTotal(total - 1)
         } else {
-          void messageApi.error({
+          void message.error({
             content: res.data
           })
         }
@@ -160,9 +160,6 @@ export default function CustomerManage(): JSX.Element {
 
   return (
     <>
-      {/* AntD Message 动态组件 */}
-      {contextHolder}
-
       {/* 添加客户信息按钮区域 */}
       <div className="my-5 text-right" style={{ width: '800px' }}>
         <Button className="text-blue-500" type="primary" onClick={() => addCustomer()}>

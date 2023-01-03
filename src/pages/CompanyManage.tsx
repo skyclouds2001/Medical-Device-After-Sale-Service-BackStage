@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { message, Table, Button, Modal, Form, Input } from 'antd'
+import { Table, Button, Modal, Form, Input, App } from 'antd'
 import { getCompanyInfo, addCompanyInfo, updateCompanyInfo, removeCompanyInfo } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type Company from '@/model/company'
 
 export default function CompanyManage(): JSX.Element {
-  const [messageApi, contextHolder] = message.useMessage()
+  const { message } = App.useApp()
 
   /** 企业列表 */
   const [company, setCompany] = useState<Company[]>([])
@@ -37,7 +37,7 @@ export default function CompanyManage(): JSX.Element {
         setCompany(res.data.company_list)
         if (isFirst) setTotal(res.data.total_num)
       } else {
-        void messageApi.error({
+        void message.error({
           content: res.data
         })
       }
@@ -71,13 +71,13 @@ export default function CompanyManage(): JSX.Element {
         try {
           const res = await addCompanyInfo(name)
           if (res.code === 0) {
-            void messageApi.success({
+            void message.success({
               content: '添加成功'
             })
             void loadCompany(false, pageNum)
             setTotal(total + 1)
           } else {
-            void messageApi.error({
+            void message.error({
               content: res.data
             })
           }
@@ -111,12 +111,12 @@ export default function CompanyManage(): JSX.Element {
         try {
           const res = await updateCompanyInfo(company.company_id, name)
           if (res.code === 0) {
-            void messageApi.success({
+            void message.success({
               content: '更新成功'
             })
             void loadCompany(false, pageNum)
           } else {
-            void messageApi.error({
+            void message.error({
               content: res.data
             })
           }
@@ -141,13 +141,13 @@ export default function CompanyManage(): JSX.Element {
       onOk: async () => {
         const res = await removeCompanyInfo(company.company_id)
         if (res.code === 0) {
-          void messageApi.success({
+          void message.success({
             content: '删除成功'
           })
           void loadCompany(false, pageNum)
           setTotal(total - 1)
         } else {
-          void messageApi.error({
+          void message.error({
             content: res.data
           })
         }
@@ -157,9 +157,6 @@ export default function CompanyManage(): JSX.Element {
 
   return (
     <>
-      {/* AntD Message 动态组件 */}
-      {contextHolder}
-
       {/* 添加企业信息按钮区域 */}
       <div className="my-5 text-right" style={{ width: '400px' }}>
         <Button className="text-blue-500" type="primary" onClick={() => addCompany()}>

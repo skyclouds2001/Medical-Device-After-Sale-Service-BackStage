@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, message, Table, Modal, Form, Input, Select } from 'antd'
+import { Button, Table, Modal, Form, Input, Select, App } from 'antd'
 import ProductDetail from '@/components/ProductDetail'
 import { addProductModel, addProductType, getAllProductTypes, getDepartmentsAndStaffs, manageCustomerService, removeCustomerService, removeProductType, updateProductType } from '@/apis'
 import type ProductType from '@/model/product_type'
@@ -8,7 +8,7 @@ import type User from '@/model/user'
 const DEFAULT_PAGE_SIZE = 10
 
 export default function ProductManage(): JSX.Element {
-  const [messageApi, messageContextHolder] = message.useMessage()
+  const { message } = App.useApp()
 
   const [productTypes, setProductTypes] = useState<ProductType[]>([])
   const [isLoading, setLoading] = useState(false)
@@ -28,7 +28,7 @@ export default function ProductManage(): JSX.Element {
       if (res.code === 0) {
         setProductTypes(res.data)
       } else {
-        void messageApi.error({
+        void message.error({
           content: res.data
         })
       }
@@ -59,12 +59,12 @@ export default function ProductManage(): JSX.Element {
         try {
           const res = await addProductType(name)
           if (res.code === 0) {
-            void messageApi.success({
+            void message.success({
               content: '添加成功'
             })
             void loadProductTypes()
           } else {
-            void messageApi.error({
+            void message.error({
               content: res.data
             })
           }
@@ -122,11 +122,11 @@ export default function ProductManage(): JSX.Element {
         addProductModel(name, id)
           .then(res => {
             if (res.code === 0) {
-              void messageApi.success({
+              void message.success({
                 content: '添加成功'
               })
             } else {
-              void messageApi.error({
+              void message.error({
                 content: res.data
               })
             }
@@ -137,11 +137,11 @@ export default function ProductManage(): JSX.Element {
         manageCustomerService(id, service)
           .then(res => {
             if (res.code === 0) {
-              void messageApi.success({
+              void message.success({
                 content: '添加成功'
               })
             } else {
-              void messageApi.error({
+              void message.error({
                 content: res.data
               })
             }
@@ -171,12 +171,12 @@ export default function ProductManage(): JSX.Element {
       onOk: async () => {
         const res = await updateProductType(type.type_id, name)
         if (res.code === 0) {
-          void messageApi.success({
+          void message.success({
             content: '更新成功'
           })
           void loadProductTypes()
         } else {
-          void messageApi.error({
+          void message.error({
             content: res.data
           })
         }
@@ -196,12 +196,12 @@ export default function ProductManage(): JSX.Element {
         removeProductType(product.type_id)
           .then(res => {
             if (res.code === 0) {
-              void messageApi.success({
+              void message.success({
                 content: '删除成功'
               })
               void loadProductTypes()
             } else {
-              void messageApi.error({
+              void message.error({
                 content: res.data
               })
             }
@@ -212,12 +212,12 @@ export default function ProductManage(): JSX.Element {
         removeCustomerService(product.type_id)
           .then(res => {
             if (res.code === 0) {
-              void messageApi.success({
+              void message.success({
                 content: '删除成功'
               })
               void loadProductTypes()
             } else {
-              void messageApi.error({
+              void message.error({
                 content: res.data
               })
             }
@@ -231,9 +231,6 @@ export default function ProductManage(): JSX.Element {
 
   return (
     <>
-      {/* AntD Message 动态组件 */}
-      {messageContextHolder}
-
       {/* 添加产品及大类按钮区域 */}
       <div className="my-5 text-right" style={{ width: '500px' }}>
         <Button className="text-blue-500" type="primary" onClick={() => addProductModels()}>
