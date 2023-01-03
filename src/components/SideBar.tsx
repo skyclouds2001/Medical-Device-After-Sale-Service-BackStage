@@ -1,24 +1,36 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Menu } from 'antd'
+import { UserOutlined, ProjectOutlined, CustomerServiceOutlined, SettingOutlined, FormOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 
 const items: MenuProps['items'] = [
   {
     label: '客户管理',
-    key: 'customer'
-  },
-  {
-    label: '企业管理',
-    key: 'company'
+    key: '/customer',
+    icon: <SettingOutlined />,
+    children: [
+      {
+        label: '用户管理',
+        key: '/customer/user',
+        icon: <UserOutlined />
+      },
+      {
+        label: '企业管理',
+        key: '/customer/company',
+        icon: <FormOutlined />
+      }
+    ]
   },
   {
     label: '客服管理',
-    key: 'service'
+    key: '/service',
+    icon: <CustomerServiceOutlined />
   },
   {
     label: '产品管理',
-    key: 'product'
+    key: '/product',
+    icon: <ProjectOutlined />
   }
 ]
 
@@ -28,7 +40,7 @@ export default function SideBar(): JSX.Element {
 
   return (
     <>
-      <Menu theme="dark" defaultSelectedKeys={[location.pathname.replaceAll('/', '')]} items={items} onClick={e => navigate(`/${e.key}`)} />
+      <Menu theme="dark" mode="inline" defaultOpenKeys={['/customer']} defaultSelectedKeys={[location.pathname]} items={items} onClick={e => navigate(e.key)} />
     </>
   )
 }
