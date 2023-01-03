@@ -1,5 +1,5 @@
 import instance from '@/network'
-import type Network from '@/model/network'
+import type Response from '@/model/response'
 import type Customer from '@/model/customer'
 
 /**
@@ -17,8 +17,8 @@ interface GetCustomerInfoResponse {
  * @param isFirstQuery 是否是第一次查询
  * @param pageNum 页码，每页10条数据，页码从1开始
  */
-export const getCustomerInfo = async (isFirstQuery: boolean, pageNum: number): Promise<Network<GetCustomerInfoResponse>> => {
-  const res = await instance.get<Network<GetCustomerInfoResponse>>(`/wizz/aftersale/account/customer/query/${isFirstQuery.toString()}/${pageNum}`)
+export const getCustomerInfo = async (isFirstQuery: boolean, pageNum: number): Promise<Response<GetCustomerInfoResponse>> => {
+  const res = await instance.get<Response<GetCustomerInfoResponse>>(`/wizz/aftersale/account/customer/query/${isFirstQuery.toString()}/${pageNum}`)
   return res.data
 }
 
@@ -28,8 +28,8 @@ export const getCustomerInfo = async (isFirstQuery: boolean, pageNum: number): P
  * @param customerName 客户名称
  * @param mobile 客户手机号
  */
-export const addCustomerInfo = async (companyId: number, customerName: string, mobile: string): Promise<Network<void>> => {
-  const res = await instance.post<Network<void>>(`/wizz/aftersale/account/customer/add`, {
+export const addCustomerInfo = async (companyId: number, customerName: string, mobile: string): Promise<Response<void>> => {
+  const res = await instance.post<Response<void>>(`/wizz/aftersale/account/customer/add`, {
     company_id: companyId,
     customer_name: customerName,
     mobile
@@ -44,8 +44,8 @@ export const addCustomerInfo = async (companyId: number, customerName: string, m
  * @param customerName 修改后的客户名称
  * @param mobile 修改后的客户手机号
  */
-export const updateCustomerInfo = async (companyId: number, customerId: number, customerName: string, mobile: string): Promise<Network<void>> => {
-  const res = await instance.put<Network<void>>('/wizz/aftersale/account/customer/update', {
+export const updateCustomerInfo = async (companyId: number, customerId: number, customerName: string, mobile: string): Promise<Response<void>> => {
+  const res = await instance.put<Response<void>>('/wizz/aftersale/account/customer/update', {
     company_id: companyId,
     customer_id: customerId,
     customer_name: customerName,
@@ -58,7 +58,7 @@ export const updateCustomerInfo = async (companyId: number, customerId: number, 
  * 删除客户信息接口
  * @param customerId 客户id
  */
-export const removeCustomerInfo = async (customerId: number): Promise<Network<void>> => {
-  const res = await instance.delete<Network<void>>(`/wizz/aftersale/account/customer/delete/${customerId}`)
+export const removeCustomerInfo = async (customerId: number): Promise<Response<void>> => {
+  const res = await instance.delete<Response<void>>(`/wizz/aftersale/account/customer/delete/${customerId}`)
   return res.data
 }

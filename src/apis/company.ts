@@ -1,5 +1,5 @@
 import instance from '@/network'
-import type Network from '@/model/network'
+import type Response from '@/model/response'
 import type Company from '@/model/company'
 
 /**
@@ -17,8 +17,8 @@ interface GetCompanyInfoResponse {
  * @param isFirstQuery 是否是第一次查询
  * @param pageNum 页码，每页10条数据，页码从1开始
  */
-export const getCompanyInfo = async (isFirstQuery: boolean, pageNum: number): Promise<Network<GetCompanyInfoResponse>> => {
-  const res = await instance.get<Network<GetCompanyInfoResponse>>(`/wizz/aftersale/account/company/query/${isFirstQuery.toString()}/${pageNum}`)
+export const getCompanyInfo = async (isFirstQuery: boolean, pageNum: number): Promise<Response<GetCompanyInfoResponse>> => {
+  const res = await instance.get<Response<GetCompanyInfoResponse>>(`/wizz/aftersale/account/company/query/${isFirstQuery.toString()}/${pageNum}`)
   return res.data
 }
 
@@ -26,8 +26,8 @@ export const getCompanyInfo = async (isFirstQuery: boolean, pageNum: number): Pr
  * 添加企业信息接口
  * @param companyName 企业名称
  */
-export const addCompanyInfo = async (companyName: string): Promise<Network<void>> => {
-  const res = await instance.post<Network<void>>('/wizz/aftersale/account/company/add', {
+export const addCompanyInfo = async (companyName: string): Promise<Response<void>> => {
+  const res = await instance.post<Response<void>>('/wizz/aftersale/account/company/add', {
     company_name: companyName
   })
   return res.data
@@ -38,8 +38,8 @@ export const addCompanyInfo = async (companyName: string): Promise<Network<void>
  * @param companyId 要修改的企业id
  * @param companyName 修改后的企业名称
  */
-export const updateCompanyInfo = async (companyId: number, companyName: string): Promise<Network<void>> => {
-  const res = await instance.put<Network<void>>('/wizz/aftersale/account/company/update', {
+export const updateCompanyInfo = async (companyId: number, companyName: string): Promise<Response<void>> => {
+  const res = await instance.put<Response<void>>('/wizz/aftersale/account/company/update', {
     company_id: companyId,
     company_name: companyName
   })
@@ -50,8 +50,8 @@ export const updateCompanyInfo = async (companyId: number, companyName: string):
  * 删除企业信息接口
  * @param companyId 企业id
  */
-export const removeCompanyInfo = async (companyId: number): Promise<Network<void>> => {
-  const res = await instance.delete<Network<void>>(`/wizz/aftersale/account/company/delete/${companyId}`)
+export const removeCompanyInfo = async (companyId: number): Promise<Response<void>> => {
+  const res = await instance.delete<Response<void>>(`/wizz/aftersale/account/company/delete/${companyId}`)
   return res.data
 }
 
