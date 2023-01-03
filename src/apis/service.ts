@@ -1,4 +1,4 @@
-import instance from '@/service'
+import instance from '@/network'
 import type Network from '@/model/network'
 import type Service from '@/model/service'
 import type Department from '@/model/department'

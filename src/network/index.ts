@@ -2,6 +2,8 @@ import axios from 'axios'
 import { BASE_URL, NETWORK_TIMEOUT } from '@/config'
 import Storage from '@/utils/storage'
 
+const WHITE_LIST = ['/wizz/aftersale/account/admin/login', '/wizz/aftersale/account/admin/resetPassword']
+
 const instance = axios.create({
   baseURL: BASE_URL,
   timeout: NETWORK_TIMEOUT,
@@ -10,12 +12,8 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
-    const token = Storage.getItem<string>('token')
-    if (token != null && config.url != null && !['/wizz/aftersale/account/admin/login', '/wizz/aftersale/account/admin/resetPassword'].includes(config.url)) {
-      config.headers = {
-        ...config.headers,
-        Authorization: token
-      }
+    if (!WHITE_LIST.includes(config.url ?? '')) {
+      Object.defineProperty(config.headers, 'Authorization', Storage.getItem<string>('token') ?? '')
     }
     return config
   },
