@@ -52,7 +52,7 @@ export default function LoginPage(): JSX.Element {
     const configs = Storage.getItem<LoginStorage>('login')
     if (configs != null) {
       setUser(configs.user)
-      setPassword(configs.password ?? '')
+      setPassword(configs.remember ? configs.password ?? '' : '')
       setRemember(configs.remember)
     }
   }, [])
