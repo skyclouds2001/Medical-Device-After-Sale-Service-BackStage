@@ -10,6 +10,18 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*", ".eslintrc.js", ".prettierrc.js", ".commitlintrc.js", ".lintstagedrc.js"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src/**/*",
+    ".eslintrc.js",
+    ".prettierrc.js",
+    ".stylelintrc.js",
+    ".postcssrc.js",
+    "tailwind.config.js",
+    ".commitlintrc.js",
+    ".lintstagedrc.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
