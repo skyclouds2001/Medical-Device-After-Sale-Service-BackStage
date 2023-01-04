@@ -7,7 +7,7 @@ import type User from '@/model/user'
 
 const DEFAULT_PAGE_SIZE = 10
 
-export default function ProductManage(): JSX.Element {
+const ProductManage: React.FC = () => {
   const { message } = App.useApp()
 
   const [productTypes, setProductTypes] = useState<ProductType[]>([])
@@ -289,3 +289,5 @@ export default function ProductManage(): JSX.Element {
     </>
   )
 }
+
+export default ProductManage

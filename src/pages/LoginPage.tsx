@@ -31,7 +31,7 @@ const initManager = (): void => {
     })
 }
 
-export default function LoginPage(): JSX.Element {
+const LoginPage: React.FC = () => {
   const { message } = App.useApp()
   const navigate = useNavigate()
 
@@ -160,3 +160,5 @@ export default function LoginPage(): JSX.Element {
     </>
   )
 }
+
+export default LoginPage

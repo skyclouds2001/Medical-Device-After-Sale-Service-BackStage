@@ -10,7 +10,7 @@ interface ProductModelWithServer extends ProductModel {
   services?: Service[]
 }
 
-export default function CustomerServiceManage(): JSX.Element {
+const CustomerServiceManage: React.FC = () => {
   const { message } = App.useApp()
 
   /** 所有产品列表 */
@@ -186,3 +186,5 @@ export default function CustomerServiceManage(): JSX.Element {
     </>
   )
 }
+
+export default CustomerServiceManage

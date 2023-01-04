@@ -4,7 +4,7 @@ import { getCompanyInfo, addCompanyInfo, updateCompanyInfo, removeCompanyInfo } 
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type Company from '@/model/company'
 
-export default function CompanyManage(): JSX.Element {
+const CompanyManage: React.FC = () => {
   const { message } = App.useApp()
 
   /** 企业列表 */
@@ -199,3 +199,5 @@ export default function CompanyManage(): JSX.Element {
     </>
   )
 }
+
+export default CompanyManage
