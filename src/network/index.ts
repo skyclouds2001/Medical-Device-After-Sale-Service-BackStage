@@ -1,9 +1,7 @@
 import axios from 'axios'
 import type { AxiosHeaders } from 'axios'
-import { BASE_URL, NETWORK_TIMEOUT } from '@/config'
+import { BASE_URL, NETWORK_TIMEOUT, WHITE_LIST } from '@/config'
 import Storage from '@/utils/storage'
-
-const WHITE_LIST = ['/wizz/aftersale/account/admin/login', '/wizz/aftersale/account/admin/resetPassword']
 
 const instance = axios.create({
   baseURL: BASE_URL,

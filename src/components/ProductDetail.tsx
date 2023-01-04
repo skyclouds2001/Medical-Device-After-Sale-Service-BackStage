@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Input, Modal, Table, App } from 'antd'
 import { getProductModelByType, removeProductModel, removeSingleServer, updateProductModel } from '@/apis'
+import { DEFAULT_PAGE_SIZE } from '@/config'
 import type ProductModel from '@/model/product_model'
 
 interface ProductDetailProps {
@@ -8,8 +9,6 @@ interface ProductDetailProps {
 }
 
 const { Column } = Table
-
-const DEFAULT_PAGE_SIZE = 10
 
 export default function ProductDetail(props: ProductDetailProps): JSX.Element {
   const { message } = App.useApp()

@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Button, Table, Modal, Form, Input, Select, App } from 'antd'
 import ProductDetail from '@/components/ProductDetail'
 import { addProductModel, addProductType, getAllProductTypes, getDepartmentsAndStaffs, manageCustomerService, removeCustomerService, removeProductType, updateProductType } from '@/apis'
+import { DEFAULT_PAGE_SIZE } from '@/config'
 import type ProductType from '@/model/product_type'
 import type User from '@/model/user'
-
-const DEFAULT_PAGE_SIZE = 10
 
 const ProductManage: React.FC = () => {
   const { message } = App.useApp()
