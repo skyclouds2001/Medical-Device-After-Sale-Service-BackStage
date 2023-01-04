@@ -1,36 +1,30 @@
 import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { Breadcrumb, Layout, theme } from 'antd'
+import { Breadcrumb, Layout } from 'antd'
 import SideBar from '@/components/SideBar'
 
-const { Header, Content, Footer, Sider } = Layout
-
 const BasePage: React.FC = () => {
-  const {
-    token: { colorBgContainer }
-  } = theme.useToken()
-
   const [collapsed, setCollapsed] = useState(false)
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
-        <div style={{ height: 32, margin: 16, background: 'rgba(255, 255, 255, 0.2)' }} />
+    <Layout className="min-h-screen">
+      <Layout.Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
+        <div className="h-8 m-4 bg-[#FFFFFF33]" />
         <SideBar />
-      </Sider>
+      </Layout.Sider>
       <Layout className="site-layout">
-        <Header style={{ padding: 0, background: colorBgContainer }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
+        <Layout.Header style={{ padding: 0, backgroundColor: 'white' }}>
+          <Breadcrumb className="p-4">
+            <Breadcrumb.Item>客服工单系统</Breadcrumb.Item>
+            <Breadcrumb.Item>TODO</Breadcrumb.Item>
           </Breadcrumb>
-        </Header>
-        <Content style={{ margin: '0 16px' }}>
-          <div style={{ padding: 24, minHeight: 360, background: colorBgContainer }}>
+        </Layout.Header>
+        <Layout.Content className="m-4">
+          <div className="min-h-[400px] p-6 bg-white">
             <Outlet />
           </div>
-        </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        </Layout.Content>
+        <Layout.Footer className="text-center">Wizz Studio © 2022-PRESENT &nbsp;&nbsp;&nbsp;&nbsp; Created by skyclouds2001</Layout.Footer>
       </Layout>
     </Layout>
   )
