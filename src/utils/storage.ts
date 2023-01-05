@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { lowerCase } from 'lodash'
+import { lowerCase } from 'lodash-es'
 import CryptoJS from 'crypto-js'
 import { APPLICATION_NAME, APPLICATION_VERSION } from '@/config'
 
