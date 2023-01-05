@@ -49,7 +49,7 @@ const LoginPage: React.FC = () => {
   const [encryptedPassword, setEncryptedPassword] = useState('')
 
   useEffect(() => {
-    const configs = Storage.getItem<LoginStorage>('login')
+    const configs = Storage.getStorage('login') as LoginStorage
     if (configs != null) {
       setUser(configs.user)
       setPassword(configs.remember ? configs.password ?? '' : '')
@@ -73,10 +73,10 @@ const LoginPage: React.FC = () => {
             content: '登录成功'
           })
           const { admin_uuid: uuid, has_set_general_kf: isSet, jwt_token: token } = res.data
-          Storage.setItem('login', configs)
-          Storage.setItem('uuid', uuid)
+          Storage.setStorage('login', configs, Infinity)
+          Storage.setStorage('uuid', uuid, Infinity)
           if (configs.remember) configs.password = undefined
-          Storage.setItem('token', token)
+          Storage.setStorage('token', token, Infinity)
           if (!isSet) {
             initManager()
           }

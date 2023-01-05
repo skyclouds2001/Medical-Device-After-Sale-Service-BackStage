@@ -14,7 +14,7 @@ instance.interceptors.request.use(
     if (!WHITE_LIST.includes(config.url ?? '')) {
       config.headers = {
         ...config.headers,
-        Authorization: Storage.getItem<string>('token') ?? ''
+        Authorization: Storage.getStorage('token') ?? ''
       } as unknown as AxiosHeaders
     }
     return config

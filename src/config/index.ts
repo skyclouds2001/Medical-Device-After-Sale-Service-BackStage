@@ -1,3 +1,9 @@
+/** 应用名称 */
+export const APPLICATION_NAME = 'MedicalDeviceAfterSaleServiceBackstage'
+
+/** 应用版本 */
+export const APPLICATION_VERSION = '0.0.0'
+
 /** 网络请求HOST */
 export const BASE_URL = 'http://aftersale.divergentcloud.com'
 
