@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { Button, Table, Modal, Form, Input, Select, App } from 'antd'
 import ProductDetail from '@/components/ProductDetail'
 import { addProductModel, addProductType, getAllProductTypes, getDepartmentsAndStaffs, manageCustomerService, removeCustomerService, removeProductType, updateProductType } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type ProductType from '@/model/product_type'
 import type User from '@/model/user'
+import type { CustomAction } from '@/store'
 
 const ProductManage: React.FC = () => {
   const { message } = App.useApp()
+  const dispatch = useDispatch()
 
   const [productTypes, setProductTypes] = useState<ProductType[]>([])
   const [isLoading, setLoading] = useState(false)
@@ -17,6 +20,7 @@ const ProductManage: React.FC = () => {
   const [current, updateCurrent] = useState<ProductType>()
 
   useEffect(() => {
+    dispatch<CustomAction>({ type: 'title/update', title: '产品管理' })
     void loadProductTypes()
   }, [])
 

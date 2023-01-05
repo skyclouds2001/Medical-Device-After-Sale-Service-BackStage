@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { App, Button, Form, Modal, Table } from 'antd'
 import CustomerServiceSelector from '@/components/CustomerServiceSelector'
 import { getAllProductModels, getSingleServer, manageCustomerService, removeCustomerService } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type ProductModel from '@/model/product_model'
 import type Service from '@/model/service'
+import type { CustomAction } from '@/store'
 
 interface ProductModelWithServer extends ProductModel {
   services?: Service[]
@@ -12,6 +14,7 @@ interface ProductModelWithServer extends ProductModel {
 
 const CustomerServiceManage: React.FC = () => {
   const { message } = App.useApp()
+  const dispatch = useDispatch()
 
   /** 所有产品列表 */
   const [allProducts, setAllProducts] = useState<ProductModelWithServer[]>([])
@@ -25,6 +28,7 @@ const CustomerServiceManage: React.FC = () => {
   const [pageNum, setPageNum] = useState(1)
 
   useEffect(() => {
+    dispatch<CustomAction>({ type: 'title/update', title: '客服管理' })
     void loadAllProductModels()
   }, [])
 

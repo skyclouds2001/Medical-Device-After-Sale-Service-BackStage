@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { Table, Button, Modal, Form, Input, App } from 'antd'
 import { getCompanyInfo, addCompanyInfo, updateCompanyInfo, removeCompanyInfo } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type Company from '@/model/company'
+import type { CustomAction } from '@/store'
 
 const CompanyManage: React.FC = () => {
   const { message } = App.useApp()
+  const dispatch = useDispatch()
 
   /** 企业列表 */
   const [company, setCompany] = useState<Company[]>([])
@@ -17,6 +20,7 @@ const CompanyManage: React.FC = () => {
   const [pageNum, setPageNum] = useState(1)
 
   useEffect(() => {
+    dispatch<CustomAction>({ type: 'title/update', title: '企业管理' })
     void loadCompany(true, 1)
   }, [])
 

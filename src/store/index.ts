@@ -18,7 +18,6 @@ const defaultState: CustomState = {
 const reducer: CustomReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'title/update':
-      console.log(action)
       return { title: action.title }
     default:
       return state

@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
 import { Table, Button, Modal, App } from 'antd'
 import { getCustomerInfo, updateCustomerInfo, removeCustomerInfo, addCustomerInfo } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import AddCustomer from '@/components/AddCustomer'
 import EditCustomer from '@/components/EditCustomer'
 import type Customer from '@/model/customer'
+import type { CustomAction } from '@/store'
 
 const UserManage: React.FC = () => {
   const { message } = App.useApp()
+  const dispatch = useDispatch()
 
   /** 添加客户表单 ref 引用 */
   const addRef = useRef<ReturnType<typeof AddCustomer>>(null)
@@ -24,6 +27,7 @@ const UserManage: React.FC = () => {
   const [pageNum, setPageNum] = useState(1)
 
   useEffect(() => {
+    dispatch<CustomAction>({ type: 'title/update', title: '用户管理' })
     void loadCustomer(true, 1)
   }, [])
 
