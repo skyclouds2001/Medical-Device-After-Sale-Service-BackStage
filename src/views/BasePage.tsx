@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { Breadcrumb, Layout } from 'antd'
+import { Breadcrumb, Layout, Image } from 'antd'
 import SideBar from '@/components/SideBar'
+import logo from '@/assets/logo.png'
 import type { CustomState } from '@/store'
 
 const BasePage: React.FC = () => {
@@ -12,12 +13,14 @@ const BasePage: React.FC = () => {
   return (
     <Layout className="min-h-screen">
       <Layout.Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
-        <div className="h-8 m-4 bg-[#FFFFFF33]" />
+        <div className="h-8 m-4 overflow-hidden">
+          <Image src={logo} alt="" width="8em" height="2.5em" preview={false} />
+        </div>
         <SideBar />
       </Layout.Sider>
       <Layout className="site-layout">
         <Layout.Header style={{ padding: 0, backgroundColor: 'white' }}>
-          <Breadcrumb className="leading-[64px] px-4">
+          <Breadcrumb className="leading-[64px] px-4 select-none">
             <Breadcrumb.Item>客服工单系统</Breadcrumb.Item>
             <Breadcrumb.Item>{title}</Breadcrumb.Item>
           </Breadcrumb>
