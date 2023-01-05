@@ -35,7 +35,7 @@ const LoginPage: React.FC = () => {
   const { message } = App.useApp()
   const navigate = useNavigate()
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setModalOpen] = useState(false)
 
   /** 用户名 */
   const [user, setUser] = useState('')
@@ -45,7 +45,7 @@ const LoginPage: React.FC = () => {
   const [remember, setRemember] = useState(false)
   /** 新密码 */
   const [newPassword, setNewPassword] = useState('')
-  /** 新密码 */
+  /** 重设密文串 */
   const [encryptedPassword, setEncryptedPassword] = useState('')
 
   useEffect(() => {
@@ -73,13 +73,11 @@ const LoginPage: React.FC = () => {
             content: '登录成功'
           })
           const { admin_uuid: uuid, has_set_general_kf: isSet, jwt_token: token } = res.data
+          if (!configs.remember) configs.password = undefined
           Storage.setStorage('login', configs, Infinity)
           Storage.setStorage('uuid', uuid, Infinity)
-          if (configs.remember) configs.password = undefined
           Storage.setStorage('token', token, Infinity)
-          if (!isSet) {
-            initManager()
-          }
+          if (!isSet) initManager()
           navigate(DEFAULT_REDIRECT_PATH)
         } else {
           void message.error({
@@ -102,7 +100,7 @@ const LoginPage: React.FC = () => {
           void message.success({
             content: '操作成功'
           })
-          setIsModalOpen(false)
+          setModalOpen(false)
         } else {
           void message.error({
             content: res.data
@@ -124,7 +122,7 @@ const LoginPage: React.FC = () => {
       </div>
 
       {/* 重设密码表单 */}
-      <Modal title="重设密码" okButtonProps={{ className: 'text-black' }} open={isModalOpen} onOk={handleForgetPassword} onCancel={() => setIsModalOpen(false)}>
+      <Modal title="重设密码" okButtonProps={{ className: 'text-black' }} open={isModalOpen} onOk={handleForgetPassword} onCancel={() => setModalOpen(false)}>
         <Input className="rounded my-2.5" placeholder="请输入用户名" value={user} onChange={e => setUser(e.target.value)} />
         <Input className="rounded my-2.5" placeholder="请输入重设密文串" value={encryptedPassword} onChange={e => setEncryptedPassword(e.target.value)} />
         <Input className="rounded my-2.5" placeholder="请输入新密码" value={newPassword} onChange={e => setNewPassword(e.target.value)} />
@@ -152,7 +150,7 @@ const LoginPage: React.FC = () => {
           </button>
         </div>
         <div>
-          <p className="text-right cursor-pointer select-none" onClick={() => setIsModalOpen(true)} style={{ color: 'rgb(86, 107, 217)' }}>
+          <p className="text-right cursor-pointer select-none" onClick={() => setModalOpen(true)} style={{ color: 'rgb(86, 107, 217)' }}>
             忘记密码？
           </p>
         </div>
