@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { Breadcrumb, Layout } from 'antd'
 import SideBar from '@/components/SideBar'
+import type { CustomState } from '@/store'
 
 const BasePage: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false)
+  const title = useSelector<CustomState, CustomState['title']>(state => state.title)
 
   return (
     <Layout className="min-h-screen">
@@ -14,9 +17,9 @@ const BasePage: React.FC = () => {
       </Layout.Sider>
       <Layout className="site-layout">
         <Layout.Header style={{ padding: 0, backgroundColor: 'white' }}>
-          <Breadcrumb className="p-4">
+          <Breadcrumb className="leading-[64px] px-4">
             <Breadcrumb.Item>客服工单系统</Breadcrumb.Item>
-            <Breadcrumb.Item>TODO</Breadcrumb.Item>
+            <Breadcrumb.Item>{title}</Breadcrumb.Item>
           </Breadcrumb>
         </Layout.Header>
         <Layout.Content className="m-4">
