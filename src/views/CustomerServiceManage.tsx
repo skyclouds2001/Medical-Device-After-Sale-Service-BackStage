@@ -4,8 +4,7 @@ import { App, Button, Form, Modal, Table } from 'antd'
 import CustomerServiceSelector from '@/components/CustomerServiceSelector'
 import { getAllProductModels, getSingleServer, manageCustomerService, removeCustomerService } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
-import type ProductModel from '@/model/product_model'
-import type Service from '@/model/service'
+import type { ProductModel, Service } from '@/model'
 import type { CustomAction } from '@/store'
 
 interface ProductModelWithServer extends ProductModel {

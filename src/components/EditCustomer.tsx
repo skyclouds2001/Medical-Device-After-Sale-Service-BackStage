@@ -1,8 +1,7 @@
 import React, { useState, forwardRef, useImperativeHandle, useRef, useEffect } from 'react'
 import { Form, Input, Select } from 'antd'
-import type Customer from '@/model/customer'
 import { getAllCompanyInfo } from '@/apis'
-import type Company from '@/model/company'
+import type { Customer, Company } from '@/model'
 
 interface EditCustomerProps {
   customer: Customer

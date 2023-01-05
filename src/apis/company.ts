@@ -1,6 +1,5 @@
 import instance from '@/network'
-import type Response from '@/model/response'
-import type Company from '@/model/company'
+import type { Response, Company } from '@/model'
 
 /**
  * 查询企业信息接口返回数据结构

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Table, Button, Modal, Form, Input, App } from 'antd'
 import { getCompanyInfo, addCompanyInfo, updateCompanyInfo, removeCompanyInfo } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
-import type Company from '@/model/company'
+import type { Company } from '@/model'
 import type { CustomAction } from '@/store'
 
 const CompanyManage: React.FC = () => {

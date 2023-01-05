@@ -1,6 +1,5 @@
 import instance from '@/network'
-import type Response from '@/model/response'
-import type Customer from '@/model/customer'
+import type { Response, Customer } from '@/model'
 
 /**
  * 查询客户信息接口返回数据结构

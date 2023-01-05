@@ -5,7 +5,7 @@ import { getCustomerInfo, updateCustomerInfo, removeCustomerInfo, addCustomerInf
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import AddCustomer from '@/components/AddCustomer'
 import EditCustomer from '@/components/EditCustomer'
-import type Customer from '@/model/customer'
+import type { Customer } from '@/model'
 import type { CustomAction } from '@/store'
 
 const UserManage: React.FC = () => {

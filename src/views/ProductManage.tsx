@@ -4,8 +4,7 @@ import { Button, Table, Modal, Form, Input, Select, App } from 'antd'
 import ProductDetail from '@/components/ProductDetail'
 import { addProductModel, addProductType, getAllProductTypes, getDepartmentsAndStaffs, manageCustomerService, removeCustomerService, removeProductType, updateProductType } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
-import type ProductType from '@/model/product_type'
-import type User from '@/model/user'
+import type { ProductType, User } from '@/model'
 import type { CustomAction } from '@/store'
 
 const ProductManage: React.FC = () => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Form, Input, Modal, Table, App } from 'antd'
 import { getProductModelByType, removeProductModel, removeSingleServer, updateProductModel } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
-import type ProductModel from '@/model/product_model'
+import type { ProductModel } from '@/model'
 
 interface ProductDetailProps {
   id?: number

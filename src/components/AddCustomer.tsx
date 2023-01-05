@@ -1,7 +1,7 @@
 import React, { useState, forwardRef, useImperativeHandle, useRef, useEffect } from 'react'
 import { Form, Input, Select } from 'antd'
 import { getAllCompanyInfo } from '@/apis'
-import type Company from '@/model/company'
+import type { Company } from '@/model'
 
 interface AddCustomerProps {
   crf: ReturnType<typeof useRef>
