@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Button, Table, Modal, Form, Input, Select, App } from 'antd'
-import { addProductModel, addProductType, getAllProductTypes, getDepartmentsAndStaffs, manageCustomerService, removeCustomerService, removeProductType, updateProductType } from '@/apis'
+import { addProductModel, addProductType, getAllProductTypes, manageCustomerService, removeCustomerService, removeProductType, updateProductType } from '@/apis'
+import CustomerServiceSelector from '@/components/CustomerServiceSelector'
 import { DEFAULT_PAGE_SIZE } from '@/config'
-import type { ProductType, User } from '@/model'
+import type { ProductType } from '@/model'
 import type { CustomAction } from '@/store'
 
 const ProductManage: React.FC = () => {
@@ -77,15 +78,7 @@ const ProductManage: React.FC = () => {
   const addProductModels = (): void => {
     let name = ''
     let id = 0
-    let service: number[] = []
-    let services: User[] = []
-    getDepartmentsAndStaffs(0)
-      .then(res => {
-        services = res.data.element_list.filter(v => v.type === 'person') as User[]
-      })
-      .catch(err => {
-        console.error(err)
-      })
+    let services: number[] = []
     Modal.confirm({
       title: '添加产品',
       content: (
@@ -103,13 +96,7 @@ const ProductManage: React.FC = () => {
             </Select>
           </Form.Item>
           <Form.Item label="产品所属客服" name="service">
-            <Select className="rounded-sm mx-2" mode="multiple" allowClear placeholder="请选择产品所属客服" onChange={(value: number[]) => (service = value)}>
-              {services.map(v => (
-                <Select.Option key={v.user_id} value={v.user_id}>
-                  {v.user_name}
-                </Select.Option>
-              ))}
-            </Select>
+            <CustomerServiceSelector onSelect={v => (services = v)} />
           </Form.Item>
         </Form>
       ),
@@ -130,7 +117,7 @@ const ProductManage: React.FC = () => {
             })
           }
 
-          const res2 = await manageCustomerService(id, service)
+          const res2 = await manageCustomerService(id, services)
           if (res2.code === 0) {
             void message.success({
               content: '添加成功'

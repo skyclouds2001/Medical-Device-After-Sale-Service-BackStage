@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Button, Form, Input, Modal, Table, App } from 'antd'
-import { getProductModelByType, removeProductModel, removeSingleServer, updateProductModel } from '@/apis'
+import { addProductModel, getProductModelByType, manageCustomerService, removeProductModel, removeSingleServer, updateProductModel } from '@/apis'
+import CustomerServiceSelector from '@/components/CustomerServiceSelector'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductModel } from '@/model'
 
@@ -36,6 +37,55 @@ const ProductModelManage: React.FC = () => {
     } finally {
       setTimeout(() => setLoading(false), 250)
     }
+  }
+
+  const addProductModels = (): void => {
+    let name = ''
+    let services: number[] = []
+    Modal.confirm({
+      title: '添加产品',
+      content: (
+        <Form labelCol={{ span: 8 }} colon={false}>
+          <Form.Item label="产品名称" name="name">
+            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入产品名称" value={name} onChange={e => (name = e.target.value)} />
+          </Form.Item>
+          <Form.Item label="产品所属客服" name="service">
+            <CustomerServiceSelector onSelect={v => (services = v)} />
+          </Form.Item>
+        </Form>
+      ),
+      closable: true,
+      okButtonProps: {
+        className: 'text-blue-500'
+      },
+      onOk: async () => {
+        try {
+          const res1 = await addProductModel(name, parseInt(typeof id === 'string' ? id : '0'))
+          if (res1.code === 0) {
+            void message.success({
+              content: '添加成功'
+            })
+          } else {
+            void message.error({
+              content: res1.data
+            })
+          }
+
+          const res2 = await manageCustomerService(parseInt(typeof id === 'string' ? id : '0'), services)
+          if (res2.code === 0) {
+            void message.success({
+              content: '添加成功'
+            })
+          } else {
+            void message.error({
+              content: res2.data
+            })
+          }
+        } catch (err) {
+          console.error(err)
+        }
+      }
+    })
   }
 
   const editProductModel = (product: ProductModel): void => {
@@ -111,6 +161,13 @@ const ProductModelManage: React.FC = () => {
 
   return (
     <>
+      {/* 添加产品按钮区域 */}
+      <div className="my-5 text-right" style={{ width: '600px' }}>
+        <Button className="text-blue-500 hover:text-white" type="primary" onClick={() => addProductModels()}>
+          添加产品
+        </Button>
+      </div>
+
       {/* 产品类型列表 */}
       <Table
         dataSource={products}
