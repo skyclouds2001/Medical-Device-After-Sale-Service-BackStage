@@ -12,7 +12,7 @@ interface CustomerServiceSelectorProps {
   onSelect?: (value: number[]) => void
 }
 
-export default function CustomerServiceSelector(props: CustomerServiceSelectorProps): JSX.Element {
+const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props => {
   const [options, setOptions] = useState<Option[]>([])
 
   const transform = async (id: number): Promise<Option[]> => {
@@ -37,16 +37,20 @@ export default function CustomerServiceSelector(props: CustomerServiceSelectorPr
     return result
   }
 
-  useEffect(() => {
-    const initOptions = async (): Promise<void> => {
+  const initOptions = async (): Promise<void> => {
+    try {
       const options = await transform(0)
       setOptions(options)
+    } catch (err) {
+      console.error(err)
     }
+  }
 
+  useEffect(() => {
     void initOptions()
   }, [])
 
-  const onChange = (value: Array<Array<string | number>>): void => {
+  const handleOptionChange = (value: Array<Array<string | number>>): void => {
     props.onSelect?.(
       value
         .map(v => v.at(-1))
@@ -57,7 +61,9 @@ export default function CustomerServiceSelector(props: CustomerServiceSelectorPr
 
   return (
     <>
-      <Cascader options={options} onChange={onChange} placeholder="" multiple maxTagCount="responsive" />
+      <Cascader options={options} onChange={handleOptionChange} placeholder="" multiple maxTagCount="responsive" />
     </>
   )
 }
+
+export default CustomerServiceSelector

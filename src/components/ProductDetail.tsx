@@ -8,7 +8,7 @@ interface ProductDetailProps {
   id?: number
 }
 
-export default function ProductDetail(props: ProductDetailProps): JSX.Element {
+const ProductDetail: React.FC<ProductDetailProps> = props => {
   const { message } = App.useApp()
 
   const [products, setProducts] = useState<ProductModel[]>([])
@@ -153,3 +153,5 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
     </>
   )
 }
+
+export default ProductDetail

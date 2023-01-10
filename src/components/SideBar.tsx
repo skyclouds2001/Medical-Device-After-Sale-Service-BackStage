@@ -34,7 +34,7 @@ const items: MenuProps['items'] = [
   }
 ]
 
-export default function SideBar(): JSX.Element {
+const SideBar: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -44,3 +44,5 @@ export default function SideBar(): JSX.Element {
     </>
   )
 }
+
+export default SideBar
