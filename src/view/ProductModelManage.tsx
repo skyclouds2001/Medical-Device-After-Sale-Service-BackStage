@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Button, Form, Input, Modal, Table, App } from 'antd'
-import { addProductModel, getProductModelByType, manageCustomerService, removeProductModel, removeSingleServer, updateProductModel } from '@/apis'
-import CustomerServiceSelector from '@/components/CustomerServiceSelector'
+import { addProductModel, getProductModelByType, manageCustomerService, removeProductModel, removeSingleServer, updateProductModel } from '@/api'
+import CustomerServiceSelector from '@/component/CustomerServiceSelector'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductModel } from '@/model'
 

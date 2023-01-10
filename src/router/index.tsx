@@ -1,13 +1,13 @@
 import React from 'react'
 import { useRoutes } from 'react-router-dom'
-import BasePage from '@/views/BasePage'
-import LoginPage from '@/views/LoginPage'
-import ProductManage from '@/views/ProductManage'
-import ProductModelManage from '@/views/ProductModelManage'
-import UserManage from '@/views/UserManage'
-import CustomerServiceManage from '@/views/CustomerServiceManage'
-import CompanyManage from '@/views/CompanyManage'
-import CustomerManage from '@/views/CustomerManage'
+import BasePage from '@/view/BasePage'
+import LoginPage from '@/view/LoginPage'
+import ProductTypeManage from '@/view/ProductTypeManage'
+import ProductModelManage from '@/view/ProductModelManage'
+import UserManage from '@/view/UserManage'
+import CustomerServiceManage from '@/view/CustomerServiceManage'
+import CompanyManage from '@/view/CompanyManage'
+import CustomerManage from '@/view/CustomerManage'
 
 const Routes: React.FC = () => {
   return useRoutes([
@@ -39,7 +39,7 @@ const Routes: React.FC = () => {
         },
         {
           path: '/product',
-          element: <ProductManage />
+          element: <ProductTypeManage />
         },
         {
           path: '/product/model/:id',

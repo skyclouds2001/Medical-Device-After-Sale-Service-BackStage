@@ -1,7 +1,7 @@
 import axios from 'axios'
 import type { AxiosHeaders } from 'axios'
 import { BASE_URL, NETWORK_TIMEOUT, WHITE_LIST } from '@/config'
-import { Storage } from '@/utils'
+import { Storage } from '@/util'
 
 const instance = axios.create({
   baseURL: BASE_URL,

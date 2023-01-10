@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Input, Checkbox, Modal, App } from 'antd'
 import { IdcardFilled, LockFilled } from '@ant-design/icons'
-import { adminLogin, resetPassword, manageCustomerService, getDepartmentsAndStaffs } from '@/apis'
-import bgImg from '@/assets/bg-img-login.png'
+import { adminLogin, resetPassword, manageCustomerService, getDepartmentsAndStaffs } from '@/api'
+import bgImg from '@/asset/bg-img-login.png'
 import { DEFAULT_REDIRECT_PATH, SESSION_EXPIRE } from '@/config'
-import { Storage } from '@/utils'
+import { Storage } from '@/util'
 import type { LoginStorage } from '@/model'
 
 const LoginPage: React.FC = () => {

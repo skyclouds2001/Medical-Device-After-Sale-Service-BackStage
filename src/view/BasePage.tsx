@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Breadcrumb, Layout, Image } from 'antd'
-import SideBar from '@/components/SideBar'
-import logo from '@/assets/logo.png'
+import SideBar from '@/component/SideBar'
+import logo from '@/asset/logo.png'
 import type { CustomState } from '@/store'
 
 const BasePage: React.FC = () => {

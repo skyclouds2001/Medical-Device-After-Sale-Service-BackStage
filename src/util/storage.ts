@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { lowerCase } from 'lodash-es'
 import { APPLICATION_NAME, APPLICATION_VERSION } from '@/config'
-import { encrypt, decrypt } from '@/utils'
+import { encrypt, decrypt } from '@/util'
 
 const prefix = lowerCase(APPLICATION_NAME.replace(/[a-z]/g, '')) + '_' + APPLICATION_VERSION
 const storage = window.localStorage

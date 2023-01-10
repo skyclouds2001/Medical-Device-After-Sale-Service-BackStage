@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Cascader } from 'antd'
-import { getDepartmentsAndStaffs } from '@/apis'
+import { getDepartmentsAndStaffs } from '@/api'
 
 interface Option {
   value: number

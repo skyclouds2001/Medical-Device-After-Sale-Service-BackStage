@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Button, Table, Modal, Form, Input, Select, App } from 'antd'
-import { addProductModel, addProductType, getAllProductTypes, manageCustomerService, removeCustomerService, removeProductType, updateProductType } from '@/apis'
-import CustomerServiceSelector from '@/components/CustomerServiceSelector'
+import { addProductModel, addProductType, getAllProductTypes, manageCustomerService, removeCustomerService, removeProductType, updateProductType } from '@/api'
+import CustomerServiceSelector from '@/component/CustomerServiceSelector'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductType } from '@/model'
 import type { CustomAction } from '@/store'
 
-const ProductManage: React.FC = () => {
+const ProductTypeManage: React.FC = () => {
   const { message } = App.useApp()
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -255,4 +255,4 @@ const ProductManage: React.FC = () => {
   )
 }
 
-export default ProductManage
+export default ProductTypeManage

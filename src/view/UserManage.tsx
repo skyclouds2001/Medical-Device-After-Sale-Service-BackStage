@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { Table, Button, Modal, App } from 'antd'
-import { getCustomerInfo, addCustomerInfo, updateCustomerInfo, removeCustomerInfo } from '@/apis'
+import { getCustomerInfo, addCustomerInfo, updateCustomerInfo, removeCustomerInfo } from '@/api'
 import { DEFAULT_PAGE_SIZE } from '@/config'
-import AddCustomer from '@/components/AddCustomer'
-import EditCustomer from '@/components/EditCustomer'
+import AddCustomer from '@/component/AddCustomer'
+import EditCustomer from '@/component/EditCustomer'
 import type { Customer } from '@/model'
 import type { CustomAction } from '@/store'
 

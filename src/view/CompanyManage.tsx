@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Table, Button, Modal, Form, Input, App } from 'antd'
-import { getCompanyInfo, addCompanyInfo, updateCompanyInfo, removeCompanyInfo } from '@/apis'
+import { getCompanyInfo, addCompanyInfo, updateCompanyInfo, removeCompanyInfo } from '@/api'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { Company } from '@/model'
 import type { CustomAction } from '@/store'
