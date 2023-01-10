@@ -4,32 +4,9 @@ import { Input, Checkbox, Modal, App } from 'antd'
 import { IdcardFilled, LockFilled } from '@ant-design/icons'
 import { adminLogin, resetPassword, manageCustomerService, getDepartmentsAndStaffs } from '@/apis'
 import bgImg from '@/assets/bg-img-login.png'
-import { DEFAULT_REDIRECT_PATH } from '@/config'
+import { DEFAULT_REDIRECT_PATH, SESSION_EXPIRE } from '@/config'
 import Storage from '@/utils/storage'
 import type { LoginStorage } from '@/model'
-
-const initManager = (): void => {
-  getDepartmentsAndStaffs(0)
-    .then(res => {
-      console.log(res)
-      if (res.code === 0) {
-        const { element_list: lists } = res.data
-        const ids = lists.filter(v => v.type === 'person').map(v => (v.type === 'person' ? v.user_id : v.department_id))
-        manageCustomerService(-1, ids)
-          .then(res => {
-            console.log(res)
-          })
-          .catch(err => {
-            console.error(err)
-          })
-      } else {
-        throw new Error('', { cause: res })
-      }
-    })
-    .catch(err => {
-      console.error(err)
-    })
-}
 
 const LoginPage: React.FC = () => {
   const { message } = App.useApp()
@@ -49,13 +26,38 @@ const LoginPage: React.FC = () => {
   const [encryptedPassword, setEncryptedPassword] = useState('')
 
   useEffect(() => {
-    const configs = Storage.getStorage('login') as LoginStorage
+    const configs = Storage.getStorage<LoginStorage>('login')
     if (configs != null) {
       setUser(configs.user)
       setPassword(configs.remember ? configs.password ?? '' : '')
       setRemember(configs.remember)
     }
   }, [])
+
+  /** 初始化管理员方法 */
+  const initManager = async (): Promise<void> => {
+    try {
+      const res1 = await getDepartmentsAndStaffs(0)
+
+      if (res1.code !== 0) {
+        void message.error({
+          content: res1.data
+        })
+      }
+
+      const ids = res1.data.element_list.filter(v => v.type === 'person').map(v => (v.type === 'person' ? v.user_id : v.department_id))
+
+      const res2 = await manageCustomerService(-1, ids)
+
+      if (res2.code !== 0) {
+        void message.error({
+          content: res2.data
+        })
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   /**
    * 执行登录操作方法
@@ -74,10 +76,10 @@ const LoginPage: React.FC = () => {
           })
           const { admin_uuid: uuid, has_set_general_kf: isSet, jwt_token: token } = res.data
           if (!configs.remember) configs.password = undefined
-          Storage.setStorage('login', configs, Infinity)
-          Storage.setStorage('uuid', uuid, Infinity)
-          Storage.setStorage('token', token, Infinity)
-          if (!isSet) initManager()
+          Storage.setStorage('login', configs, +Infinity)
+          Storage.setStorage('uuid', uuid, SESSION_EXPIRE)
+          Storage.setStorage('token', token, SESSION_EXPIRE)
+          if (!isSet) void initManager()
           navigate(DEFAULT_REDIRECT_PATH)
         } else {
           void message.error({
