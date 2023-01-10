@@ -139,6 +139,7 @@ const CustomerServiceManage: React.FC = () => {
           pageSize: DEFAULT_PAGE_SIZE
         }}
         onChange={pagination => {
+          setPageNum(pagination.current ?? 1)
           void loadProductModels(allProducts, pagination.current)
         }}
         style={{ width: '800px' }}

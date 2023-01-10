@@ -5,7 +5,7 @@ import { IdcardFilled, LockFilled } from '@ant-design/icons'
 import { adminLogin, resetPassword, manageCustomerService, getDepartmentsAndStaffs } from '@/apis'
 import bgImg from '@/assets/bg-img-login.png'
 import { DEFAULT_REDIRECT_PATH, SESSION_EXPIRE } from '@/config'
-import Storage from '@/utils/storage'
+import { Storage } from '@/utils'
 import type { LoginStorage } from '@/model'
 
 const LoginPage: React.FC = () => {
