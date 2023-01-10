@@ -8,8 +8,6 @@ interface ProductDetailProps {
   id?: number
 }
 
-const { Column } = Table
-
 export default function ProductDetail(props: ProductDetailProps): JSX.Element {
   const { message } = App.useApp()
 
@@ -50,7 +48,7 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
       content: (
         <Form labelCol={{ span: 8 }} colon={false}>
           <Form.Item label="产品名称" name="name">
-            <Input className="rounded-xl mx-2" placeholder="请输入产品名称" value={name} onChange={e => (name = e.target.value)} />
+            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入产品名称" value={name} onChange={e => (name = e.target.value)} />
           </Form.Item>
         </Form>
       ),
@@ -134,9 +132,9 @@ export default function ProductDetail(props: ProductDetailProps): JSX.Element {
         }}
         onChange={pagination => setPageNum(pagination.current ?? 1)}
       >
-        <Column align="center" title="产品名称" dataIndex="model_name" key="model_name" />
-        <Column align="center" title="产品大类" dataIndex="type_name" key="type_name" />
-        <Column
+        <Table.Column align="center" title="产品名称" dataIndex="model_name" key="model_name" />
+        <Table.Column align="center" title="产品大类" dataIndex="type_name" key="type_name" />
+        <Table.Column
           align="center"
           title="操作"
           key="action"

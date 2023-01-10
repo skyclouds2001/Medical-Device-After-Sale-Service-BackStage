@@ -24,10 +24,6 @@ const CompanyManage: React.FC = () => {
     void loadCompany(true, 1)
   }, [])
 
-  useEffect(() => {
-    void loadCompany(false, pageNum)
-  }, [pageNum])
-
   /**
    * 加载企业信息
    * @param isFirst 是否首次加载
@@ -62,8 +58,8 @@ const CompanyManage: React.FC = () => {
       title: '添加企业信息',
       content: (
         <Form labelCol={{ span: 8 }} colon={false}>
-          <Form.Item label="产品大类名称" name="name">
-            <Input className="rounded-xl mx-2" placeholder="请输入企业名称" value={name} onChange={e => (name = e.target.value)} />
+          <Form.Item label="企业名称" name="name">
+            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入企业名称" value={name} onChange={e => (name = e.target.value)} />
           </Form.Item>
         </Form>
       ),
@@ -102,8 +98,8 @@ const CompanyManage: React.FC = () => {
       title: '修改企业信息',
       content: (
         <Form labelCol={{ span: 8 }} colon={false}>
-          <Form.Item label="产品大类名称" name="name">
-            <Input className="rounded-xl mx-2" placeholder="请输入企业名称" value={name} onChange={e => (name = e.target.value)} />
+          <Form.Item label="企业名称" name="name">
+            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入企业名称" value={name} onChange={e => (name = e.target.value)} />
           </Form.Item>
         </Form>
       ),
@@ -179,7 +175,10 @@ const CompanyManage: React.FC = () => {
           total,
           pageSize: DEFAULT_PAGE_SIZE
         }}
-        onChange={pagination => setPageNum(pagination.current ?? 1)}
+        onChange={pagination => {
+          setPageNum(pagination.current ?? 1)
+          void loadCompany(false, pageNum)
+        }}
         style={{ width: '400px' }}
       >
         <Table.Column width="200px" align="center" title="企业名称" dataIndex="company_name" key="company_name" />

@@ -49,7 +49,7 @@ const ProductManage: React.FC = () => {
       content: (
         <Form labelCol={{ span: 8 }} colon={false}>
           <Form.Item label="产品大类名称" name="name">
-            <Input className="rounded-xl mx-2" placeholder="请输入产品大类名称" value={name} onChange={e => (name = e.target.value)} />
+            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入产品大类名称" value={name} onChange={e => (name = e.target.value)} />
           </Form.Item>
         </Form>
       ),
@@ -94,7 +94,7 @@ const ProductManage: React.FC = () => {
       content: (
         <Form labelCol={{ span: 8 }} colon={false}>
           <Form.Item label="产品名称" name="name">
-            <Input className="rounded-xl mx-2" placeholder="请输入产品名称" value={name} onChange={e => (name = e.target.value)} />
+            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入产品名称" value={name} onChange={e => (name = e.target.value)} />
           </Form.Item>
           <Form.Item label="产品所属大类" name="type">
             <Select className="rounded-sm mx-2" placeholder="请选择产品所属大类" onChange={(value: number) => (id = value)}>
@@ -162,7 +162,7 @@ const ProductManage: React.FC = () => {
       content: (
         <Form labelCol={{ span: 8 }} colon={false}>
           <Form.Item label="产品大类名称" name="name">
-            <Input className="rounded-xl mx-2" placeholder="请输入产品大类名称" value={name} onChange={e => (name = e.target.value)} />
+            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入产品大类名称" value={name} onChange={e => (name = e.target.value)} />
           </Form.Item>
         </Form>
       ),

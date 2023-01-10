@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { Table, Button, Modal, App } from 'antd'
-import { getCustomerInfo, updateCustomerInfo, removeCustomerInfo, addCustomerInfo } from '@/apis'
+import { getCustomerInfo, addCustomerInfo, updateCustomerInfo, removeCustomerInfo } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import AddCustomer from '@/components/AddCustomer'
 import EditCustomer from '@/components/EditCustomer'
@@ -29,11 +29,8 @@ const UserManage: React.FC = () => {
   useEffect(() => {
     dispatch<CustomAction>({ type: 'title/update', title: '用户管理' })
     void loadCustomer(true, 1)
+    setPageNum(1)
   }, [])
-
-  useEffect(() => {
-    void loadCustomer(false, pageNum)
-  }, [pageNum])
 
   /**
    * 加载客户信息
@@ -182,7 +179,10 @@ const UserManage: React.FC = () => {
           total,
           pageSize: DEFAULT_PAGE_SIZE
         }}
-        onChange={pagination => setPageNum(pagination.current ?? 1)}
+        onChange={pagination => {
+          setPageNum(pagination.current ?? 1)
+          void loadCustomer(false, pagination.current ?? 1)
+        }}
         style={{ width: '800px' }}
       >
         <Table.Column width="200px" align="center" title="用户名称" dataIndex="customer_name" key="customer_name" />
