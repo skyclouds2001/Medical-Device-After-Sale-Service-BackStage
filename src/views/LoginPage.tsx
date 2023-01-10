@@ -76,9 +76,9 @@ const LoginPage: React.FC = () => {
           })
           const { admin_uuid: uuid, has_set_general_kf: isSet, jwt_token: token } = res.data
           if (!configs.remember) configs.password = undefined
-          Storage.setStorage('login', configs, +Infinity)
-          Storage.setStorage('uuid', uuid, SESSION_EXPIRE)
-          Storage.setStorage('token', token, SESSION_EXPIRE)
+          Storage.setStorage<string>('token', token, SESSION_EXPIRE)
+          Storage.setStorage<string>('uuid', uuid, SESSION_EXPIRE)
+          Storage.setStorage<LoginStorage>('login', configs, Number.MAX_VALUE)
           if (!isSet) void initManager()
           navigate(DEFAULT_REDIRECT_PATH)
         } else {

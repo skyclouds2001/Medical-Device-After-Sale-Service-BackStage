@@ -44,7 +44,7 @@ export const getStorage = <T = unknown>(key: string): T | null => {
 
   const data: Data = JSON.parse(decrypt(storage.getItem(s_key) as string))
 
-  if (data.expire + data.time <= Date.now()) {
+  if (data.expire + data.time > Date.now()) {
     return data.value
   } else {
     removeStorage(key)
