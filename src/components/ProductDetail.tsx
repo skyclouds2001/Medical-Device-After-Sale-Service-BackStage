@@ -72,7 +72,7 @@ const ProductDetail: React.FC<ProductDetailProps> = props => {
     })
   }
 
-  const removeProductDetail = (product: ProductModel): void => {
+  const deleteProductDetail = (product: ProductModel): void => {
     Modal.confirm({
       title: '警告',
       content: '确认移除当前产品？',
@@ -80,39 +80,34 @@ const ProductDetail: React.FC<ProductDetailProps> = props => {
       okButtonProps: {
         className: 'text-blue-500'
       },
-      onOk: () => {
-        removeProductModel(product.model_id)
-          .then(res => {
-            if (res.code === 0) {
-              void message.success({
-                content: '删除成功'
-              })
-              void loadProductModels()
-            } else {
-              void message.error({
-                content: res.data
-              })
-            }
-          })
-          .catch(err => {
-            console.error(err)
-          })
-        removeSingleServer(product.model_id)
-          .then(res => {
-            if (res.code === 0) {
-              void message.success({
-                content: '删除成功'
-              })
-              void loadProductModels()
-            } else {
-              void message.error({
-                content: res.data
-              })
-            }
-          })
-          .catch(err => {
-            console.error(err)
-          })
+      onOk: async () => {
+        try {
+          const res1 = await removeProductModel(product.model_id)
+          if (res1.code === 0) {
+            void message.success({
+              content: '删除成功'
+            })
+          } else {
+            void message.error({
+              content: res1.data
+            })
+          }
+
+          const res2 = await removeSingleServer(product.model_id)
+          if (res2.code === 0) {
+            void message.success({
+              content: '删除成功'
+            })
+          } else {
+            void message.error({
+              content: res2.data
+            })
+          }
+
+          void loadProductModels()
+        } catch (err) {
+          console.error(err)
+        }
       }
     })
   }
@@ -143,7 +138,7 @@ const ProductDetail: React.FC<ProductDetailProps> = props => {
               <Button type="link" onClick={() => editProductModel(record)}>
                 编辑
               </Button>
-              <Button type="link" danger onClick={() => removeProductDetail(record)}>
+              <Button type="link" danger onClick={() => deleteProductDetail(record)}>
                 删除
               </Button>
             </>

@@ -36,10 +36,9 @@ const ProductManage: React.FC = () => {
       }
     } catch (err) {
       console.error(err)
+    } finally {
+      setTimeout(() => setLoading(false), 250)
     }
-    setTimeout(() => {
-      setLoading(false)
-    }, 250)
   }
 
   const addProductTypes = (): void => {
@@ -120,37 +119,32 @@ const ProductManage: React.FC = () => {
       okButtonProps: {
         className: 'text-blue-500'
       },
-      onOk: () => {
-        addProductModel(name, id)
-          .then(res => {
-            if (res.code === 0) {
-              void message.success({
-                content: '添加成功'
-              })
-            } else {
-              void message.error({
-                content: res.data
-              })
-            }
-          })
-          .catch(err => {
-            console.log(err)
-          })
-        manageCustomerService(id, service)
-          .then(res => {
-            if (res.code === 0) {
-              void message.success({
-                content: '添加成功'
-              })
-            } else {
-              void message.error({
-                content: res.data
-              })
-            }
-          })
-          .catch(err => {
-            console.log(err)
-          })
+      onOk: async () => {
+        try {
+          const res1 = await addProductModel(name, id)
+          if (res1.code === 0) {
+            void message.success({
+              content: '添加成功'
+            })
+          } else {
+            void message.error({
+              content: res1.data
+            })
+          }
+
+          const res2 = await manageCustomerService(id, service)
+          if (res2.code === 0) {
+            void message.success({
+              content: '添加成功'
+            })
+          } else {
+            void message.error({
+              content: res2.data
+            })
+          }
+        } catch (err) {
+          console.error(err)
+        }
       }
     })
   }
@@ -186,7 +180,7 @@ const ProductManage: React.FC = () => {
     })
   }
 
-  const removeProductRange = (product: ProductType): void => {
+  const deleteProductType = (product: ProductType): void => {
     Modal.confirm({
       title: '警告',
       content: '确认移除当前产品大类及其产品？',
@@ -194,39 +188,34 @@ const ProductManage: React.FC = () => {
       okButtonProps: {
         className: 'text-blue-500'
       },
-      onOk: () => {
-        removeProductType(product.type_id)
-          .then(res => {
-            if (res.code === 0) {
-              void message.success({
-                content: '删除成功'
-              })
-              void loadProductTypes()
-            } else {
-              void message.error({
-                content: res.data
-              })
-            }
-          })
-          .catch(err => {
-            console.error(err)
-          })
-        removeCustomerService(product.type_id)
-          .then(res => {
-            if (res.code === 0) {
-              void message.success({
-                content: '删除成功'
-              })
-              void loadProductTypes()
-            } else {
-              void message.error({
-                content: res.data
-              })
-            }
-          })
-          .catch(err => {
-            console.error(err)
-          })
+      onOk: async () => {
+        try {
+          const res1 = await removeProductType(product.type_id)
+          if (res1.code === 0) {
+            void message.success({
+              content: '删除成功'
+            })
+          } else {
+            void message.error({
+              content: res1.data
+            })
+          }
+
+          const res2 = await removeCustomerService(product.type_id)
+          if (res2.code === 0) {
+            void message.success({
+              content: '删除成功'
+            })
+          } else {
+            void message.error({
+              content: res2.data
+            })
+          }
+
+          void loadProductTypes()
+        } catch (err) {
+          console.error(err)
+        }
       }
     })
   }
@@ -281,7 +270,7 @@ const ProductManage: React.FC = () => {
               <Button type="link" onClick={() => editProductType(record)}>
                 编辑
               </Button>
-              <Button type="link" danger onClick={() => removeProductRange(record)}>
+              <Button type="link" danger onClick={() => deleteProductType(record)}>
                 删除
               </Button>
             </>
