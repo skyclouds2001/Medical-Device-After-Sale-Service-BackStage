@@ -3,6 +3,7 @@ import { useRoutes } from 'react-router-dom'
 import BasePage from '@/views/BasePage'
 import LoginPage from '@/views/LoginPage'
 import ProductManage from '@/views/ProductManage'
+import ProductModelManage from '@/views/ProductModelManage'
 import UserManage from '@/views/UserManage'
 import CustomerServiceManage from '@/views/CustomerServiceManage'
 import CompanyManage from '@/views/CompanyManage'
@@ -39,6 +40,10 @@ const Routes: React.FC = () => {
         {
           path: '/product',
           element: <ProductManage />
+        },
+        {
+          path: '/product/model/:id',
+          element: <ProductModelManage />
         }
       ]
     }

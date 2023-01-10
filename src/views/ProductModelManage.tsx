@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { Button, Form, Input, Modal, Table, App } from 'antd'
 import { getProductModelByType, removeProductModel, removeSingleServer, updateProductModel } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductModel } from '@/model'
 
-interface ProductDetailProps {
-  id?: number
-}
-
-const ProductDetail: React.FC<ProductDetailProps> = props => {
+const ProductModelManage: React.FC = () => {
   const { message } = App.useApp()
+
+  const { id } = useParams<'id'>()
 
   const [products, setProducts] = useState<ProductModel[]>([])
   const [isLoading, setLoading] = useState(false)
@@ -23,8 +22,7 @@ const ProductDetail: React.FC<ProductDetailProps> = props => {
   const loadProductModels = async (): Promise<void> => {
     setLoading(true)
     try {
-      if (props.id === undefined) return
-      const res = await getProductModelByType(props.id)
+      const res = await getProductModelByType(parseInt(typeof id === 'string' ? id : '0'))
       if (res.code === 0) {
         setProducts(res.data)
         setTotal(res.data.length)
@@ -35,10 +33,9 @@ const ProductDetail: React.FC<ProductDetailProps> = props => {
       }
     } catch (err) {
       console.error(err)
+    } finally {
+      setTimeout(() => setLoading(false), 250)
     }
-    setTimeout(() => {
-      setLoading(false)
-    }, 250)
   }
 
   const editProductModel = (product: ProductModel): void => {
@@ -126,10 +123,12 @@ const ProductDetail: React.FC<ProductDetailProps> = props => {
           pageSize: DEFAULT_PAGE_SIZE
         }}
         onChange={pagination => setPageNum(pagination.current ?? 1)}
+        style={{ width: '600px' }}
       >
-        <Table.Column align="center" title="产品名称" dataIndex="model_name" key="model_name" />
-        <Table.Column align="center" title="产品大类" dataIndex="type_name" key="type_name" />
+        <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
+        <Table.Column width="200px" align="center" title="产品大类" dataIndex="type_name" key="type_name" />
         <Table.Column
+          width="200px"
           align="center"
           title="操作"
           key="action"
@@ -149,4 +148,4 @@ const ProductDetail: React.FC<ProductDetailProps> = props => {
   )
 }
 
-export default ProductDetail
+export default ProductModelManage

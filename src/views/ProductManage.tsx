@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Button, Table, Modal, Form, Input, Select, App } from 'antd'
-import ProductDetail from '@/components/ProductDetail'
 import { addProductModel, addProductType, getAllProductTypes, getDepartmentsAndStaffs, manageCustomerService, removeCustomerService, removeProductType, updateProductType } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductType, User } from '@/model'
@@ -9,14 +9,12 @@ import type { CustomAction } from '@/store'
 
 const ProductManage: React.FC = () => {
   const { message } = App.useApp()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const [productTypes, setProductTypes] = useState<ProductType[]>([])
   const [isLoading, setLoading] = useState(false)
   const [pageNum, setPageNum] = useState(1)
-
-  const [isShow, setShow] = useState(false)
-  const [current, updateCurrent] = useState<ProductType>()
 
   useEffect(() => {
     dispatch<CustomAction>({ type: 'title/update', title: '产品管理' })
@@ -232,11 +230,6 @@ const ProductManage: React.FC = () => {
         </Button>
       </div>
 
-      {/* 产品大类对应产品类型列表弹窗 */}
-      <Modal destroyOnClose open={isShow} closable={true} title={`产品-${current?.type_name ?? ''}`} footer={null} okButtonProps={{ className: 'text-blue-500' }} onCancel={() => setShow(false)}>
-        <ProductDetail id={current?.type_id} />
-      </Modal>
-
       {/* 产品大类列表 */}
       <Table
         dataSource={productTypes}
@@ -258,13 +251,7 @@ const ProductManage: React.FC = () => {
           key="action"
           render={(_, record: ProductType) => (
             <>
-              <Button
-                type="link"
-                onClick={() => {
-                  setShow(true)
-                  updateCurrent(record)
-                }}
-              >
+              <Button type="link" onClick={() => navigate(`/product/model/${record.type_id}`)}>
                 查看
               </Button>
               <Button type="link" onClick={() => editProductType(record)}>
