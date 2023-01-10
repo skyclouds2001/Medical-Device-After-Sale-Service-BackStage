@@ -18,3 +18,6 @@ export const DEFAULT_REDIRECT_PATH = '/product'
 
 /** 默认单页的容量，若修改需同时修改后端 */
 export const DEFAULT_PAGE_SIZE = 10
+
+/** 默认登录状态过期时间，若修改需同时修改后端 */
+export const SESSION_EXPIRE = 3 * 24 * 60 * 60 * 1000
