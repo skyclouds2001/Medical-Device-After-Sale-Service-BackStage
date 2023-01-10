@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { App, Button, Form, Modal, Table } from 'antd'
 import CustomerServiceSelector from '@/components/CustomerServiceSelector'
-import { getAllProductModels, getSingleServer, manageCustomerService, removeCustomerService } from '@/apis'
+import { getAllProductModels, getSingleServer, manageCustomerService } from '@/apis'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductModel, Service } from '@/model'
 import type { CustomAction } from '@/store'
@@ -31,50 +31,65 @@ const CustomerServiceManage: React.FC = () => {
     void loadAllProductModels()
   }, [])
 
-  useEffect(() => {
-    void loadProductModels()
-  }, [pageNum])
-
   /**
    * 加载全部产品列表
    */
-  const loadAllProductModels = (): void => {
-    setLoading(true)
-    getAllProductModels()
-      .then(res => {
-        if (res.code === 0) {
-          const products = res.data as ProductModelWithServer[]
-          products.forEach(v => (v.services = []))
-          setAllProducts(products)
-          setTotalNum(products.length)
-          loadProductModels(products).finally(() => {
-            setTimeout(() => {
-              setLoading(false)
-            }, 250)
-          })
-        } else {
-          void message.error({
-            content: res.data
-          })
-        }
-      })
-      .catch(err => {
-        console.error(err)
-      })
+  const loadAllProductModels = async (): Promise<void> => {
+    try {
+      setLoading(true)
+
+      const res = await getAllProductModels()
+
+      if (res.code !== 0) {
+        void message.error({
+          content: res.data
+        })
+      }
+
+      const products = res.data as ProductModelWithServer[]
+      products.forEach(v => (v.services = []))
+
+      setAllProducts(products)
+      setTotalNum(products.length)
+      setPageNum(1)
+
+      loadProductModels(products, 1)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setTimeout(() => setLoading(false), 250)
+    }
   }
 
   /**
-   * 加载产品列表
+   * 加载产品列表（即当前表格显示产品列表）
    */
-  const loadProductModels = async (all: ProductModelWithServer[] = allProducts): Promise<void> => {
-    const products = all.slice((pageNum - 1) * DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE)
-    for await (const p of products) {
-      const res = await getSingleServer(p.model_id)
-      p.services = res.data.server_info_list
-    }
+  const loadProductModels = (all: ProductModelWithServer[] = allProducts, page = pageNum): void => {
+    const products = all.slice((page - 1) * DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE)
+
     setProducts(products)
+
+    /* eslint-disable-next-line */
+    Promise.allSettled(products.map(v => getSingleServer(v.model_id).then(res => {
+          if (res.code === 0) {
+            v.services = res.data.server_info_list
+          } else {
+            void message.error({
+              content: res.data.toString().replace(/该产品型号/, v.model_name)
+            })
+          }
+          return v
+        })
+      )
+    ).then(res => {
+      setProducts(res.filter(v => v.status === 'fulfilled').map(v => (v.status === 'fulfilled' ? v.value : null)) as ProductModelWithServer[])
+    })
   }
 
+  /**
+   *  编辑产品对应客服
+   * @param product 产品
+   */
   const editService = (product: ProductModelWithServer): void => {
     let services: number[] = []
     Modal.confirm({
@@ -93,12 +108,11 @@ const CustomerServiceManage: React.FC = () => {
       onOk: async () => {
         try {
           const res = await manageCustomerService(product.model_id, services)
-          console.log(res)
           if (res.code === 0) {
+            loadProductModels()
             void message.success({
               content: '修改成功'
             })
-            void loadAllProductModels()
           } else {
             void message.error({
               content: res.data
@@ -111,36 +125,9 @@ const CustomerServiceManage: React.FC = () => {
     })
   }
 
-  /**
-   * 移除产品对应客服
-   * @param product 产品
-   */
-  const removeService = (product: ProductModelWithServer): void => {
-    Modal.confirm({
-      title: '警告',
-      content: '确认移除产品对应客服？',
-      okText: '删除',
-      okType: 'danger',
-      closable: true,
-      onOk: async () => {
-        const res = await removeCustomerService(product.model_id)
-        if (res.code === 0) {
-          void message.success({
-            content: '删除成功'
-          })
-          void loadAllProductModels()
-        } else {
-          void message.error({
-            content: res.data
-          })
-        }
-      }
-    })
-  }
-
   return (
     <>
-      {/* 产品信息表格 */}
+      {/* 产品客服信息表格 */}
       <Table
         dataSource={products}
         bordered
@@ -151,7 +138,9 @@ const CustomerServiceManage: React.FC = () => {
           total: totalNum,
           pageSize: DEFAULT_PAGE_SIZE
         }}
-        onChange={pagination => setPageNum(pagination.current ?? 1)}
+        onChange={pagination => {
+          void loadProductModels(allProducts, pagination.current)
+        }}
         style={{ width: '800px' }}
       >
         <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
@@ -177,10 +166,7 @@ const CustomerServiceManage: React.FC = () => {
           render={(_, record: ProductModelWithServer) => (
             <>
               <Button type="link" onClick={() => editService(record)}>
-                编辑
-              </Button>
-              <Button type="link" danger onClick={() => removeService(record)}>
-                删除
+                管理客服
               </Button>
             </>
           )}
