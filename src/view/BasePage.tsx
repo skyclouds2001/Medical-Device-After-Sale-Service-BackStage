@@ -12,7 +12,13 @@ const BasePage: React.FC = () => {
 
   return (
     <Layout className="min-h-screen">
-      <Layout.Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
+      <Layout.Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={value => {
+          setCollapsed(value)
+        }}
+      >
         <div className="h-8 m-4 overflow-hidden">
           <Image src={logo} alt="" width="8em" height="2.5em" preview={false} />
         </div>

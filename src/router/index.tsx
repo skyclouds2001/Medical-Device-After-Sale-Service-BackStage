@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRoutes } from 'react-router-dom'
+import { Outlet, useRoutes } from 'react-router-dom'
 import BasePage from '@/view/BasePage'
 import LoginPage from '@/view/LoginPage'
 import ProductTypeManage from '@/view/ProductTypeManage'
@@ -7,7 +7,6 @@ import ProductModelManage from '@/view/ProductModelManage'
 import UserManage from '@/view/UserManage'
 import CustomerServiceManage from '@/view/CustomerServiceManage'
 import CompanyManage from '@/view/CompanyManage'
-import CustomerManage from '@/view/CustomerManage'
 
 const Routes: React.FC = () => {
   return useRoutes([
@@ -21,7 +20,7 @@ const Routes: React.FC = () => {
       children: [
         {
           path: '/customer',
-          element: <CustomerManage />,
+          element: <Outlet />,
           children: [
             {
               path: '/customer/user',

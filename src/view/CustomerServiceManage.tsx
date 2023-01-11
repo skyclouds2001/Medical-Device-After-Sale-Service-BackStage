@@ -57,7 +57,9 @@ const CustomerServiceManage: React.FC = () => {
     } catch (err) {
       console.error(err)
     } finally {
-      setTimeout(() => setLoading(false), 250)
+      setTimeout(() => {
+        setLoading(false)
+      }, 250)
     }
   }
 
@@ -69,8 +71,10 @@ const CustomerServiceManage: React.FC = () => {
 
     setProducts(products)
 
-    /* eslint-disable-next-line */
-    Promise.allSettled(products.map(v => getSingleServer(v.model_id).then(res => {
+    Promise.allSettled(
+      /* eslint-disable-next-line */
+      products.map(v =>
+        getSingleServer(v.model_id).then(res => {
           if (res.code === 0) {
             v.services = res.data.server_info_list
           } else {
@@ -81,9 +85,13 @@ const CustomerServiceManage: React.FC = () => {
           return v
         })
       )
-    ).then(res => {
-      setProducts(res.filter(v => v.status === 'fulfilled').map(v => (v.status === 'fulfilled' ? v.value : null)) as ProductModelWithServer[])
-    })
+    )
+      .then(res => {
+        setProducts(res.filter(v => v.status === 'fulfilled').map(v => (v.status === 'fulfilled' ? v.value : null)) as ProductModelWithServer[])
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 
   /**
@@ -140,7 +148,7 @@ const CustomerServiceManage: React.FC = () => {
         }}
         onChange={pagination => {
           setPageNum(pagination.current ?? 1)
-          void loadProductModels(allProducts, pagination.current)
+          loadProductModels(allProducts, pagination.current)
         }}
         className="w-[50rem]"
       >
@@ -166,7 +174,12 @@ const CustomerServiceManage: React.FC = () => {
           key="action"
           render={(_, record: ProductModelWithServer) => (
             <>
-              <Button type="link" onClick={() => editService(record)}>
+              <Button
+                type="link"
+                onClick={() => {
+                  editService(record)
+                }}
+              >
                 管理客服
               </Button>
             </>

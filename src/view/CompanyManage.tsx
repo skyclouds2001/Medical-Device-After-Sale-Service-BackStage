@@ -159,7 +159,13 @@ const CompanyManage: React.FC = () => {
     <>
       {/* 添加企业信息按钮区域 */}
       <div className="my-5 text-right w-[25rem]">
-        <Button className="text-blue-500" type="primary" onClick={() => addCompany()}>
+        <Button
+          className="text-blue-500"
+          type="primary"
+          onClick={() => {
+            addCompany()
+          }}
+        >
           添加企业
         </Button>
       </div>
@@ -189,10 +195,21 @@ const CompanyManage: React.FC = () => {
           key="action"
           render={(_, record: Company) => (
             <>
-              <Button type="link" onClick={() => editCompany(record)}>
+              <Button
+                type="link"
+                onClick={() => {
+                  editCompany(record)
+                }}
+              >
                 编辑
               </Button>
-              <Button type="link" danger onClick={() => removeCompany(record)}>
+              <Button
+                type="link"
+                danger
+                onClick={() => {
+                  removeCompany(record)
+                }}
+              >
                 删除
               </Button>
             </>

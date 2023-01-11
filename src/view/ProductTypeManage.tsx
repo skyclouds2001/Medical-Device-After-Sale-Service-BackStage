@@ -36,7 +36,9 @@ const ProductTypeManage: React.FC = () => {
     } catch (err) {
       console.error(err)
     } finally {
-      setTimeout(() => setLoading(false), 250)
+      setTimeout(() => {
+        setLoading(false)
+      }, 250)
     }
   }
 
@@ -209,10 +211,22 @@ const ProductTypeManage: React.FC = () => {
     <>
       {/* 添加产品及大类按钮区域 */}
       <div className="my-5 text-right w-[31rem]">
-        <Button className="text-blue-500" type="primary" onClick={() => addProductModels()}>
+        <Button
+          className="text-blue-500"
+          type="primary"
+          onClick={() => {
+            addProductModels()
+          }}
+        >
           添加产品
         </Button>
-        <Button className="text-blue-500" type="primary" onClick={() => addProductTypes()}>
+        <Button
+          className="text-blue-500"
+          type="primary"
+          onClick={() => {
+            addProductTypes()
+          }}
+        >
           添加产品大类
         </Button>
       </div>
@@ -227,7 +241,9 @@ const ProductTypeManage: React.FC = () => {
           current: pageNum,
           pageSize: DEFAULT_PAGE_SIZE
         }}
-        onChange={pagination => setPageNum(pagination.current ?? 1)}
+        onChange={pagination => {
+          setPageNum(pagination.current ?? 1)
+        }}
         style={{ width: '500px' }}
         className="w-[31rem]"
       >
@@ -239,13 +255,29 @@ const ProductTypeManage: React.FC = () => {
           key="action"
           render={(_, record: ProductType) => (
             <>
-              <Button type="link" onClick={() => navigate(`/product/model/${record.type_id}`, { state: record.type_name })}>
+              <Button
+                type="link"
+                onClick={() => {
+                  navigate(`/product/model/${record.type_id}`, { state: record.type_name })
+                }}
+              >
                 查看
               </Button>
-              <Button type="link" onClick={() => editProductType(record)}>
+              <Button
+                type="link"
+                onClick={() => {
+                  editProductType(record)
+                }}
+              >
                 编辑
               </Button>
-              <Button type="link" danger onClick={() => deleteProductType(record)}>
+              <Button
+                type="link"
+                danger
+                onClick={() => {
+                  deleteProductType(record)
+                }}
+              >
                 删除
               </Button>
             </>

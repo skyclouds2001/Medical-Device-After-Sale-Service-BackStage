@@ -124,10 +124,39 @@ const LoginPage: React.FC = () => {
       </div>
 
       {/* 重设密码表单 */}
-      <Modal title="重设密码" okButtonProps={{ className: 'text-black' }} open={isModalOpen} onOk={handleForgetPassword} onCancel={() => setModalOpen(false)}>
-        <Input className="rounded my-2.5" placeholder="请输入用户名" value={user} onChange={e => setUser(e.target.value)} />
-        <Input className="rounded my-2.5" placeholder="请输入重设密文串" value={encryptedPassword} onChange={e => setEncryptedPassword(e.target.value)} />
-        <Input className="rounded my-2.5" placeholder="请输入新密码" value={newPassword} onChange={e => setNewPassword(e.target.value)} />
+      <Modal
+        title="重设密码"
+        okButtonProps={{ className: 'text-black' }}
+        open={isModalOpen}
+        onOk={handleForgetPassword}
+        onCancel={() => {
+          setModalOpen(false)
+        }}
+      >
+        <Input
+          className="rounded my-2.5"
+          placeholder="请输入用户名"
+          value={user}
+          onChange={e => {
+            setUser(e.target.value)
+          }}
+        />
+        <Input
+          className="rounded my-2.5"
+          placeholder="请输入重设密文串"
+          value={encryptedPassword}
+          onChange={e => {
+            setEncryptedPassword(e.target.value)
+          }}
+        />
+        <Input
+          className="rounded my-2.5"
+          placeholder="请输入新密码"
+          value={newPassword}
+          onChange={e => {
+            setNewPassword(e.target.value)
+          }}
+        />
       </Modal>
 
       {/* 登录表单 */}
@@ -136,13 +165,32 @@ const LoginPage: React.FC = () => {
           登录
         </div>
         <div className="mx-0 my-5">
-          <Input placeholder="请输入用户名" prefix={<IdcardFilled />} value={user} onChange={e => setUser(e.target.value)} />
+          <Input
+            placeholder="请输入用户名"
+            prefix={<IdcardFilled />}
+            value={user}
+            onChange={e => {
+              setUser(e.target.value)
+            }}
+          />
         </div>
         <div className="mx-0 my-2.5">
-          <Input.Password placeholder="请输入密码" prefix={<LockFilled />} value={password} onChange={e => setPassword(e.target.value)} />
+          <Input.Password
+            placeholder="请输入密码"
+            prefix={<LockFilled />}
+            value={password}
+            onChange={e => {
+              setPassword(e.target.value)
+            }}
+          />
         </div>
         <div className="mx-0 my-2.5 text-left" style={{ color: 'rgb(122, 121, 130)' }}>
-          <Checkbox checked={remember} onChange={e => setRemember(e.target.checked)}>
+          <Checkbox
+            checked={remember}
+            onChange={e => {
+              setRemember(e.target.checked)
+            }}
+          >
             记住密码
           </Checkbox>
         </div>
@@ -152,7 +200,13 @@ const LoginPage: React.FC = () => {
           </button>
         </div>
         <div>
-          <p className="text-right cursor-pointer select-none" onClick={() => setModalOpen(true)} style={{ color: 'rgb(86, 107, 217)' }}>
+          <p
+            className="text-right cursor-pointer select-none"
+            onClick={() => {
+              setModalOpen(true)
+            }}
+            style={{ color: 'rgb(86, 107, 217)' }}
+          >
             忘记密码？
           </p>
         </div>

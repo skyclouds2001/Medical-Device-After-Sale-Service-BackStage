@@ -38,9 +38,13 @@ const SideBar: React.FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
+  const go: Required<MenuProps>['onClick'] = e => {
+    navigate(e.key)
+  }
+
   return (
     <>
-      <Menu theme="dark" mode="inline" defaultOpenKeys={['/customer']} defaultSelectedKeys={[location.pathname]} items={items} onClick={e => navigate(e.key)} />
+      <Menu theme="dark" mode="inline" defaultOpenKeys={['/customer']} defaultSelectedKeys={[location.pathname]} items={items} onClick={go} />
     </>
   )
 }

@@ -163,7 +163,13 @@ const UserManage: React.FC = () => {
     <>
       {/* 添加客户信息按钮区域 */}
       <div className="my-5 text-right w-[50rem]">
-        <Button className="text-blue-500" type="primary" onClick={() => addCustomer()}>
+        <Button
+          className="text-blue-500"
+          type="primary"
+          onClick={() => {
+            addCustomer()
+          }}
+        >
           添加客户
         </Button>
       </div>
@@ -195,10 +201,21 @@ const UserManage: React.FC = () => {
           key="action"
           render={(_, record: Customer) => (
             <>
-              <Button type="link" onClick={() => editCustomer(record)}>
+              <Button
+                type="link"
+                onClick={() => {
+                  editCustomer(record)
+                }}
+              >
                 编辑
               </Button>
-              <Button type="link" danger onClick={() => removeCustomer(record)}>
+              <Button
+                type="link"
+                danger
+                onClick={() => {
+                  removeCustomer(record)
+                }}
+              >
                 删除
               </Button>
             </>

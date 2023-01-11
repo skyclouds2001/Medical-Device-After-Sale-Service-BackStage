@@ -42,7 +42,9 @@ const ProductModelManage: React.FC = () => {
     } catch (err) {
       console.error(err)
     } finally {
-      setTimeout(() => setLoading(false), 250)
+      setTimeout(() => {
+        setLoading(false)
+      }, 250)
     }
   }
 
@@ -171,13 +173,24 @@ const ProductModelManage: React.FC = () => {
       {/* 添加产品按钮区域 */}
       <Row className="my-5 w-[37rem]">
         <Col span={12} className="text-left">
-          <div className="flex justify-start items-center h-full select-none cursor-pointer" onClick={() => navigate('/product')}>
+          <div
+            className="flex justify-start items-center h-full select-none cursor-pointer"
+            onClick={() => {
+              navigate('/product')
+            }}
+          >
             <LeftOutlined />
             返回
           </div>
         </Col>
         <Col span={12} className="text-right">
-          <Button className="text-blue-500 hover:text-white" type="primary" onClick={() => addProductModels()}>
+          <Button
+            className="text-blue-500 hover:text-white"
+            type="primary"
+            onClick={() => {
+              addProductModels()
+            }}
+          >
             添加产品
           </Button>
         </Col>
@@ -194,7 +207,9 @@ const ProductModelManage: React.FC = () => {
           total,
           pageSize: DEFAULT_PAGE_SIZE
         }}
-        onChange={pagination => setPageNum(pagination.current ?? 1)}
+        onChange={pagination => {
+          setPageNum(pagination.current ?? 1)
+        }}
         className="w-[37rem]"
       >
         <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
@@ -206,10 +221,21 @@ const ProductModelManage: React.FC = () => {
           key="action"
           render={(_, record: ProductModel) => (
             <>
-              <Button type="link" onClick={() => editProductModel(record)}>
+              <Button
+                type="link"
+                onClick={() => {
+                  editProductModel(record)
+                }}
+              >
                 编辑
               </Button>
-              <Button type="link" danger onClick={() => deleteProductDetail(record)}>
+              <Button
+                type="link"
+                danger
+                onClick={() => {
+                  deleteProductDetail(record)
+                }}
+              >
                 删除
               </Button>
             </>
