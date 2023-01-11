@@ -162,7 +162,7 @@ const UserManage: React.FC = () => {
   return (
     <>
       {/* 添加客户信息按钮区域 */}
-      <div className="my-5 text-right" style={{ width: '800px' }}>
+      <div className="my-5 text-right w-[50rem]">
         <Button className="text-blue-500" type="primary" onClick={() => addCustomer()}>
           添加客户
         </Button>
@@ -183,7 +183,7 @@ const UserManage: React.FC = () => {
           setPageNum(pagination.current ?? 1)
           void loadCustomer(false, pagination.current ?? 1)
         }}
-        style={{ width: '800px' }}
+        className="w-[50rem]"
       >
         <Table.Column width="200px" align="center" title="用户名称" dataIndex="customer_name" key="customer_name" />
         <Table.Column width="200px" align="center" title="企业名称" dataIndex="company_name" key="company_name" />

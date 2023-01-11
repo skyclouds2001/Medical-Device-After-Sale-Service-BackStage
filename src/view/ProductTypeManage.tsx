@@ -208,7 +208,7 @@ const ProductTypeManage: React.FC = () => {
   return (
     <>
       {/* 添加产品及大类按钮区域 */}
-      <div className="my-5 text-right" style={{ width: '500px' }}>
+      <div className="my-5 text-right w-[31rem]">
         <Button className="text-blue-500" type="primary" onClick={() => addProductModels()}>
           添加产品
         </Button>
@@ -229,6 +229,7 @@ const ProductTypeManage: React.FC = () => {
         }}
         onChange={pagination => setPageNum(pagination.current ?? 1)}
         style={{ width: '500px' }}
+        className="w-[31rem]"
       >
         <Table.Column width="200px" align="center" title="产品大类名称" dataIndex="type_name" key="type_name" />
         <Table.Column

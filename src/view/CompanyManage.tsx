@@ -158,7 +158,7 @@ const CompanyManage: React.FC = () => {
   return (
     <>
       {/* 添加企业信息按钮区域 */}
-      <div className="my-5 text-right" style={{ width: '400px' }}>
+      <div className="my-5 text-right w-[25rem]">
         <Button className="text-blue-500" type="primary" onClick={() => addCompany()}>
           添加企业
         </Button>
@@ -179,7 +179,7 @@ const CompanyManage: React.FC = () => {
           setPageNum(pagination.current ?? 1)
           void loadCompany(false, pageNum)
         }}
-        style={{ width: '400px' }}
+        className="w-[25rem]"
       >
         <Table.Column width="200px" align="center" title="企业名称" dataIndex="company_name" key="company_name" />
         <Table.Column

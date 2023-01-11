@@ -195,7 +195,7 @@ const ProductModelManage: React.FC = () => {
           pageSize: DEFAULT_PAGE_SIZE
         }}
         onChange={pagination => setPageNum(pagination.current ?? 1)}
-        style={{ width: '600px' }}
+        className="w-[37rem]"
       >
         <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
         <Table.Column width="200px" align="center" title="产品大类" dataIndex="type_name" key="type_name" />

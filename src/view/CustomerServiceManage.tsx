@@ -142,7 +142,7 @@ const CustomerServiceManage: React.FC = () => {
           setPageNum(pagination.current ?? 1)
           void loadProductModels(allProducts, pagination.current)
         }}
-        style={{ width: '800px' }}
+        className="w-[50rem]"
       >
         <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
         <Table.Column width="200px" align="center" title="所属大类" dataIndex="type_name" key="type_name" />

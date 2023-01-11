@@ -19,14 +19,14 @@ const BasePage: React.FC = () => {
         <SideBar />
       </Layout.Sider>
       <Layout className="site-layout">
-        <Layout.Header style={{ padding: 0, backgroundColor: 'white' }}>
-          <Breadcrumb className="leading-[64px] px-4 select-none">
+        <Layout.Header className="bg-white p-0">
+          <Breadcrumb className="leading-[64px] px-5 select-none">
             <Breadcrumb.Item>客服工单系统</Breadcrumb.Item>
             <Breadcrumb.Item>{title}</Breadcrumb.Item>
           </Breadcrumb>
         </Layout.Header>
-        <Layout.Content className="m-4">
-          <div className="min-h-[400px] p-6 bg-white">
+        <Layout.Content className="m-5">
+          <div className="min-h-[400px] p-10 bg-white">
             <Outlet />
           </div>
         </Layout.Content>
