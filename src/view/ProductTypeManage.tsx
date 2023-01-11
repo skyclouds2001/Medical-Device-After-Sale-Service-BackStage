@@ -238,7 +238,7 @@ const ProductTypeManage: React.FC = () => {
           key="action"
           render={(_, record: ProductType) => (
             <>
-              <Button type="link" onClick={() => navigate(`/product/model/${record.type_id}`)}>
+              <Button type="link" onClick={() => navigate(`/product/model/${record.type_id}`, { state: record.type_name })}>
                 查看
               </Button>
               <Button type="link" onClick={() => editProductType(record)}>

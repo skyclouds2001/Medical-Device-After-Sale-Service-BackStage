@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { Button, Form, Input, Modal, Table, App } from 'antd'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
+import { Button, Form, Input, Modal, Table, App, Row, Col } from 'antd'
+import { LeftOutlined } from '@ant-design/icons'
 import { addProductModel, getProductModelByType, manageCustomerService, removeProductModel, removeSingleServer, updateProductModel } from '@/api'
 import CustomerServiceSelector from '@/component/CustomerServiceSelector'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductModel } from '@/model'
 
 const ProductModelManage: React.FC = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
   const { message } = App.useApp()
 
   const { id } = useParams<'id'>()
+  const name = location.state as string
 
   const [products, setProducts] = useState<ProductModel[]>([])
-  const [isLoading, setLoading] = useState(false)
   const [pageNum, setPageNum] = useState(1)
   const [total, setTotal] = useState(0)
+
+  const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
     void loadProductModels()
@@ -25,8 +30,10 @@ const ProductModelManage: React.FC = () => {
     try {
       const res = await getProductModelByType(parseInt(typeof id === 'string' ? id : '0'))
       if (res.code === 0) {
-        setProducts(res.data)
-        setTotal(res.data.length)
+        const products = res.data
+        products.forEach(v => (v.type_name = name))
+        setProducts(products)
+        setTotal(products.length)
       } else {
         void message.error({
           content: res.data
@@ -162,11 +169,19 @@ const ProductModelManage: React.FC = () => {
   return (
     <>
       {/* 添加产品按钮区域 */}
-      <div className="my-5 text-right" style={{ width: '600px' }}>
-        <Button className="text-blue-500 hover:text-white" type="primary" onClick={() => addProductModels()}>
-          添加产品
-        </Button>
-      </div>
+      <Row className="my-5 w-[37rem]">
+        <Col span={12} className="text-left">
+          <div className="flex justify-start items-center h-full select-none cursor-pointer" onClick={() => navigate('/product')}>
+            <LeftOutlined />
+            返回
+          </div>
+        </Col>
+        <Col span={12} className="text-right">
+          <Button className="text-blue-500 hover:text-white" type="primary" onClick={() => addProductModels()}>
+            添加产品
+          </Button>
+        </Col>
+      </Row>
 
       {/* 产品类型列表 */}
       <Table
