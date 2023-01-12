@@ -27,7 +27,7 @@ export const getCompanyInfo = async (isFirstQuery: boolean, pageNum: number): Pr
  */
 export const addCompanyInfo = async (companyName: string): Promise<Response<void>> => {
   const res = await instance.post<Response<void>>('/wizz/aftersale/account/company/add', {
-    company_name: companyName
+    company_name: companyName,
   })
   return res.data
 }
@@ -40,7 +40,7 @@ export const addCompanyInfo = async (companyName: string): Promise<Response<void
 export const updateCompanyInfo = async (companyId: number, companyName: string): Promise<Response<void>> => {
   const res = await instance.put<Response<void>>('/wizz/aftersale/account/company/update', {
     company_id: companyId,
-    company_name: companyName
+    company_name: companyName,
   })
   return res.data
 }

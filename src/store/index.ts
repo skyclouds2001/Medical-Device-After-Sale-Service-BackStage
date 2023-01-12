@@ -12,7 +12,7 @@ export interface CustomAction extends Action<string> {
 export type CustomReducer = Reducer<CustomState, CustomAction>
 
 const defaultState: CustomState = {
-  title: ''
+  title: '',
 }
 
 const reducer: CustomReducer = (state = defaultState, action) => {

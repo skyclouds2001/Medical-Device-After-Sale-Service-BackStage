@@ -17,8 +17,8 @@ export default forwardRef(function AddCustomer(props: AddCustomerProps, _ref): J
     getCustomer: () => ({
       name,
       company,
-      mobile
-    })
+      mobile,
+    }),
   }))
 
   useEffect(() => {

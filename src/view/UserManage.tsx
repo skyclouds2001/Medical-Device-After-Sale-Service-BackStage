@@ -46,7 +46,7 @@ const UserManage: React.FC = () => {
         if (isFirst) setTotal(res.data.total_num)
       } else {
         void message.error({
-          content: res.data
+          content: res.data,
         })
       }
     } catch (err) {
@@ -66,7 +66,7 @@ const UserManage: React.FC = () => {
       content: <AddCustomer ref={addRef} crf={addRef} />,
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500'
+        className: 'text-blue-500',
       },
       onOk: async () => {
         const cus = (
@@ -78,19 +78,19 @@ const UserManage: React.FC = () => {
           const res = await addCustomerInfo(cus.company, cus.name, cus.mobile)
           if (res.code === 0) {
             void message.success({
-              content: '更新成功'
+              content: '更新成功',
             })
             void loadCustomer(false, pageNum)
             setTotal(total + 1)
           } else {
             void message.error({
-              content: res.data
+              content: res.data,
             })
           }
         } catch (err) {
           console.error(err)
         }
-      }
+      },
     })
   }
 
@@ -104,7 +104,7 @@ const UserManage: React.FC = () => {
       content: <EditCustomer ref={editRef} crf={editRef} customer={customer} />,
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500'
+        className: 'text-blue-500',
       },
       onOk: async () => {
         const cus = (
@@ -116,18 +116,18 @@ const UserManage: React.FC = () => {
           const res = await updateCustomerInfo(cus.company, customer.customer_id, cus.name, cus.mobile)
           if (res.code === 0) {
             void message.success({
-              content: '更新成功'
+              content: '更新成功',
             })
             void loadCustomer(false, pageNum)
           } else {
             void message.error({
-              content: res.data
+              content: res.data,
             })
           }
         } catch (err) {
           console.error(err)
         }
-      }
+      },
     })
   }
 
@@ -146,16 +146,16 @@ const UserManage: React.FC = () => {
         const res = await removeCustomerInfo(customer.customer_id)
         if (res.code === 0) {
           void message.success({
-            content: '删除成功'
+            content: '删除成功',
           })
           void loadCustomer(false, pageNum)
           setTotal(total - 1)
         } else {
           void message.error({
-            content: res.data
+            content: res.data,
           })
         }
-      }
+      },
     })
   }
 
@@ -183,7 +183,7 @@ const UserManage: React.FC = () => {
         pagination={{
           current: pageNum,
           total,
-          pageSize: DEFAULT_PAGE_SIZE
+          pageSize: DEFAULT_PAGE_SIZE,
         }}
         onChange={pagination => {
           setPageNum(pagination.current ?? 1)

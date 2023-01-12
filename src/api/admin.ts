@@ -23,7 +23,7 @@ interface AdminLoginResponse {
 export const adminLogin = async (admin: string, password: string): Promise<Response<AdminLoginResponse>> => {
   const res = await instance.post<Response<AdminLoginResponse>>('/wizz/aftersale/account/admin/login', {
     admin_name: admin,
-    password
+    password,
   })
   return res.data
 }
@@ -38,7 +38,7 @@ export const resetPassword = async (admin: string, encrypt: string, newPw: strin
   const res = await instance.put<Response<void>>('/wizz/aftersale/account/admin/resetPassword', {
     admin_name: admin,
     encrypted_password: encrypt,
-    new_password: newPw
+    new_password: newPw,
   })
   return res.data
 }

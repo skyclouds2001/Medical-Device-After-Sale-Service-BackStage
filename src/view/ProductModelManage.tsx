@@ -36,7 +36,7 @@ const ProductModelManage: React.FC = () => {
         setTotal(products.length)
       } else {
         void message.error({
-          content: res.data
+          content: res.data,
         })
       }
     } catch (err) {
@@ -65,35 +65,35 @@ const ProductModelManage: React.FC = () => {
       ),
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500'
+        className: 'text-blue-500',
       },
       onOk: async () => {
         try {
           const res1 = await addProductModel(name, parseInt(typeof id === 'string' ? id : '0'))
           if (res1.code === 0) {
             void message.success({
-              content: '添加成功'
+              content: '添加成功',
             })
           } else {
             void message.error({
-              content: res1.data
+              content: res1.data,
             })
           }
 
           const res2 = await manageCustomerService(parseInt(typeof id === 'string' ? id : '0'), services)
           if (res2.code === 0) {
             void message.success({
-              content: '添加成功'
+              content: '添加成功',
             })
           } else {
             void message.error({
-              content: res2.data
+              content: res2.data,
             })
           }
         } catch (err) {
           console.error(err)
         }
-      }
+      },
     })
   }
 
@@ -110,21 +110,21 @@ const ProductModelManage: React.FC = () => {
       ),
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500'
+        className: 'text-blue-500',
       },
       onOk: async () => {
         const res = await updateProductModel(product.model_id, name, product.type_id)
         if (res.code === 0) {
           void message.success({
-            content: '更新成功'
+            content: '更新成功',
           })
           void loadProductModels()
         } else {
           void message.error({
-            content: res.data
+            content: res.data,
           })
         }
-      }
+      },
     })
   }
 
@@ -134,29 +134,29 @@ const ProductModelManage: React.FC = () => {
       content: '确认移除当前产品？',
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500'
+        className: 'text-blue-500',
       },
       onOk: async () => {
         try {
           const res1 = await removeProductModel(product.model_id)
           if (res1.code === 0) {
             void message.success({
-              content: '删除成功'
+              content: '删除成功',
             })
           } else {
             void message.error({
-              content: res1.data
+              content: res1.data,
             })
           }
 
           const res2 = await removeSingleServer(product.model_id)
           if (res2.code === 0) {
             void message.success({
-              content: '删除成功'
+              content: '删除成功',
             })
           } else {
             void message.error({
-              content: res2.data
+              content: res2.data,
             })
           }
 
@@ -164,7 +164,7 @@ const ProductModelManage: React.FC = () => {
         } catch (err) {
           console.error(err)
         }
-      }
+      },
     })
   }
 
@@ -205,7 +205,7 @@ const ProductModelManage: React.FC = () => {
         pagination={{
           current: pageNum,
           total,
-          pageSize: DEFAULT_PAGE_SIZE
+          pageSize: DEFAULT_PAGE_SIZE,
         }}
         onChange={pagination => {
           setPageNum(pagination.current ?? 1)

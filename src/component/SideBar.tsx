@@ -13,25 +13,25 @@ const items: MenuProps['items'] = [
       {
         label: '用户管理',
         key: '/customer/user',
-        icon: <UserOutlined />
+        icon: <UserOutlined />,
       },
       {
         label: '企业管理',
         key: '/customer/company',
-        icon: <FormOutlined />
-      }
-    ]
+        icon: <FormOutlined />,
+      },
+    ],
   },
   {
     label: '客服管理',
     key: '/service',
-    icon: <CustomerServiceOutlined />
+    icon: <CustomerServiceOutlined />,
   },
   {
     label: '产品管理',
     key: '/product',
-    icon: <ProjectOutlined />
-  }
+    icon: <ProjectOutlined />,
+  },
 ]
 
 const SideBar: React.FC = () => {

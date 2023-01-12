@@ -30,7 +30,7 @@ const ProductTypeManage: React.FC = () => {
         setProductTypes(res.data)
       } else {
         void message.error({
-          content: res.data
+          content: res.data,
         })
       }
     } catch (err) {
@@ -55,25 +55,25 @@ const ProductTypeManage: React.FC = () => {
       ),
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500'
+        className: 'text-blue-500',
       },
       onOk: async () => {
         try {
           const res = await addProductType(name)
           if (res.code === 0) {
             void message.success({
-              content: '添加成功'
+              content: '添加成功',
             })
             void loadProductTypes()
           } else {
             void message.error({
-              content: res.data
+              content: res.data,
             })
           }
         } catch (err) {
           console.error(err)
         }
-      }
+      },
     })
   }
 
@@ -104,35 +104,35 @@ const ProductTypeManage: React.FC = () => {
       ),
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500'
+        className: 'text-blue-500',
       },
       onOk: async () => {
         try {
           const res1 = await addProductModel(name, id)
           if (res1.code === 0) {
             void message.success({
-              content: '添加成功'
+              content: '添加成功',
             })
           } else {
             void message.error({
-              content: res1.data
+              content: res1.data,
             })
           }
 
           const res2 = await manageCustomerService(id, services)
           if (res2.code === 0) {
             void message.success({
-              content: '添加成功'
+              content: '添加成功',
             })
           } else {
             void message.error({
-              content: res2.data
+              content: res2.data,
             })
           }
         } catch (err) {
           console.error(err)
         }
-      }
+      },
     })
   }
 
@@ -149,21 +149,21 @@ const ProductTypeManage: React.FC = () => {
       ),
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500'
+        className: 'text-blue-500',
       },
       onOk: async () => {
         const res = await updateProductType(type.type_id, name)
         if (res.code === 0) {
           void message.success({
-            content: '更新成功'
+            content: '更新成功',
           })
           void loadProductTypes()
         } else {
           void message.error({
-            content: res.data
+            content: res.data,
           })
         }
-      }
+      },
     })
   }
 
@@ -173,29 +173,29 @@ const ProductTypeManage: React.FC = () => {
       content: '确认移除当前产品大类及其产品？',
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500'
+        className: 'text-blue-500',
       },
       onOk: async () => {
         try {
           const res1 = await removeProductType(product.type_id)
           if (res1.code === 0) {
             void message.success({
-              content: '删除成功'
+              content: '删除成功',
             })
           } else {
             void message.error({
-              content: res1.data
+              content: res1.data,
             })
           }
 
           const res2 = await removeCustomerService(product.type_id)
           if (res2.code === 0) {
             void message.success({
-              content: '删除成功'
+              content: '删除成功',
             })
           } else {
             void message.error({
-              content: res2.data
+              content: res2.data,
             })
           }
 
@@ -203,7 +203,7 @@ const ProductTypeManage: React.FC = () => {
         } catch (err) {
           console.error(err)
         }
-      }
+      },
     })
   }
 
@@ -239,7 +239,7 @@ const ProductTypeManage: React.FC = () => {
         loading={isLoading}
         pagination={{
           current: pageNum,
-          pageSize: DEFAULT_PAGE_SIZE
+          pageSize: DEFAULT_PAGE_SIZE,
         }}
         onChange={pagination => {
           setPageNum(pagination.current ?? 1)

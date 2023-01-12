@@ -42,7 +42,7 @@ const CustomerServiceManage: React.FC = () => {
 
       if (res.code !== 0) {
         void message.error({
-          content: res.data
+          content: res.data,
         })
       }
 
@@ -79,12 +79,12 @@ const CustomerServiceManage: React.FC = () => {
             v.services = res.data.server_info_list
           } else {
             void message.error({
-              content: res.data.toString().replace(/该产品型号/, v.model_name)
+              content: res.data.toString().replace(/该产品型号/, v.model_name),
             })
           }
           return v
-        })
-      )
+        }),
+      ),
     )
       .then(res => {
         setProducts(res.filter(v => v.status === 'fulfilled').map(v => (v.status === 'fulfilled' ? v.value : null)) as ProductModelWithServer[])
@@ -111,7 +111,7 @@ const CustomerServiceManage: React.FC = () => {
       ),
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500'
+        className: 'text-blue-500',
       },
       onOk: async () => {
         try {
@@ -119,17 +119,17 @@ const CustomerServiceManage: React.FC = () => {
           if (res.code === 0) {
             loadProductModels()
             void message.success({
-              content: '修改成功'
+              content: '修改成功',
             })
           } else {
             void message.error({
-              content: res.data
+              content: res.data,
             })
           }
         } catch (err) {
           console.error(err)
         }
-      }
+      },
     })
   }
 
@@ -144,7 +144,7 @@ const CustomerServiceManage: React.FC = () => {
         pagination={{
           current: pageNum,
           total: totalNum,
-          pageSize: DEFAULT_PAGE_SIZE
+          pageSize: DEFAULT_PAGE_SIZE,
         }}
         onChange={pagination => {
           setPageNum(pagination.current ?? 1)

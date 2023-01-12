@@ -43,7 +43,7 @@ export const setStorage = <T = unknown>(key: string, value: T | null, expire = 0
       value,
       time: Date.now(),
       expire,
-    })
+    }),
   )
 
   storage.setItem(s_key, data)

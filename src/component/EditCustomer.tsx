@@ -18,8 +18,8 @@ export default forwardRef(function EditCustomer(props: EditCustomerProps, _ref):
     getCustomer: () => ({
       name,
       mobile,
-      company
-    })
+      company,
+    }),
   }))
 
   useEffect(() => {

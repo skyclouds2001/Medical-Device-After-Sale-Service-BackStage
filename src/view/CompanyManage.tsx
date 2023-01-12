@@ -38,7 +38,7 @@ const CompanyManage: React.FC = () => {
         if (isFirst) setTotal(res.data.total_num)
       } else {
         void message.error({
-          content: res.data
+          content: res.data,
         })
       }
     } catch (err) {
@@ -65,26 +65,26 @@ const CompanyManage: React.FC = () => {
       ),
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500'
+        className: 'text-blue-500',
       },
       onOk: async () => {
         try {
           const res = await addCompanyInfo(name)
           if (res.code === 0) {
             void message.success({
-              content: '添加成功'
+              content: '添加成功',
             })
             void loadCompany(false, pageNum)
             setTotal(total + 1)
           } else {
             void message.error({
-              content: res.data
+              content: res.data,
             })
           }
         } catch (err) {
           console.error(err)
         }
-      }
+      },
     })
   }
 
@@ -105,25 +105,25 @@ const CompanyManage: React.FC = () => {
       ),
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500'
+        className: 'text-blue-500',
       },
       onOk: async () => {
         try {
           const res = await updateCompanyInfo(company.company_id, name)
           if (res.code === 0) {
             void message.success({
-              content: '更新成功'
+              content: '更新成功',
             })
             void loadCompany(false, pageNum)
           } else {
             void message.error({
-              content: res.data
+              content: res.data,
             })
           }
         } catch (err) {
           console.error(err)
         }
-      }
+      },
     })
   }
 
@@ -142,16 +142,16 @@ const CompanyManage: React.FC = () => {
         const res = await removeCompanyInfo(company.company_id)
         if (res.code === 0) {
           void message.success({
-            content: '删除成功'
+            content: '删除成功',
           })
           void loadCompany(false, pageNum)
           setTotal(total - 1)
         } else {
           void message.error({
-            content: res.data
+            content: res.data,
           })
         }
-      }
+      },
     })
   }
 
@@ -179,7 +179,7 @@ const CompanyManage: React.FC = () => {
         pagination={{
           current: pageNum,
           total,
-          pageSize: DEFAULT_PAGE_SIZE
+          pageSize: DEFAULT_PAGE_SIZE,
         }}
         onChange={pagination => {
           setPageNum(pagination.current ?? 1)

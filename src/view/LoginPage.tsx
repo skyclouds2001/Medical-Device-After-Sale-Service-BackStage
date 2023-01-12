@@ -41,7 +41,7 @@ const LoginPage: React.FC = () => {
 
       if (res1.code !== 0) {
         void message.error({
-          content: res1.data
+          content: res1.data,
         })
       }
 
@@ -51,7 +51,7 @@ const LoginPage: React.FC = () => {
 
       if (res2.code !== 0) {
         void message.error({
-          content: res2.data
+          content: res2.data,
         })
       }
     } catch (err) {
@@ -66,13 +66,13 @@ const LoginPage: React.FC = () => {
     const configs: LoginStorage = {
       user,
       password,
-      remember
+      remember,
     }
     adminLogin(user, password)
       .then(res => {
         if (res.code === 0) {
           void message.success({
-            content: '登录成功'
+            content: '登录成功',
           })
           const { admin_uuid: uuid, has_set_general_kf: isSet, jwt_token: token } = res.data
           if (!configs.remember) configs.password = undefined
@@ -83,7 +83,7 @@ const LoginPage: React.FC = () => {
           navigate(DEFAULT_REDIRECT_PATH)
         } else {
           void message.error({
-            content: res.data
+            content: res.data,
           })
         }
       })
@@ -100,12 +100,12 @@ const LoginPage: React.FC = () => {
       .then(res => {
         if (res.code === 0) {
           void message.success({
-            content: '操作成功'
+            content: '操作成功',
           })
           setModalOpen(false)
         } else {
           void message.error({
-            content: res.data
+            content: res.data,
           })
           setEncryptedPassword('')
           setNewPassword('')

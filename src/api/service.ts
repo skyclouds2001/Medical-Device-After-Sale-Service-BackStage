@@ -51,7 +51,7 @@ export const removeSingleServer = async (productModelId: number): Promise<Respon
 export const manageCustomerService = async (productModelId: number, userIdList: number[]): Promise<Response<void>> => {
   const res = await instance.post<Response<void>>('/wizz/aftersale/account/kf/setKfByModelId', {
     product_model_id: productModelId,
-    user_id_list: userIdList
+    user_id_list: userIdList,
   })
   return res.data
 }

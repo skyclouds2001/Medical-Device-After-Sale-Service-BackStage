@@ -12,7 +12,7 @@ type GetProductTypeResponse = ProductType
  */
 export const getProductType = async (productTypeId: number): Promise<Response<GetProductTypeResponse>> => {
   const res = await instance.get<Response<GetProductTypeResponse>>('/wizz/aftersale/product-type/get', {
-    params: { productTypeId }
+    params: { productTypeId },
   })
   return res.data
 }
@@ -23,7 +23,7 @@ export const getProductType = async (productTypeId: number): Promise<Response<Ge
  */
 export const addProductType = async (typeName: string): Promise<Response<void>> => {
   const res = await instance.post<Response<void>>('/wizz/aftersale/product-type/add', {
-    type_name: typeName
+    type_name: typeName,
   })
   return res.data
 }
@@ -36,7 +36,7 @@ export const addProductType = async (typeName: string): Promise<Response<void>> 
 export const updateProductType = async (typeId: number, typeName: string): Promise<Response<void>> => {
   const res = await instance.post<Response<void>>('/wizz/aftersale/product-type/update', {
     type_id: typeId,
-    type_name: typeName
+    type_name: typeName,
   })
   return res.data
 }
@@ -49,8 +49,8 @@ export const removeProductType = async (productTypeId: number): Promise<Response
   const res = await instance.delete<Response<void>>('/wizz/aftersale/product-type/delete', {
     data: `productTypeId=${productTypeId}`,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
   })
   return res.data
 }

@@ -24,13 +24,13 @@ const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props =>
         result.push({
           label: v.department_name,
           value: v.department_id,
-          children: res
+          children: res,
         })
       } else {
         result.push({
           label: v.user_name,
           value: v.user_id,
-          children: undefined
+          children: undefined,
         })
       }
     }
@@ -55,7 +55,7 @@ const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props =>
       value
         .map(v => v.at(-1))
         .filter(v => v !== undefined)
-        .map(v => (typeof v === 'string' ? parseInt(v) : (v as number)))
+        .map(v => (typeof v === 'string' ? parseInt(v) : (v as number))),
     )
   }
 

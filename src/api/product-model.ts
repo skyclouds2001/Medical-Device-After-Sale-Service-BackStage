@@ -12,7 +12,7 @@ type GetProductModelResponse = ProductModel
  */
 export const getProductModel = async (productModelId: number): Promise<Response<GetProductModelResponse>> => {
   const res = await instance.get<Response<GetProductModelResponse>>('/wizz/aftersale/product-model/get', {
-    params: { productModelId }
+    params: { productModelId },
   })
   return res.data
 }
@@ -25,7 +25,7 @@ export const getProductModel = async (productModelId: number): Promise<Response<
 export const addProductModel = async (modelName: string, typeId: number): Promise<Response<void>> => {
   const res = await instance.post<Response<void>>('/wizz/aftersale/product-model/add', {
     model_name: modelName,
-    type_id: typeId
+    type_id: typeId,
   })
   return res.data
 }
@@ -40,7 +40,7 @@ export const updateProductModel = async (modelId: number, modelName: string, typ
   const res = await instance.post<Response<void>>('/wizz/aftersale/product-model/update', {
     model_id: modelId,
     model_name: modelName,
-    type_id: typeId
+    type_id: typeId,
   })
   return res.data
 }
@@ -53,8 +53,8 @@ export const removeProductModel = async (productModelId: number): Promise<Respon
   const res = await instance.delete<Response<void>>('/wizz/aftersale/product-model/delete', {
     data: `productModelId=${productModelId}`,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
   })
   return res.data
 }
@@ -70,8 +70,8 @@ type GetProductModelByTypeResponse = ProductModel[]
 export const getProductModelByType = async (productTypeId: number): Promise<Response<GetProductModelByTypeResponse>> => {
   const res = await instance.get<Response<GetProductModelByTypeResponse>>('/wizz/aftersale/product-model/getByTypeId', {
     params: {
-      productTypeId
-    }
+      productTypeId,
+    },
   })
   return res.data
 }

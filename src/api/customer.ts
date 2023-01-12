@@ -31,7 +31,7 @@ export const addCustomerInfo = async (companyId: number, customerName: string, m
   const res = await instance.post<Response<void>>(`/wizz/aftersale/account/customer/add`, {
     company_id: companyId,
     customer_name: customerName,
-    mobile
+    mobile,
   })
   return res.data
 }
@@ -48,7 +48,7 @@ export const updateCustomerInfo = async (companyId: number, customerId: number, 
     company_id: companyId,
     customer_id: customerId,
     customer_name: customerName,
-    mobile
+    mobile,
   })
   return res.data
 }
