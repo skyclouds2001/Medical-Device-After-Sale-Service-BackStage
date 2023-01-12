@@ -1,22 +1,37 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Outlet, useRoutes } from 'react-router-dom'
-import BasePage from '@/view/BasePage'
-import LoginPage from '@/view/LoginPage'
-import ProductTypeManage from '@/view/ProductTypeManage'
-import ProductModelManage from '@/view/ProductModelManage'
-import UserManage from '@/view/UserManage'
-import CustomerServiceManage from '@/view/CustomerServiceManage'
-import CompanyManage from '@/view/CompanyManage'
+
+const BasePage = lazy(async () => await import('@/view/BasePage'))
+
+const LoginPage = lazy(async () => await import('@/view/LoginPage'))
+
+const UserManage = lazy(async () => await import('@/view/UserManage'))
+
+const CompanyManage = lazy(async () => await import('@/view/CompanyManage'))
+
+const CustomerServiceManage = lazy(async () => await import('@/view/CustomerServiceManage'))
+
+const ProductTypeManage = lazy(async () => await import('@/view/ProductTypeManage'))
+
+const ProductModelManage = lazy(async () => await import('@/view/ProductModelManage'))
 
 const Routes: React.FC = () => {
   return useRoutes([
     {
       path: '/',
-      element: <LoginPage />
+      element: (
+        <Suspense>
+          <LoginPage />
+        </Suspense>
+      ),
     },
     {
       path: '/',
-      element: <BasePage />,
+      element: (
+        <Suspense>
+          <BasePage />
+        </Suspense>
+      ),
       children: [
         {
           path: '/customer',
@@ -24,28 +39,48 @@ const Routes: React.FC = () => {
           children: [
             {
               path: '/customer/user',
-              element: <UserManage />
+              element: (
+                <Suspense>
+                  <UserManage />
+                </Suspense>
+              ),
             },
             {
               path: '/customer/company',
-              element: <CompanyManage />
-            }
-          ]
+              element: (
+                <Suspense>
+                  <CompanyManage />
+                </Suspense>
+              ),
+            },
+          ],
         },
         {
           path: '/service',
-          element: <CustomerServiceManage />
+          element: (
+            <Suspense>
+              <CustomerServiceManage />
+            </Suspense>
+          ),
         },
         {
           path: '/product',
-          element: <ProductTypeManage />
+          element: (
+            <Suspense>
+              <ProductTypeManage />
+            </Suspense>
+          ),
         },
         {
           path: '/product/model/:id',
-          element: <ProductModelManage />
-        }
-      ]
-    }
+          element: (
+            <Suspense>
+              <ProductModelManage />
+            </Suspense>
+          ),
+        },
+      ],
+    },
   ])
 }
 
