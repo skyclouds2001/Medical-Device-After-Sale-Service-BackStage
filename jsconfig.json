@@ -1,15 +1,9 @@
 {
   "compilerOptions": {
-    "noLib": false,
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "Node",
-    "checkJs": true,
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*", ".eslintrc.js", ".prettierrc.js", ".commitlintrc.js", ".lintstagedrc.js"],
+  "include": ["src/**/*", "vite.config.ts", ".eslintrc.js", ".prettierrc.js", ".commitlintrc.js", ".lintstagedrc.js", ".postcssrc.js", ".stylelintrc.js", "tailwind.config.js"],
   "exclude": ["node_modules", "dist"]
 }

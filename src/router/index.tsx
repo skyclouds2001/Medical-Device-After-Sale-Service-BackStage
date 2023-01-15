@@ -1,32 +1,87 @@
-import React from 'react'
-import type { RouteProps } from 'react-router-dom'
-import LoginPage from '@/pages/LoginPage'
-import ProductManage from '@/pages/ProductManage'
-import CustomerManage from '@/pages/CustomerManage'
-import CustomerServiceManage from '@/pages/CustomerServiceManage'
-import CompanyManage from '@/pages/CompanyManage'
+import React, { lazy, Suspense } from 'react'
+import { Outlet, useRoutes } from 'react-router-dom'
 
-const routes: RouteProps[] = [
-  {
-    path: '/',
-    element: <LoginPage />
-  },
-  {
-    path: '/customer',
-    element: <CustomerManage />
-  },
-  {
-    path: '/company',
-    element: <CompanyManage />
-  },
-  {
-    path: '/service',
-    element: <CustomerServiceManage />
-  },
-  {
-    path: '/product',
-    element: <ProductManage />
-  }
-]
+const BasePage = lazy(async () => await import('@/view/BasePage'))
 
-export default routes
+const LoginPage = lazy(async () => await import('@/view/LoginPage'))
+
+const UserManage = lazy(async () => await import('@/view/UserManage'))
+
+const CompanyManage = lazy(async () => await import('@/view/CompanyManage'))
+
+const CustomerServiceManage = lazy(async () => await import('@/view/CustomerServiceManage'))
+
+const ProductTypeManage = lazy(async () => await import('@/view/ProductTypeManage'))
+
+const ProductModelManage = lazy(async () => await import('@/view/ProductModelManage'))
+
+const Routes: React.FC = () => {
+  return useRoutes([
+    {
+      path: '/',
+      element: (
+        <Suspense>
+          <LoginPage />
+        </Suspense>
+      ),
+    },
+    {
+      path: '/',
+      element: (
+        <Suspense>
+          <BasePage />
+        </Suspense>
+      ),
+      children: [
+        {
+          path: '/customer',
+          element: <Outlet />,
+          children: [
+            {
+              path: '/customer/user',
+              element: (
+                <Suspense>
+                  <UserManage />
+                </Suspense>
+              ),
+            },
+            {
+              path: '/customer/company',
+              element: (
+                <Suspense>
+                  <CompanyManage />
+                </Suspense>
+              ),
+            },
+          ],
+        },
+        {
+          path: '/service',
+          element: (
+            <Suspense>
+              <CustomerServiceManage />
+            </Suspense>
+          ),
+        },
+        {
+          path: '/product',
+          element: (
+            <Suspense>
+              <ProductTypeManage />
+            </Suspense>
+          ),
+        },
+        {
+          path: '/product/model/:id',
+          element: (
+            <Suspense>
+              <ProductModelManage />
+            </Suspense>
+          ),
+        },
+      ],
+    },
+  ])
+}
+
+export default Routes
