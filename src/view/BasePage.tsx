@@ -26,17 +26,17 @@ const BasePage: React.FC = () => {
       </Layout.Sider>
       <Layout className="site-layout">
         <Layout.Header className="bg-white p-0">
-          <Breadcrumb className="leading-[64px] px-5 select-none">
+          <Breadcrumb className="leading-[64px] px-8 select-none">
             <Breadcrumb.Item>客服工单系统</Breadcrumb.Item>
             <Breadcrumb.Item>{title}</Breadcrumb.Item>
           </Breadcrumb>
         </Layout.Header>
-        <Layout.Content className="m-5">
-          <div className="min-h-[400px] p-10 bg-white">
+        <Layout.Content className="mx-8 my-5">
+          <div className="min-h-[600px] px-14 py-5 bg-white rounded">
             <Outlet />
           </div>
         </Layout.Content>
-        <Layout.Footer className="text-center">Wizz Studio © 2022-PRESENT &nbsp;&nbsp;&nbsp;&nbsp; Created by skyclouds2001</Layout.Footer>
+        <Layout.Footer className="text-center hidden">Wizz Studio © 2022-PRESENT &nbsp;&nbsp;&nbsp;&nbsp; Created by skyclouds2001</Layout.Footer>
       </Layout>
     </Layout>
   )
