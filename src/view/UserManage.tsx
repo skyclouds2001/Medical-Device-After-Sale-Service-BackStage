@@ -34,6 +34,7 @@ const UserManage: React.FC = () => {
 
   /**
    * 加载客户信息
+   *
    * @param isFirst 是否首次加载
    * @param num 当前页数
    */
@@ -96,6 +97,7 @@ const UserManage: React.FC = () => {
 
   /**
    * 更新客户信息
+   *
    * @param customer 需更新的客户信息
    */
   const editCustomer = (customer: Customer): void => {
@@ -133,6 +135,7 @@ const UserManage: React.FC = () => {
 
   /**
    * 移除客户信息
+   *
    * @param customer 客户信息
    */
   const removeCustomer = (customer: Customer): void => {
@@ -143,17 +146,21 @@ const UserManage: React.FC = () => {
       okType: 'danger',
       closable: true,
       onOk: async () => {
-        const res = await removeCustomerInfo(customer.customer_id)
-        if (res.code === 0) {
-          void message.success({
-            content: '删除成功',
-          })
-          void loadCustomer(false, pageNum)
-          setTotal(total - 1)
-        } else {
-          void message.error({
-            content: res.data,
-          })
+        try {
+          const res = await removeCustomerInfo(customer.customer_id)
+          if (res.code === 0) {
+            void message.success({
+              content: '删除成功',
+            })
+            void loadCustomer(false, pageNum)
+            setTotal(total - 1)
+          } else {
+            void message.error({
+              content: res.data,
+            })
+          }
+        } catch (err) {
+          console.error(err)
         }
       },
     })

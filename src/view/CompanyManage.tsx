@@ -32,6 +32,7 @@ const CompanyManage: React.FC = () => {
 
   /**
    * 加载企业信息
+   *
    * @param isFirst 是否首次加载
    * @param num 当前页数
    */
@@ -57,6 +58,8 @@ const CompanyManage: React.FC = () => {
 
   /**
    * 添加企业
+   *
+   * @param params
    */
   const addCompany = async (params: Omit<Company, 'company_id'>): Promise<void> => {
     try {
@@ -79,6 +82,7 @@ const CompanyManage: React.FC = () => {
 
   /**
    * 更新企业信息
+   *
    * @param params 需更新的企业信息
    */
   const editCompany = async (params: Company): Promise<void> => {
@@ -101,6 +105,7 @@ const CompanyManage: React.FC = () => {
 
   /**
    * 移除企业信息
+   *
    * @param company 企业信息
    */
   const removeCompany = (company: Company): void => {
@@ -111,17 +116,21 @@ const CompanyManage: React.FC = () => {
       okType: 'danger',
       closable: true,
       onOk: async () => {
-        const res = await removeCompanyInfo(company.company_id)
-        if (res.code === 0) {
-          void message.success({
-            content: '删除成功',
-          })
-          void loadCompany(false, pageNum)
-          setTotal(total - 1)
-        } else {
-          void message.error({
-            content: res.data,
-          })
+        try {
+          const res = await removeCompanyInfo(company.company_id)
+          if (res.code === 0) {
+            void message.success({
+              content: '删除成功',
+            })
+            void loadCompany(false, pageNum)
+            setTotal(total - 1)
+          } else {
+            void message.error({
+              content: res.data,
+            })
+          }
+        } catch (err) {
+          console.error(err)
         }
       },
     })

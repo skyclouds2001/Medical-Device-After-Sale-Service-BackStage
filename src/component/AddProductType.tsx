@@ -5,7 +5,7 @@ import type { ProductType } from '@/model'
 
 interface AddProductTypeProps {
   open: boolean
-  onSubmit: (params: Omit<ProductType, 'type_id'>) => void
+  onSubmit: (props: Omit<ProductType, 'type_id'>) => void
   onCancel: () => void
 }
 
