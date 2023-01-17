@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useNavigate, useLocation } from 'react-router-dom'
-import { Button, Form, Input, Modal, Table, App, Row, Col } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Button, Form, Input, Modal, Table, App, Row, Col, Select } from 'antd'
 import { LeftOutlined } from '@ant-design/icons'
-import { addProductModel, getProductModelByType, manageCustomerService, removeProductModel, removeSingleServer, updateProductModel } from '@/api'
+import { addProductModel, getAllProductModels, manageCustomerService, removeProductModel, removeSingleServer, updateProductModel } from '@/api'
 import CustomerServiceSelector from '@/component/CustomerServiceSelector'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductModel } from '@/model'
+import type { CustomAction } from '@/store'
 
 const ProductModelManage: React.FC = () => {
-  const navigate = useNavigate()
-  const location = useLocation()
   const { message } = App.useApp()
-
-  const { id } = useParams<'id'>()
-  const name = location.state as string
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [products, setProducts] = useState<ProductModel[]>([])
   const [pageNum, setPageNum] = useState(1)
@@ -22,16 +21,16 @@ const ProductModelManage: React.FC = () => {
   const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
+    dispatch<CustomAction>({ type: 'title/update', title: '产品型号管理' })
     void loadProductModels()
   }, [])
 
   const loadProductModels = async (): Promise<void> => {
     setLoading(true)
     try {
-      const res = await getProductModelByType(parseInt(typeof id === 'string' ? id : '0'))
+      const res = await getAllProductModels()
       if (res.code === 0) {
         const products = res.data
-        products.forEach(v => (v.type_name = name))
         setProducts(products)
         setTotal(products.length)
       } else {
@@ -50,13 +49,23 @@ const ProductModelManage: React.FC = () => {
 
   const addProductModels = (): void => {
     let name = ''
-    let services: number[] = []
+    let id = 0
+    let services: string[] = []
     Modal.confirm({
       title: '添加产品',
       content: (
         <Form labelCol={{ span: 8 }} colon={false}>
           <Form.Item label="产品名称" name="name">
             <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入产品名称" value={name} onChange={e => (name = e.target.value)} />
+          </Form.Item>
+          <Form.Item label="产品所属大类" name="type">
+            <Select className="rounded-sm mx-2" placeholder="请选择产品所属大类" onChange={(value: number) => (id = value)}>
+              {/* {productTypes.map(v => ( */}
+              {/*  <Select.Option key={v.type_id} value={v.type_id}> */}
+              {/*    {v.type_name} */}
+              {/*  </Select.Option> */}
+              {/* ))} */}
+            </Select>
           </Form.Item>
           <Form.Item label="产品所属客服" name="service">
             <CustomerServiceSelector onSelect={v => (services = v)} />
@@ -69,7 +78,7 @@ const ProductModelManage: React.FC = () => {
       },
       onOk: async () => {
         try {
-          const res1 = await addProductModel(name, parseInt(typeof id === 'string' ? id : '0'))
+          const res1 = await addProductModel(name, id)
           if (res1.code === 0) {
             void message.success({
               content: '添加成功',
@@ -80,7 +89,7 @@ const ProductModelManage: React.FC = () => {
             })
           }
 
-          const res2 = await manageCustomerService(parseInt(typeof id === 'string' ? id : '0'), services)
+          const res2 = await manageCustomerService(id, services)
           if (res2.code === 0) {
             void message.success({
               content: '添加成功',

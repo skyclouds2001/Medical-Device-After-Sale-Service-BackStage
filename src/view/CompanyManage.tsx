@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import { Table, Button, Modal, Form, Input, App } from 'antd'
+import { Table, Button, Modal, App } from 'antd'
 import { getCompanyInfo, addCompanyInfo, updateCompanyInfo, removeCompanyInfo } from '@/api'
 import { DEFAULT_PAGE_SIZE } from '@/config'
+import AddCompany from '@/component/AddCompany'
+import EditCompany from '@/component/EditCompany'
 import type { Company } from '@/model'
 import type { CustomAction } from '@/store'
 
@@ -19,6 +21,10 @@ const CompanyManage: React.FC = () => {
   /** 企业列表当前页数 */
   const [pageNum, setPageNum] = useState(1)
 
+  const [showAddCompany, setShowAddCompany] = useState(false)
+  const [showEditCompany, setShowEditCompany] = useState(false)
+  const current = useRef<Company>()
+
   useEffect(() => {
     dispatch<CustomAction>({ type: 'title/update', title: '企业管理' })
     void loadCompany(true, 1)
@@ -26,6 +32,7 @@ const CompanyManage: React.FC = () => {
 
   /**
    * 加载企业信息
+   *
    * @param isFirst 是否首次加载
    * @param num 当前页数
    */
@@ -51,84 +58,54 @@ const CompanyManage: React.FC = () => {
 
   /**
    * 添加企业
+   *
+   * @param params
    */
-  const addCompany = (): void => {
-    let name = ''
-    Modal.confirm({
-      title: '添加企业信息',
-      content: (
-        <Form labelCol={{ span: 8 }} colon={false}>
-          <Form.Item label="企业名称" name="name">
-            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入企业名称" value={name} onChange={e => (name = e.target.value)} />
-          </Form.Item>
-        </Form>
-      ),
-      closable: true,
-      okButtonProps: {
-        className: 'text-blue-500',
-      },
-      onOk: async () => {
-        try {
-          const res = await addCompanyInfo(name)
-          if (res.code === 0) {
-            void message.success({
-              content: '添加成功',
-            })
-            void loadCompany(false, pageNum)
-            setTotal(total + 1)
-          } else {
-            void message.error({
-              content: res.data,
-            })
-          }
-        } catch (err) {
-          console.error(err)
-        }
-      },
-    })
+  const addCompany = async (params: Omit<Company, 'company_id'>): Promise<void> => {
+    try {
+      const res = await addCompanyInfo(params.company_name)
+      if (res.code === 0) {
+        void message.success({
+          content: '添加成功',
+        })
+        void loadCompany(false, pageNum)
+        setTotal(total + 1)
+      } else {
+        void message.error({
+          content: res.data,
+        })
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   /**
    * 更新企业信息
-   * @param company 需更新的企业信息
+   *
+   * @param params 需更新的企业信息
    */
-  const editCompany = (company: Company): void => {
-    let name = ''
-    Modal.confirm({
-      title: '修改企业信息',
-      content: (
-        <Form labelCol={{ span: 8 }} colon={false}>
-          <Form.Item label="企业名称" name="name">
-            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入企业名称" value={name} onChange={e => (name = e.target.value)} />
-          </Form.Item>
-        </Form>
-      ),
-      closable: true,
-      okButtonProps: {
-        className: 'text-blue-500',
-      },
-      onOk: async () => {
-        try {
-          const res = await updateCompanyInfo(company.company_id, name)
-          if (res.code === 0) {
-            void message.success({
-              content: '更新成功',
-            })
-            void loadCompany(false, pageNum)
-          } else {
-            void message.error({
-              content: res.data,
-            })
-          }
-        } catch (err) {
-          console.error(err)
-        }
-      },
-    })
+  const editCompany = async (params: Company): Promise<void> => {
+    try {
+      const res = await updateCompanyInfo(params.company_id, params.company_name)
+      if (res.code === 0) {
+        void message.success({
+          content: '更新成功',
+        })
+        void loadCompany(false, pageNum)
+      } else {
+        void message.error({
+          content: res.data,
+        })
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   /**
    * 移除企业信息
+   *
    * @param company 企业信息
    */
   const removeCompany = (company: Company): void => {
@@ -139,17 +116,21 @@ const CompanyManage: React.FC = () => {
       okType: 'danger',
       closable: true,
       onOk: async () => {
-        const res = await removeCompanyInfo(company.company_id)
-        if (res.code === 0) {
-          void message.success({
-            content: '删除成功',
-          })
-          void loadCompany(false, pageNum)
-          setTotal(total - 1)
-        } else {
-          void message.error({
-            content: res.data,
-          })
+        try {
+          const res = await removeCompanyInfo(company.company_id)
+          if (res.code === 0) {
+            void message.success({
+              content: '删除成功',
+            })
+            void loadCompany(false, pageNum)
+            setTotal(total - 1)
+          } else {
+            void message.error({
+              content: res.data,
+            })
+          }
+        } catch (err) {
+          console.error(err)
         }
       },
     })
@@ -160,10 +141,8 @@ const CompanyManage: React.FC = () => {
       {/* 添加企业信息按钮区域 */}
       <div className="my-5 text-right w-[25rem]">
         <Button
-          className="text-blue-500"
-          type="primary"
           onClick={() => {
-            addCompany()
+            setShowAddCompany(true)
           }}
         >
           添加企业
@@ -198,7 +177,8 @@ const CompanyManage: React.FC = () => {
               <Button
                 type="link"
                 onClick={() => {
-                  editCompany(record)
+                  setShowEditCompany(true)
+                  current.current = record
                 }}
               >
                 编辑
@@ -216,6 +196,27 @@ const CompanyManage: React.FC = () => {
           )}
         />
       </Table>
+
+      <AddCompany
+        open={showAddCompany}
+        onSubmit={props => {
+          void addCompany(props)
+        }}
+        onCancel={() => {
+          setShowAddCompany(false)
+        }}
+      />
+
+      <EditCompany
+        open={showEditCompany}
+        onSubmit={props => {
+          void editCompany(props)
+        }}
+        onCancel={() => {
+          setShowEditCompany(false)
+        }}
+        properties={current.current as Company}
+      />
     </>
   )
 }

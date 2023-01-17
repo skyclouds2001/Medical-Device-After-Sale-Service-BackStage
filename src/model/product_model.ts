@@ -1,3 +1,5 @@
+import Service from '@/model/service'
+
 /**
  * 产品型号数据结构
  */
@@ -10,4 +12,6 @@ export default interface ProductModel {
   type_id: number
   /** 产品型号所属大类 */
   type_name: string
+  /** 产品型号所属客服 */
+  services?: Service[]
 }
