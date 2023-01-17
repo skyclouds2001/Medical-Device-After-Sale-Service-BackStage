@@ -3,13 +3,13 @@ import { Cascader } from 'antd'
 import { getDepartmentsAndStaffs } from '@/api'
 
 interface Option {
-  value: number
+  value: number | string
   label: string
   children?: Option[]
 }
 
 interface CustomerServiceSelectorProps {
-  onSelect?: (value: number[]) => void
+  onSelect: (value: string[]) => void
 }
 
 const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props => {
@@ -54,14 +54,14 @@ const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props =>
     props.onSelect?.(
       value
         .map(v => v.at(-1))
-        .filter(v => v !== undefined)
-        .map(v => (typeof v === 'string' ? parseInt(v) : (v as number))),
+        .filter(v => v)
+        .map(v => v as string),
     )
   }
 
   return (
     <>
-      <Cascader options={options} onChange={handleOptionChange} placeholder="" multiple maxTagCount="responsive" />
+      <Cascader options={options} onChange={handleOptionChange} placeholder="请选择客服" multiple maxTagCount="responsive" />
     </>
   )
 }

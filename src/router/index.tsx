@@ -65,14 +65,20 @@ const Routes: React.FC = () => {
         },
         {
           path: '/product',
-          element: (
-            <Suspense>
-              <ProductTypeManage />
-            </Suspense>
-          ),
+          element: <Outlet />,
+          children: [
+            {
+              path: '/product/type',
+              element: (
+                <Suspense>
+                  <ProductTypeManage />
+                </Suspense>
+              ),
+            },
+          ],
         },
         {
-          path: '/product/model/:id',
+          path: '/product/model',
           element: (
             <Suspense>
               <ProductModelManage />
