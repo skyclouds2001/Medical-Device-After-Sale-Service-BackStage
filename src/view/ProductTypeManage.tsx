@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Button, Table, Modal, Form, Input, Select, App } from 'antd'
@@ -8,6 +8,7 @@ import CustomerServiceSelector from '@/component/CustomerServiceSelector'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductType } from '@/model'
 import type { CustomAction } from '@/store'
+import EditProductType from '@/component/EditProductType'
 
 const ProductTypeManage: React.FC = () => {
   const { message } = App.useApp()
@@ -19,6 +20,8 @@ const ProductTypeManage: React.FC = () => {
   const [pageNum, setPageNum] = useState(1)
 
   const [showAddProductType, setShowAddProductType] = useState(false)
+  const [showEditProductType, setShowEditProductType] = useState(false)
+  const current = useRef<ProductType>()
 
   useEffect(() => {
     dispatch<CustomAction>({ type: 'title/update', title: '产品管理' })
@@ -53,6 +56,7 @@ const ProductTypeManage: React.FC = () => {
           content: '添加成功',
         })
         void loadProductTypes()
+        setShowAddProductType(false)
       } else {
         void message.error({
           content: res.data,
@@ -122,35 +126,23 @@ const ProductTypeManage: React.FC = () => {
     })
   }
 
-  const editProductType = (type: ProductType): void => {
-    let name = ''
-    Modal.confirm({
-      title: '编辑产品大类信息',
-      content: (
-        <Form labelCol={{ span: 8 }} colon={false}>
-          <Form.Item label="产品大类名称" name="name">
-            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入产品大类名称" value={name} onChange={e => (name = e.target.value)} />
-          </Form.Item>
-        </Form>
-      ),
-      closable: true,
-      okButtonProps: {
-        className: 'text-blue-500',
-      },
-      onOk: async () => {
-        const res = await updateProductType(type.type_id, name)
-        if (res.code === 0) {
-          void message.success({
-            content: '更新成功',
-          })
-          void loadProductTypes()
-        } else {
-          void message.error({
-            content: res.data,
-          })
-        }
-      },
-    })
+  const editProductType = async (type: ProductType): Promise<void> => {
+    try {
+      const res = await updateProductType(type.type_id, type.type_name)
+      if (res.code === 0) {
+        void message.success({
+          content: '更新成功',
+        })
+        void loadProductTypes()
+        setShowEditProductType(false)
+      } else {
+        void message.error({
+          content: res.data,
+        })
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   const deleteProductType = (product: ProductType): void => {
@@ -252,7 +244,8 @@ const ProductTypeManage: React.FC = () => {
               <Button
                 type="link"
                 onClick={() => {
-                  editProductType(record)
+                  setShowEditProductType(true)
+                  current.current = record
                 }}
               >
                 编辑
@@ -279,6 +272,17 @@ const ProductTypeManage: React.FC = () => {
         onCancel={() => {
           setShowAddProductType(false)
         }}
+      />
+
+      <EditProductType
+        open={showEditProductType}
+        onSubmit={params => {
+          void editProductType(params)
+        }}
+        onCancel={() => {
+          setShowEditProductType(false)
+        }}
+        properties={current.current as ProductType}
       />
     </>
   )
