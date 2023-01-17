@@ -9,7 +9,7 @@ interface Option {
 }
 
 interface CustomerServiceSelectorProps {
-  onSelect?: (value: number[]) => void
+  onSelect: (value: number[]) => void
 }
 
 const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props => {
