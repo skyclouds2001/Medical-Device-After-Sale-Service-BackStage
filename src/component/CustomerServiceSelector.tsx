@@ -9,7 +9,7 @@ interface Option {
 }
 
 interface CustomerServiceSelectorProps {
-  onSelect: (value: number[]) => void
+  onSelect: (value: string[]) => void
 }
 
 const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props => {
@@ -55,7 +55,7 @@ const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props =>
       value
         .map(v => v.at(-1))
         .filter(v => v)
-        .map(v => (typeof v === 'string' ? parseInt(v) : (v as number))),
+        .map(v => v as string),
     )
   }
 

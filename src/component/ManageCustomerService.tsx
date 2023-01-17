@@ -4,12 +4,12 @@ import CustomerServiceSelector from '@/component/CustomerServiceSelector'
 
 interface EditCustomerServiceProps {
   open: boolean
-  onSubmit: (ids: number[]) => void
+  onSubmit: (ids: string[]) => void
   onCancel: () => void
 }
 
 const ManageCustomerService: React.FC<EditCustomerServiceProps> = props => {
-  const groups = useRef<number[]>([])
+  const groups = useRef<string[]>([])
 
   const submit = (): void => {
     props.onSubmit(groups.current)
@@ -19,7 +19,7 @@ const ManageCustomerService: React.FC<EditCustomerServiceProps> = props => {
     props.onCancel()
   }
 
-  const select = (ids: number[]): void => {
+  const select = (ids: string[]): void => {
     groups.current = ids
   }
 

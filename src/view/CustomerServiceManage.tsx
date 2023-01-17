@@ -97,7 +97,8 @@ const CustomerServiceManage: React.FC = () => {
    *  编辑产品对应客服
    * @param ids 客服ids
    */
-  const editService = async (ids: number[]): Promise<void> => {
+  const editService = async (ids: string[]): Promise<void> => {
+    console.log(ids)
     if (current.current === undefined) return
     try {
       const res = await manageCustomerService(current.current.model_id, ids)
