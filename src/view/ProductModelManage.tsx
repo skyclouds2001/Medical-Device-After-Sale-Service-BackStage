@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useNavigate, useLocation } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Button, Form, Input, Modal, Table, App, Row, Col } from 'antd'
 import { LeftOutlined } from '@ant-design/icons'
-import { addProductModel, getProductModelByType, manageCustomerService, removeProductModel, removeSingleServer, updateProductModel } from '@/api'
+import { addProductModel, getAllProductModels, manageCustomerService, removeProductModel, removeSingleServer, updateProductModel } from '@/api'
 import CustomerServiceSelector from '@/component/CustomerServiceSelector'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductModel } from '@/model'
 
 const ProductModelManage: React.FC = () => {
   const navigate = useNavigate()
-  const location = useLocation()
   const { message } = App.useApp()
 
   const { id } = useParams<'id'>()
-  const name = location.state as string
 
   const [products, setProducts] = useState<ProductModel[]>([])
   const [pageNum, setPageNum] = useState(1)
@@ -28,10 +26,9 @@ const ProductModelManage: React.FC = () => {
   const loadProductModels = async (): Promise<void> => {
     setLoading(true)
     try {
-      const res = await getProductModelByType(parseInt(typeof id === 'string' ? id : '0'))
+      const res = await getAllProductModels()
       if (res.code === 0) {
         const products = res.data
-        products.forEach(v => (v.type_name = name))
         setProducts(products)
         setTotal(products.length)
       } else {
