@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Button, Table, Modal, Form, Input, Select, App } from 'antd'
 import { addProductModel, addProductType, getAllProductTypes, manageCustomerService, removeCustomerService, removeProductType, updateProductType } from '@/api'
+import AddProductType from '@/component/AddProductType'
 import CustomerServiceSelector from '@/component/CustomerServiceSelector'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductType } from '@/model'
@@ -16,6 +17,8 @@ const ProductTypeManage: React.FC = () => {
   const [productTypes, setProductTypes] = useState<ProductType[]>([])
   const [isLoading, setLoading] = useState(false)
   const [pageNum, setPageNum] = useState(1)
+
+  const [showAddProductType, setShowAddProductType] = useState(false)
 
   useEffect(() => {
     dispatch<CustomAction>({ type: 'title/update', title: '产品管理' })
@@ -42,39 +45,22 @@ const ProductTypeManage: React.FC = () => {
     }
   }
 
-  const addProductTypes = (): void => {
-    let name = ''
-    Modal.confirm({
-      title: '添加产品大类',
-      content: (
-        <Form labelCol={{ span: 8 }} colon={false}>
-          <Form.Item label="产品大类名称" name="name">
-            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入产品大类名称" value={name} onChange={e => (name = e.target.value)} />
-          </Form.Item>
-        </Form>
-      ),
-      closable: true,
-      okButtonProps: {
-        className: 'text-blue-500',
-      },
-      onOk: async () => {
-        try {
-          const res = await addProductType(name)
-          if (res.code === 0) {
-            void message.success({
-              content: '添加成功',
-            })
-            void loadProductTypes()
-          } else {
-            void message.error({
-              content: res.data,
-            })
-          }
-        } catch (err) {
-          console.error(err)
-        }
-      },
-    })
+  const addProductTypes = async (params: Omit<ProductType, 'type_id'>): Promise<void> => {
+    try {
+      const res = await addProductType(params.type_name)
+      if (res.code === 0) {
+        void message.success({
+          content: '添加成功',
+        })
+        void loadProductTypes()
+      } else {
+        void message.error({
+          content: res.data,
+        })
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   const addProductModels = (): void => {
@@ -224,7 +210,7 @@ const ProductTypeManage: React.FC = () => {
           className="text-blue-500"
           type="primary"
           onClick={() => {
-            addProductTypes()
+            setShowAddProductType(true)
           }}
         >
           添加产品大类
@@ -284,6 +270,16 @@ const ProductTypeManage: React.FC = () => {
           )}
         />
       </Table>
+
+      <AddProductType
+        open={showAddProductType}
+        onSubmit={params => {
+          void addProductTypes(params)
+        }}
+        onCancel={() => {
+          setShowAddProductType(false)
+        }}
+      />
     </>
   )
 }
