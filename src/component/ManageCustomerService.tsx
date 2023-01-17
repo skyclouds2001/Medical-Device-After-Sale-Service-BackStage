@@ -1,25 +1,18 @@
 import React, { useRef } from 'react'
 import { Form, Modal } from 'antd'
 import CustomerServiceSelector from '@/component/CustomerServiceSelector'
-import type { ProductModel } from '@/model'
 
 interface EditCustomerServiceProps {
   open: boolean
-  onSubmit: (props: ProductModel) => void
+  onSubmit: (ids: number[]) => void
   onCancel: () => void
-  properties: ProductModel
 }
 
-const EditCustomerService: React.FC<EditCustomerServiceProps> = props => {
+const ManageCustomerService: React.FC<EditCustomerServiceProps> = props => {
   const groups = useRef<number[]>([])
 
   const submit = (): void => {
-    props.onSubmit({
-      ...props.properties,
-      /* eslint-disable-next-line */
-      // @ts-ignore
-      services: [...groups.current],
-    })
+    props.onSubmit(groups.current)
   }
 
   const cancel = (): void => {
@@ -41,4 +34,4 @@ const EditCustomerService: React.FC<EditCustomerServiceProps> = props => {
   )
 }
 
-export default EditCustomerService
+export default ManageCustomerService

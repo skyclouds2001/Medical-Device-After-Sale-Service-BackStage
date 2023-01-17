@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { App, Button, Table } from 'antd'
-import EditCustomerService from '@/component/EditCustomerService'
+import ManageCustomerService from '@/component/ManageCustomerService'
 import { getAllProductModels, getSingleServer, manageCustomerService } from '@/api'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductModel } from '@/model'
@@ -95,15 +95,12 @@ const CustomerServiceManage: React.FC = () => {
 
   /**
    *  编辑产品对应客服
-   * @param product 产品
+   * @param ids 客服ids
    */
-  const editService = async (product: ProductModel): Promise<void> => {
-    if (product.services == null) return
+  const editService = async (ids: number[]): Promise<void> => {
+    if (current.current === undefined) return
     try {
-      const res = await manageCustomerService(
-        product.model_id,
-        product.services.map(v => parseInt(v.user_id)),
-      )
+      const res = await manageCustomerService(current.current.model_id, ids)
       if (res.code === 0) {
         loadProductModels()
         void message.success({
@@ -174,16 +171,14 @@ const CustomerServiceManage: React.FC = () => {
         />
       </Table>
 
-      <EditCustomerService
+      <ManageCustomerService
         open={showEdit}
         onSubmit={props => {
-          console.log(props)
-          // editService(props)
+          void editService(props)
         }}
         onCancel={() => {
           setShowEdit(false)
         }}
-        properties={current.current as ProductModel}
       />
     </>
   )

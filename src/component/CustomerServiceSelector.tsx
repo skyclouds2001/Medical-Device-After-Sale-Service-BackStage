@@ -54,14 +54,14 @@ const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props =>
     props.onSelect?.(
       value
         .map(v => v.at(-1))
-        .filter(v => v !== undefined)
+        .filter(v => v)
         .map(v => (typeof v === 'string' ? parseInt(v) : (v as number))),
     )
   }
 
   return (
     <>
-      <Cascader options={options} onChange={handleOptionChange} placeholder="" multiple maxTagCount="responsive" />
+      <Cascader options={options} onChange={handleOptionChange} placeholder="请选择客服" multiple maxTagCount="responsive" />
     </>
   )
 }
