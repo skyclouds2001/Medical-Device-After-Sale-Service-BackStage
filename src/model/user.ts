@@ -3,7 +3,7 @@
  */
 export default interface User {
   /** 员工id */
-  user_id: number
+  user_id: string
   /** 员工名称 */
   user_name: string
 }

@@ -45,7 +45,7 @@ const LoginPage: React.FC = () => {
         })
       }
 
-      const ids = res1.data.element_list.filter(v => v.type === 'person').map(v => (v.type === 'person' ? v.user_id : v.department_id))
+      const ids = res1.data.element_list.filter(v => v.type === 'person').map(v => (v.type === 'person' ? v.user_id : v.department_id.toString()))
 
       const res2 = await manageCustomerService(-1, ids)
 

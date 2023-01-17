@@ -50,7 +50,7 @@ const ProductModelManage: React.FC = () => {
 
   const addProductModels = (): void => {
     let name = ''
-    let services: number[] = []
+    let services: string[] = []
     Modal.confirm({
       title: '添加产品',
       content: (

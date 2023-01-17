@@ -3,7 +3,7 @@ import { Cascader } from 'antd'
 import { getDepartmentsAndStaffs } from '@/api'
 
 interface Option {
-  value: number
+  value: number | string
   label: string
   children?: Option[]
 }
