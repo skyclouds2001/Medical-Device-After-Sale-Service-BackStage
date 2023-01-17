@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { Button, Table, Modal, Form, Input, Select, App } from 'antd'
-import { addProductModel, addProductType, getAllProductTypes, manageCustomerService, removeCustomerService, removeProductType, updateProductType } from '@/api'
+import { Button, Table, Modal, App } from 'antd'
+import { addProductType, getAllProductTypes, removeCustomerService, removeProductType, updateProductType } from '@/api'
 import AddProductType from '@/component/AddProductType'
-import CustomerServiceSelector from '@/component/CustomerServiceSelector'
+import EditProductType from '@/component/EditProductType'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductType } from '@/model'
 import type { CustomAction } from '@/store'
-import EditProductType from '@/component/EditProductType'
 
 const ProductTypeManage: React.FC = () => {
   const { message } = App.useApp()
@@ -18,13 +17,14 @@ const ProductTypeManage: React.FC = () => {
   const [productTypes, setProductTypes] = useState<ProductType[]>([])
   const [isLoading, setLoading] = useState(false)
   const [pageNum, setPageNum] = useState(1)
+  const [total, setTotal] = useState(0)
 
   const [showAddProductType, setShowAddProductType] = useState(false)
   const [showEditProductType, setShowEditProductType] = useState(false)
   const current = useRef<ProductType>()
 
   useEffect(() => {
-    dispatch<CustomAction>({ type: 'title/update', title: '产品管理' })
+    dispatch<CustomAction>({ type: 'title/update', title: '产品大类管理' })
     void loadProductTypes()
   }, [])
 
@@ -33,7 +33,9 @@ const ProductTypeManage: React.FC = () => {
     try {
       const res = await getAllProductTypes()
       if (res.code === 0) {
-        setProductTypes(res.data)
+        const types = res.data
+        setProductTypes(types)
+        setTotal(types.length)
       } else {
         void message.error({
           content: res.data,
@@ -65,65 +67,6 @@ const ProductTypeManage: React.FC = () => {
     } catch (err) {
       console.error(err)
     }
-  }
-
-  const addProductModels = (): void => {
-    let name = ''
-    let id = 0
-    let services: string[] = []
-    Modal.confirm({
-      title: '添加产品',
-      content: (
-        <Form labelCol={{ span: 8 }} colon={false}>
-          <Form.Item label="产品名称" name="name">
-            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入产品名称" value={name} onChange={e => (name = e.target.value)} />
-          </Form.Item>
-          <Form.Item label="产品所属大类" name="type">
-            <Select className="rounded-sm mx-2" placeholder="请选择产品所属大类" onChange={(value: number) => (id = value)}>
-              {productTypes.map(v => (
-                <Select.Option key={v.type_id} value={v.type_id}>
-                  {v.type_name}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item label="产品所属客服" name="service">
-            <CustomerServiceSelector onSelect={v => (services = v)} />
-          </Form.Item>
-        </Form>
-      ),
-      closable: true,
-      okButtonProps: {
-        className: 'text-blue-500',
-      },
-      onOk: async () => {
-        try {
-          const res1 = await addProductModel(name, id)
-          if (res1.code === 0) {
-            void message.success({
-              content: '添加成功',
-            })
-          } else {
-            void message.error({
-              content: res1.data,
-            })
-          }
-
-          const res2 = await manageCustomerService(id, services)
-          if (res2.code === 0) {
-            void message.success({
-              content: '添加成功',
-            })
-          } else {
-            void message.error({
-              content: res2.data,
-            })
-          }
-        } catch (err) {
-          console.error(err)
-        }
-      },
-    })
   }
 
   const editProductType = async (type: ProductType): Promise<void> => {
@@ -193,15 +136,6 @@ const ProductTypeManage: React.FC = () => {
           className="text-blue-500"
           type="primary"
           onClick={() => {
-            addProductModels()
-          }}
-        >
-          添加产品
-        </Button>
-        <Button
-          className="text-blue-500"
-          type="primary"
-          onClick={() => {
             setShowAddProductType(true)
           }}
         >
@@ -217,6 +151,7 @@ const ProductTypeManage: React.FC = () => {
         loading={isLoading}
         pagination={{
           current: pageNum,
+          total,
           pageSize: DEFAULT_PAGE_SIZE,
         }}
         onChange={pagination => {
