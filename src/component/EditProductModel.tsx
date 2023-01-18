@@ -2,25 +2,24 @@ import React, { useRef } from 'react'
 import { Form, Input, Modal } from 'antd'
 import type { InputRef } from 'antd'
 import ProductTypeSelector from '@/component/ProductTypeSelector'
-import CustomerServiceSelector from '@/component/CustomerServiceSelector'
 import type { ProductModel } from '@/model'
 
-interface AddProductModelProps {
+interface EditProductModelProps {
   open: boolean
-  onSubmit: (props: Omit<ProductModel, 'model_id' | 'type_name' | 'services'> & { services: string[] }) => void
+  onSubmit: (props: Omit<ProductModel, 'type_name' | 'services'>) => void
   onCancel: () => void
+  properties: ProductModel
 }
 
-const AddProductModel: React.FC<AddProductModelProps> = props => {
+const EditProductModel: React.FC<EditProductModelProps> = props => {
   const name = useRef<InputRef>(null)
   const type = useRef<number>(-1)
-  const services = useRef<string[]>([])
 
   const submit = (): void => {
     props.onSubmit({
-      model_name: name.current?.input?.value ?? '',
-      type_id: type.current,
-      services: services.current,
+      model_id: props.properties.model_id,
+      model_name: name.current?.input?.value ?? props.properties.model_name,
+      type_id: type.current !== -1 ? type.current : props.properties.type_id,
     })
   }
 
@@ -37,12 +36,9 @@ const AddProductModel: React.FC<AddProductModelProps> = props => {
         <Form.Item label="产品所属大类" name="type">
           <ProductTypeSelector onSelect={v => (type.current = v)} />
         </Form.Item>
-        <Form.Item label="产品所属客服" name="service">
-          <CustomerServiceSelector onSelect={v => (services.current = v)} />
-        </Form.Item>
       </Form>
     </Modal>
   )
 }
 
-export default AddProductModel
+export default EditProductModel

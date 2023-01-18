@@ -1,17 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { Button, Form, Input, Modal, Table, App, Row, Col } from 'antd'
-import { LeftOutlined } from '@ant-design/icons'
+import { Button, Modal, Table, App } from 'antd'
 import { addProductModel, getAllProductModels, manageCustomerService, removeProductModel, removeSingleServer, updateProductModel } from '@/api'
 import AddProductModel from '@/component/AddProductModel'
+import EditProductModel from '@/component/EditProductModel'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductModel } from '@/model'
 import type { CustomAction } from '@/store'
 
 const ProductModelManage: React.FC = () => {
   const { message } = App.useApp()
-  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const [products, setProducts] = useState<ProductModel[]>([])
@@ -71,41 +69,30 @@ const ProductModelManage: React.FC = () => {
           content: '添加成功',
         })
         setShowAddProductModel(false)
+        void loadProductModels()
       }
     } catch (err) {
       console.error(err)
     }
   }
 
-  const editProductModel = (product: ProductModel): void => {
-    let name = ''
-    Modal.confirm({
-      title: '编辑产品信息',
-      content: (
-        <Form labelCol={{ span: 8 }} colon={false}>
-          <Form.Item label="产品名称" name="name">
-            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入产品名称" value={name} onChange={e => (name = e.target.value)} />
-          </Form.Item>
-        </Form>
-      ),
-      closable: true,
-      okButtonProps: {
-        className: 'text-blue-500',
-      },
-      onOk: async () => {
-        const res = await updateProductModel(product.model_id, name, product.type_id)
-        if (res.code === 0) {
-          void message.success({
-            content: '更新成功',
-          })
-          void loadProductModels()
-        } else {
-          void message.error({
-            content: res.data,
-          })
-        }
-      },
-    })
+  const editProductModel = async (params: Omit<ProductModel, 'type_name' | 'services'>): Promise<void> => {
+    try {
+      const res = await updateProductModel(params.model_id, params.model_name, params.type_id)
+      if (res.code === 0) {
+        void message.success({
+          content: '更新成功',
+        })
+        setShowEditProductModel(false)
+        void loadProductModels()
+      } else {
+        void message.error({
+          content: res.data,
+        })
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   const deleteProductDetail = (product: ProductModel): void => {
@@ -119,28 +106,25 @@ const ProductModelManage: React.FC = () => {
       onOk: async () => {
         try {
           const res1 = await removeProductModel(product.model_id)
-          if (res1.code === 0) {
-            void message.success({
-              content: '删除成功',
-            })
-          } else {
+          if (res1.code !== 0) {
             void message.error({
               content: res1.data,
             })
           }
 
           const res2 = await removeSingleServer(product.model_id)
-          if (res2.code === 0) {
-            void message.success({
-              content: '删除成功',
-            })
-          } else {
+          if (res2.code !== 0) {
             void message.error({
               content: res2.data,
             })
           }
 
-          void loadProductModels()
+          if (res1.code === 0 && res2.code === 0) {
+            void message.success({
+              content: '删除成功',
+            })
+            void loadProductModels()
+          }
         } catch (err) {
           console.error(err)
         }
@@ -151,30 +135,17 @@ const ProductModelManage: React.FC = () => {
   return (
     <>
       {/* 添加产品按钮区域 */}
-      <Row className="my-5 w-[37rem]">
-        <Col span={12} className="text-left">
-          <div
-            className="flex justify-start items-center h-full select-none cursor-pointer"
-            onClick={() => {
-              navigate('/product')
-            }}
-          >
-            <LeftOutlined />
-            返回
-          </div>
-        </Col>
-        <Col span={12} className="text-right">
-          <Button
-            className="text-blue-500 hover:text-white"
-            type="primary"
-            onClick={() => {
-              setShowAddProductModel(true)
-            }}
-          >
-            添加产品
-          </Button>
-        </Col>
-      </Row>
+      <div className="my-5 w-[37rem]">
+        <Button
+          className="text-blue-500 hover:text-white"
+          type="primary"
+          onClick={() => {
+            setShowAddProductModel(true)
+          }}
+        >
+          添加产品
+        </Button>
+      </div>
 
       {/* 产品类型列表 */}
       <Table
@@ -204,7 +175,8 @@ const ProductModelManage: React.FC = () => {
               <Button
                 type="link"
                 onClick={() => {
-                  editProductModel(record)
+                  current.current = record
+                  setShowEditProductModel(true)
                 }}
               >
                 编辑
@@ -231,6 +203,17 @@ const ProductModelManage: React.FC = () => {
         onCancel={() => {
           setShowAddProductModel(false)
         }}
+      />
+
+      <EditProductModel
+        open={showEditProductModel}
+        onSubmit={params => {
+          void editProductModel(params)
+        }}
+        onCancel={() => {
+          setShowEditProductModel(false)
+        }}
+        properties={current.current as ProductModel}
       />
     </>
   )
