@@ -1,14 +1,14 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Menu } from 'antd'
-import { UserOutlined, ProjectOutlined, CustomerServiceOutlined, SettingOutlined, FormOutlined } from '@ant-design/icons'
+import { UserOutlined, ProjectOutlined, CustomerServiceOutlined, FormOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 
 const items: MenuProps['items'] = [
   {
     label: '客户管理',
     key: '/customer',
-    icon: <SettingOutlined />,
+    icon: <UserOutlined />,
     children: [
       {
         label: '用户管理',
@@ -18,7 +18,7 @@ const items: MenuProps['items'] = [
       {
         label: '企业管理',
         key: '/customer/company',
-        icon: <FormOutlined />,
+        icon: <UserOutlined />,
       },
     ],
   },
@@ -43,6 +43,11 @@ const items: MenuProps['items'] = [
         icon: <ProjectOutlined />,
       },
     ],
+  },
+  {
+    label: '工单管理',
+    key: '/order',
+    icon: <FormOutlined />,
   },
 ]
 

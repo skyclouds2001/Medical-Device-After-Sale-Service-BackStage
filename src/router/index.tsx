@@ -15,6 +15,8 @@ const ProductTypeManage = lazy(async () => await import('@/view/ProductTypeManag
 
 const ProductModelManage = lazy(async () => await import('@/view/ProductModelManage'))
 
+const WorkOrderManage = lazy(async () => await import('@/view/WorkOrderManage'))
+
 const Routes: React.FC = () => {
   return useRoutes([
     {
@@ -75,13 +77,21 @@ const Routes: React.FC = () => {
                 </Suspense>
               ),
             },
+            {
+              path: '/product/model',
+              element: (
+                <Suspense>
+                  <ProductModelManage />
+                </Suspense>
+              ),
+            },
           ],
         },
         {
-          path: '/product/model',
+          path: '/order',
           element: (
             <Suspense>
-              <ProductModelManage />
+              <WorkOrderManage />
             </Suspense>
           ),
         },
