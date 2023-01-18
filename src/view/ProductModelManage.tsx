@@ -101,7 +101,7 @@ const ProductModelManage: React.FC = () => {
       content: '确认移除当前产品？',
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500',
+        className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent',
       },
       onOk: async () => {
         try {
@@ -123,8 +123,9 @@ const ProductModelManage: React.FC = () => {
             void message.success({
               content: '删除成功',
             })
-            void loadProductModels()
           }
+
+          void loadProductModels()
         } catch (err) {
           console.error(err)
         }
@@ -135,15 +136,15 @@ const ProductModelManage: React.FC = () => {
   return (
     <>
       {/* 添加产品按钮区域 */}
-      <div className="my-5 w-[37rem]">
+      <div className="my-5 text-right w-[37rem]">
         <Button
-          className="text-blue-500 hover:text-white"
+          className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent"
           type="primary"
           onClick={() => {
             setShowAddProductModel(true)
           }}
         >
-          添加产品
+          添加产品型号
         </Button>
       </div>
 
