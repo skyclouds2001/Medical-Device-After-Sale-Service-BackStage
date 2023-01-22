@@ -5,7 +5,7 @@ const BasePage = lazy(async () => await import('@/view/BasePage'))
 
 const LoginPage = lazy(async () => await import('@/view/LoginPage'))
 
-const UserManage = lazy(async () => await import('@/view/UserManage'))
+const CustomerManage = lazy(async () => await import('@/view/CustomerManage'))
 
 const CompanyManage = lazy(async () => await import('@/view/CompanyManage'))
 
@@ -45,7 +45,7 @@ const Routes: React.FC = () => {
               path: '/customer/user',
               element: (
                 <Suspense>
-                  <UserManage />
+                  <CustomerManage />
                 </Suspense>
               ),
             },

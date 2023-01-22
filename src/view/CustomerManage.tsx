@@ -3,12 +3,12 @@ import { useDispatch } from 'react-redux'
 import { Table, Button, Modal, App } from 'antd'
 import { getCustomerInfo, addCustomerInfo, updateCustomerInfo, removeCustomerInfo } from '@/api'
 import { DEFAULT_PAGE_SIZE } from '@/config'
-import AddCustomer from '@/component/AddCustomer'
-import EditCustomer from '@/component/EditCustomer'
+import AddCustomer from '@/component/_AddCustomer'
+import EditCustomer from '@/component/_EditCustomer'
 import type { Customer } from '@/model'
 import type { CustomAction } from '@/store'
 
-const UserManage: React.FC = () => {
+const CustomerManage: React.FC = () => {
   const { message } = App.useApp()
   const dispatch = useDispatch()
 
@@ -233,4 +233,4 @@ const UserManage: React.FC = () => {
   )
 }
 
-export default UserManage
+export default CustomerManage

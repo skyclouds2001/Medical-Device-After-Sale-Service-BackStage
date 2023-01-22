@@ -4,7 +4,7 @@
 
 ```markdown
 - 登录页 `/` LoginPage
-- 客服管理-用户管理 `/customer/user` UserManage
+- 客服管理-用户管理 `/customer/user` CustomerManage
 - 客服管理-企业管理 `/customer/company` CompanyManage
 - 客服管理 `/service` CustomerServiceManage
 - 产品管理-产品大类管理 `/product` ProductTypeManage
