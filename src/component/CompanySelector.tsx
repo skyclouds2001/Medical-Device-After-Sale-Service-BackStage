@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Select } from 'antd'
-import { getAllCompanyInfo } from '@/api'
+import { getCompanyInfo } from '@/api'
 import type { Company } from '@/model'
 
 interface CompanySelectorProps {
@@ -13,8 +13,11 @@ const CompanySelector: React.FC<CompanySelectorProps> = props => {
   useEffect(() => {
     const loadCompanies = async (): Promise<void> => {
       try {
-        const res = await getAllCompanyInfo()
-        setCompanies(res)
+        const res = await getCompanyInfo(true, 1)
+        const { total_num: num } = res.data
+        const result = await Promise.allSettled(new Array(num).fill([]).map(async (_, i) => await getCompanyInfo(false, i)))
+        result.reduce<Company[]>((p, c) => [...p, ...(c.status === 'fulfilled' ? c.value.data.company_list : [])], [])
+        setCompanies([])
       } catch (err) {
         console.error(err)
       }
