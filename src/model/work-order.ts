@@ -16,6 +16,8 @@ export interface Attachment {
  * 订单数据结构
  */
 export default interface WorkOrder {
+  /** 工单id */
+  order_id: number
   /** 客户id */
   customer_id: number
   /** 产品型号id */
