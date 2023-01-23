@@ -25,7 +25,7 @@ const EditProductType: React.FC<EditProductTypeProps> = props => {
   }
 
   return (
-    <Modal open={props.open} title="编辑产品大类信息" closable onOk={submit} onCancel={cancel}>
+    <Modal open={props.open} title="修改产品大类信息" closable onOk={submit} onCancel={cancel}>
       <Form labelCol={{ span: 8 }} colon={false}>
         <Form.Item label="产品大类名称" name="name">
           <Input ref={name} className="rounded-xl mx-2" autoComplete="off" placeholder="请输入产品大类名称" />
