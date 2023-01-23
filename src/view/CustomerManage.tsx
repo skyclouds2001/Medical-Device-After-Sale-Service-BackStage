@@ -3,19 +3,14 @@ import { useDispatch } from 'react-redux'
 import { Table, Button, Modal, App } from 'antd'
 import { getCustomerInfo, addCustomerInfo, updateCustomerInfo, removeCustomerInfo } from '@/api'
 import { DEFAULT_PAGE_SIZE } from '@/config'
-import AddCustomer from '@/component/_AddCustomer'
-import EditCustomer from '@/component/_EditCustomer'
+import AddCustomer from '@/component/AddCustomer'
+import EditCustomer from '@/component/EditCustomer'
 import type { Customer } from '@/model'
 import type { CustomAction } from '@/store'
 
 const CustomerManage: React.FC = () => {
   const { message } = App.useApp()
   const dispatch = useDispatch()
-
-  /** 添加客户表单 ref 引用 */
-  const addRef = useRef<ReturnType<typeof AddCustomer>>(null)
-  /** 编辑客户表单 ref 引用 */
-  const editRef = useRef<ReturnType<typeof EditCustomer>>(null)
 
   /** 客户列表 */
   const [customers, setCustomers] = useState<Customer[]>([])
@@ -25,6 +20,10 @@ const CustomerManage: React.FC = () => {
   const [isLoading, setLoading] = useState(false)
   /** 客户列表当前页数 */
   const [pageNum, setPageNum] = useState(1)
+
+  const [showAddCustomer, setShowAddCustomer] = useState(false)
+  const [showEditCustomer, setShowEditCustomer] = useState(false)
+  const current = useRef<Customer>()
 
   useEffect(() => {
     dispatch<CustomAction>({ type: 'title/update', title: '用户管理' })
@@ -60,83 +59,55 @@ const CustomerManage: React.FC = () => {
 
   /**
    * 添加客户
+   *
+   * @param params
    */
-  const addCustomer = (): void => {
-    Modal.confirm({
-      title: '添加客户信息',
-      content: <AddCustomer ref={addRef} crf={addRef} />,
-      closable: true,
-      okButtonProps: {
-        className: 'text-blue-500',
-      },
-      onOk: async () => {
-        const cus = (
-          addRef.current as unknown as {
-            getCustomer: () => { name: string; mobile: string; company: number }
-          }
-        ).getCustomer()
-        try {
-          const res = await addCustomerInfo(cus.company, cus.name, cus.mobile)
-          if (res.code === 0) {
-            void message.success({
-              content: '更新成功',
-            })
-            void loadCustomer(false, pageNum)
-            setTotal(total + 1)
-          } else {
-            void message.error({
-              content: res.data,
-            })
-          }
-        } catch (err) {
-          console.error(err)
-        }
-      },
-    })
+  const addCustomer = async (params: Omit<Customer, 'customer_id' | 'company_name'>): Promise<void> => {
+    try {
+      const res = await addCustomerInfo(params.company_id, params.customer_name, params.mobile)
+      if (res.code === 0) {
+        void message.success({
+          content: '更新成功',
+        })
+        void loadCustomer(false, pageNum)
+        setTotal(total + 1)
+      } else {
+        void message.error({
+          content: res.data,
+        })
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   /**
    * 更新客户信息
    *
-   * @param customer 需更新的客户信息
+   * @param params
    */
-  const editCustomer = (customer: Customer): void => {
-    Modal.confirm({
-      title: '修改客户信息',
-      content: <EditCustomer ref={editRef} crf={editRef} customer={customer} />,
-      closable: true,
-      okButtonProps: {
-        className: 'text-blue-500',
-      },
-      onOk: async () => {
-        const cus = (
-          editRef.current as unknown as {
-            getCustomer: () => { name: string; mobile: string; company: number }
-          }
-        ).getCustomer()
-        try {
-          const res = await updateCustomerInfo(cus.company, customer.customer_id, cus.name, cus.mobile)
-          if (res.code === 0) {
-            void message.success({
-              content: '更新成功',
-            })
-            void loadCustomer(false, pageNum)
-          } else {
-            void message.error({
-              content: res.data,
-            })
-          }
-        } catch (err) {
-          console.error(err)
-        }
-      },
-    })
+  const editCustomer = async (params: Omit<Customer, 'company_name'>): Promise<void> => {
+    try {
+      const res = await updateCustomerInfo(params.company_id, params.customer_id, params.customer_name, params.mobile)
+      if (res.code === 0) {
+        void message.success({
+          content: '更新成功',
+        })
+        void loadCustomer(false, pageNum)
+      } else {
+        void message.error({
+          content: res.data,
+        })
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   /**
    * 移除客户信息
    *
-   * @param customer 客户信息
+   * @param customer
    */
   const removeCustomer = (customer: Customer): void => {
     Modal.confirm({
@@ -174,7 +145,7 @@ const CustomerManage: React.FC = () => {
           className="text-blue-500"
           type="primary"
           onClick={() => {
-            addCustomer()
+            setShowAddCustomer(true)
           }}
         >
           添加客户
@@ -211,7 +182,8 @@ const CustomerManage: React.FC = () => {
               <Button
                 type="link"
                 onClick={() => {
-                  editCustomer(record)
+                  setShowEditCustomer(true)
+                  current.current = record
                 }}
               >
                 编辑
@@ -229,6 +201,27 @@ const CustomerManage: React.FC = () => {
           )}
         />
       </Table>
+
+      <AddCustomer
+        open={showAddCustomer}
+        onSubmit={props => {
+          void addCustomer(props)
+        }}
+        onCancel={() => {
+          setShowAddCustomer(false)
+        }}
+      />
+
+      <EditCustomer
+        open={showEditCustomer}
+        onSubmit={props => {
+          void editCustomer(props)
+        }}
+        onCancel={() => {
+          setShowEditCustomer(false)
+        }}
+        properties={current.current as Customer}
+      />
     </>
   )
 }
