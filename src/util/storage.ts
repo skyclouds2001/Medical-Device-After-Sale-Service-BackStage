@@ -59,13 +59,3 @@ export const clearStorage = (): void => {
 }
 
 export const length = (): number => storage.length
-
-const Storage = {
-  getStorage,
-  setStorage,
-  removeStorage,
-  clearStorage,
-  length,
-}
-
-export default Storage
