@@ -1,3 +1,4 @@
+import qs from 'qs'
 import instance from '@/network'
 import type { Response, ProductType } from '@/model'
 
@@ -8,7 +9,8 @@ type GetProductTypeResponse = ProductType
 
 /**
  * 查询产品大类接口
- * @param productTypeId 产品大类ID
+ *
+ * @param {number} productTypeId 产品大类ID
  */
 export const getProductType = async (productTypeId: number): Promise<Response<GetProductTypeResponse>> => {
   const res = await instance.get<Response<GetProductTypeResponse>>('/wizz/aftersale/product-type/get', {
@@ -19,7 +21,8 @@ export const getProductType = async (productTypeId: number): Promise<Response<Ge
 
 /**
  * 添加产品大类接口
- * @param typeName 产品大类名称
+ *
+ * @param {string} typeName 产品大类名称
  */
 export const addProductType = async (typeName: string): Promise<Response<void>> => {
   const res = await instance.post<Response<void>>('/wizz/aftersale/product-type/add', {
@@ -30,8 +33,9 @@ export const addProductType = async (typeName: string): Promise<Response<void>> 
 
 /**
  * 更新产品大类接口
- * @param typeId 产品大类id
- * @param typeName 产品大类名称
+ *
+ * @param {number} typeId 产品大类id
+ * @param {string} typeName 产品大类名称
  */
 export const updateProductType = async (typeId: number, typeName: string): Promise<Response<void>> => {
   const res = await instance.post<Response<void>>('/wizz/aftersale/product-type/update', {
@@ -43,11 +47,14 @@ export const updateProductType = async (typeId: number, typeName: string): Promi
 
 /**
  * 删除产品大类接口
- * @param productTypeId 产品大类id
+ *
+ * @param {number} productTypeId 产品大类id
  */
 export const removeProductType = async (productTypeId: number): Promise<Response<void>> => {
   const res = await instance.delete<Response<void>>('/wizz/aftersale/product-type/delete', {
-    data: `productTypeId=${productTypeId}`,
+    data: qs.stringify({
+      productTypeId,
+    }),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
