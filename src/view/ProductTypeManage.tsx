@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Button, Table, Modal, App } from 'antd'
 import { addProductType, getAllProductTypes, removeCustomerService, removeProductType, updateProductType } from '@/api'
@@ -11,7 +10,6 @@ import type { CustomAction } from '@/store'
 
 const ProductTypeManage: React.FC = () => {
   const { message } = App.useApp()
-  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const [productTypes, setProductTypes] = useState<ProductType[]>([])
@@ -94,29 +92,27 @@ const ProductTypeManage: React.FC = () => {
       content: '确认移除当前产品大类及其产品？',
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500',
+        className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent',
       },
       onOk: async () => {
         try {
           const res1 = await removeProductType(product.type_id)
-          if (res1.code === 0) {
-            void message.success({
-              content: '删除成功',
-            })
-          } else {
+          if (res1.code !== 0) {
             void message.error({
               content: res1.data,
             })
           }
 
           const res2 = await removeCustomerService(product.type_id)
-          if (res2.code === 0) {
-            void message.success({
-              content: '删除成功',
-            })
-          } else {
+          if (res2.code !== 0) {
             void message.error({
               content: res2.data,
+            })
+          }
+
+          if (res1.code === 0 && res2.code === 0) {
+            void message.success({
+              content: '删除成功',
             })
           }
 
@@ -133,7 +129,7 @@ const ProductTypeManage: React.FC = () => {
       {/* 添加产品及大类按钮区域 */}
       <div className="my-5 text-right w-[31rem]">
         <Button
-          className="text-blue-500"
+          className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent"
           type="primary"
           onClick={() => {
             setShowAddProductType(true)
@@ -157,7 +153,6 @@ const ProductTypeManage: React.FC = () => {
         onChange={pagination => {
           setPageNum(pagination.current ?? 1)
         }}
-        style={{ width: '500px' }}
         className="w-[31rem]"
       >
         <Table.Column width="200px" align="center" title="产品大类名称" dataIndex="type_name" key="type_name" />
@@ -168,14 +163,6 @@ const ProductTypeManage: React.FC = () => {
           key="action"
           render={(_, record: ProductType) => (
             <>
-              <Button
-                type="link"
-                onClick={() => {
-                  navigate(`/product/model/${record.type_id}`, { state: record.type_name })
-                }}
-              >
-                查看
-              </Button>
               <Button
                 type="link"
                 onClick={() => {
