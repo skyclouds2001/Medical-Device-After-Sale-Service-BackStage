@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Button, Form, Input, Modal, Table, App, Row, Col, Select } from 'antd'
-import { LeftOutlined } from '@ant-design/icons'
+import { Button, Modal, Table, App } from 'antd'
 import { addProductModel, getAllProductModels, manageCustomerService, removeProductModel, removeSingleServer, updateProductModel } from '@/api'
-import CustomerServiceSelector from '@/component/CustomerServiceSelector'
+import AddProductModel from '@/component/AddProductModel'
+import EditProductModel from '@/component/EditProductModel'
 import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { ProductModel } from '@/model'
 import type { CustomAction } from '@/store'
 
 const ProductModelManage: React.FC = () => {
   const { message } = App.useApp()
-  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const [products, setProducts] = useState<ProductModel[]>([])
+  const [isLoading, setLoading] = useState(false)
   const [pageNum, setPageNum] = useState(1)
   const [total, setTotal] = useState(0)
 
-  const [isLoading, setLoading] = useState(false)
+  const [showAddProductModel, setShowAddProductModel] = useState(false)
+  const [showEditProductModel, setShowEditProductModel] = useState(false)
+  const current = useRef<ProductModel>()
 
   useEffect(() => {
     dispatch<CustomAction>({ type: 'title/update', title: '产品型号管理' })
@@ -47,94 +48,51 @@ const ProductModelManage: React.FC = () => {
     }
   }
 
-  const addProductModels = (): void => {
-    let name = ''
-    let id = 0
-    let services: string[] = []
-    Modal.confirm({
-      title: '添加产品',
-      content: (
-        <Form labelCol={{ span: 8 }} colon={false}>
-          <Form.Item label="产品名称" name="name">
-            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入产品名称" value={name} onChange={e => (name = e.target.value)} />
-          </Form.Item>
-          <Form.Item label="产品所属大类" name="type">
-            <Select className="rounded-sm mx-2" placeholder="请选择产品所属大类" onChange={(value: number) => (id = value)}>
-              {/* {productTypes.map(v => ( */}
-              {/*  <Select.Option key={v.type_id} value={v.type_id}> */}
-              {/*    {v.type_name} */}
-              {/*  </Select.Option> */}
-              {/* ))} */}
-            </Select>
-          </Form.Item>
-          <Form.Item label="产品所属客服" name="service">
-            <CustomerServiceSelector onSelect={v => (services = v)} />
-          </Form.Item>
-        </Form>
-      ),
-      closable: true,
-      okButtonProps: {
-        className: 'text-blue-500',
-      },
-      onOk: async () => {
-        try {
-          const res1 = await addProductModel(name, id)
-          if (res1.code === 0) {
-            void message.success({
-              content: '添加成功',
-            })
-          } else {
-            void message.error({
-              content: res1.data,
-            })
-          }
+  const addProductModels = async (params: Omit<ProductModel, 'model_id' | 'type_name' | 'services'> & { services: string[] }): Promise<void> => {
+    try {
+      const res1 = await addProductModel(params.model_name, params.type_id)
+      if (res1.code !== 0) {
+        void message.error({
+          content: res1.data,
+        })
+      }
 
-          const res2 = await manageCustomerService(id, services)
-          if (res2.code === 0) {
-            void message.success({
-              content: '添加成功',
-            })
-          } else {
-            void message.error({
-              content: res2.data,
-            })
-          }
-        } catch (err) {
-          console.error(err)
-        }
-      },
-    })
+      const res2 = await manageCustomerService(params.type_id, params.services)
+      if (res2.code !== 0) {
+        void message.error({
+          content: res2.data,
+        })
+      }
+
+      if (res1.code === 0 && res2.code === 0) {
+        void message.success({
+          content: '添加成功',
+        })
+        setShowAddProductModel(false)
+        void loadProductModels()
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
-  const editProductModel = (product: ProductModel): void => {
-    let name = ''
-    Modal.confirm({
-      title: '编辑产品信息',
-      content: (
-        <Form labelCol={{ span: 8 }} colon={false}>
-          <Form.Item label="产品名称" name="name">
-            <Input className="rounded-xl mx-2" autoComplete="off" placeholder="请输入产品名称" value={name} onChange={e => (name = e.target.value)} />
-          </Form.Item>
-        </Form>
-      ),
-      closable: true,
-      okButtonProps: {
-        className: 'text-blue-500',
-      },
-      onOk: async () => {
-        const res = await updateProductModel(product.model_id, name, product.type_id)
-        if (res.code === 0) {
-          void message.success({
-            content: '更新成功',
-          })
-          void loadProductModels()
-        } else {
-          void message.error({
-            content: res.data,
-          })
-        }
-      },
-    })
+  const editProductModel = async (params: Omit<ProductModel, 'type_name' | 'services'>): Promise<void> => {
+    try {
+      const res = await updateProductModel(params.model_id, params.model_name, params.type_id)
+      if (res.code === 0) {
+        void message.success({
+          content: '更新成功',
+        })
+        setShowEditProductModel(false)
+        void loadProductModels()
+      } else {
+        void message.error({
+          content: res.data,
+        })
+      }
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   const deleteProductDetail = (product: ProductModel): void => {
@@ -143,29 +101,27 @@ const ProductModelManage: React.FC = () => {
       content: '确认移除当前产品？',
       closable: true,
       okButtonProps: {
-        className: 'text-blue-500',
+        className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent',
       },
       onOk: async () => {
         try {
           const res1 = await removeProductModel(product.model_id)
-          if (res1.code === 0) {
-            void message.success({
-              content: '删除成功',
-            })
-          } else {
+          if (res1.code !== 0) {
             void message.error({
               content: res1.data,
             })
           }
 
           const res2 = await removeSingleServer(product.model_id)
-          if (res2.code === 0) {
-            void message.success({
-              content: '删除成功',
-            })
-          } else {
+          if (res2.code !== 0) {
             void message.error({
               content: res2.data,
+            })
+          }
+
+          if (res1.code === 0 && res2.code === 0) {
+            void message.success({
+              content: '删除成功',
             })
           }
 
@@ -180,30 +136,17 @@ const ProductModelManage: React.FC = () => {
   return (
     <>
       {/* 添加产品按钮区域 */}
-      <Row className="my-5 w-[37rem]">
-        <Col span={12} className="text-left">
-          <div
-            className="flex justify-start items-center h-full select-none cursor-pointer"
-            onClick={() => {
-              navigate('/product')
-            }}
-          >
-            <LeftOutlined />
-            返回
-          </div>
-        </Col>
-        <Col span={12} className="text-right">
-          <Button
-            className="text-blue-500 hover:text-white"
-            type="primary"
-            onClick={() => {
-              addProductModels()
-            }}
-          >
-            添加产品
-          </Button>
-        </Col>
-      </Row>
+      <div className="my-5 text-right w-[37rem]">
+        <Button
+          className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent"
+          type="primary"
+          onClick={() => {
+            setShowAddProductModel(true)
+          }}
+        >
+          添加产品型号
+        </Button>
+      </div>
 
       {/* 产品类型列表 */}
       <Table
@@ -233,7 +176,8 @@ const ProductModelManage: React.FC = () => {
               <Button
                 type="link"
                 onClick={() => {
-                  editProductModel(record)
+                  current.current = record
+                  setShowEditProductModel(true)
                 }}
               >
                 编辑
@@ -251,6 +195,27 @@ const ProductModelManage: React.FC = () => {
           )}
         />
       </Table>
+
+      <AddProductModel
+        open={showAddProductModel}
+        onSubmit={params => {
+          void addProductModels(params)
+        }}
+        onCancel={() => {
+          setShowAddProductModel(false)
+        }}
+      />
+
+      <EditProductModel
+        open={showEditProductModel}
+        onSubmit={params => {
+          void editProductModel(params)
+        }}
+        onCancel={() => {
+          setShowEditProductModel(false)
+        }}
+        properties={current.current as ProductModel}
+      />
     </>
   )
 }

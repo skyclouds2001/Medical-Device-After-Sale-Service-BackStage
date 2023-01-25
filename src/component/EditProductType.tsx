@@ -15,7 +15,7 @@ const EditProductType: React.FC<EditProductTypeProps> = props => {
 
   const submit = (): void => {
     props.onSubmit({
-      type_name: name.current?.input?.value ?? '',
+      type_name: name.current?.input?.value ?? props.properties.type_name,
       type_id: props.properties.type_id,
     })
   }
