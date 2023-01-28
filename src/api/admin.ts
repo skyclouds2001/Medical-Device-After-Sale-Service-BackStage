@@ -17,8 +17,9 @@ interface AdminLoginResponse {
 
 /**
  * 管理员登录接口
- * @param admin 管理员名称
- * @param password 密码
+ *
+ * @param {string} admin 管理员名称
+ * @param {string} password 密码
  */
 export const adminLogin = async (admin: string, password: string): Promise<Response<AdminLoginResponse>> => {
   const res = await instance.post<Response<AdminLoginResponse>>('/wizz/aftersale/account/admin/login', {
@@ -30,9 +31,10 @@ export const adminLogin = async (admin: string, password: string): Promise<Respo
 
 /**
  * 管理员重设密码接口
- * @param admin 管理员名称
- * @param encrypt 密文串
- * @param newPw 新密码
+ *
+ * @param {string} admin 管理员名称
+ * @param {string} encrypt 密文串
+ * @param {string} newPw 新密码
  */
 export const resetPassword = async (admin: string, encrypt: string, newPw: string): Promise<Response<void>> => {
   const res = await instance.put<Response<void>>('/wizz/aftersale/account/admin/resetPassword', {

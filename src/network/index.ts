@@ -1,7 +1,7 @@
 import axios from 'axios'
 import type { AxiosHeaders } from 'axios'
 import { BASE_URL, NETWORK_TIMEOUT, WHITE_LIST } from '@/config'
-import { Storage } from '@/util'
+import { getStorage } from '@/util'
 
 const instance = axios.create({
   baseURL: BASE_URL,
@@ -14,7 +14,7 @@ instance.interceptors.request.use(
     if (!WHITE_LIST.includes(config.url ?? '')) {
       config.headers = {
         ...config.headers,
-        Authorization: Storage.getStorage<string>('token') ?? '',
+        Authorization: getStorage<string>('token') ?? '',
       } as unknown as AxiosHeaders
     }
     return config

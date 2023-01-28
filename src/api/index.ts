@@ -1,11 +1,13 @@
-export * from '@/api/admin'
+export * from './admin'
 
-export * from '@/api/customer'
+export * from './customer'
 
-export * from '@/api/company'
+export * from './company'
 
-export * from '@/api/service'
+export * from './service'
 
-export * from '@/api/product-type'
+export * from './product-type'
 
-export * from '@/api/product-model'
+export * from './product-model'
+
+export * from './work-order'

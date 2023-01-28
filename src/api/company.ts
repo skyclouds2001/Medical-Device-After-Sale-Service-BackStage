@@ -13,8 +13,9 @@ interface GetCompanyInfoResponse {
 
 /**
  * 查询企业信息接口
- * @param isFirstQuery 是否是第一次查询
- * @param pageNum 页码，每页10条数据，页码从1开始
+ *
+ * @param {boolean} isFirstQuery 是否是第一次查询
+ * @param {number} pageNum 页码，每页10条数据，页码从1开始
  */
 export const getCompanyInfo = async (isFirstQuery: boolean, pageNum: number): Promise<Response<GetCompanyInfoResponse>> => {
   const res = await instance.get<Response<GetCompanyInfoResponse>>(`/wizz/aftersale/account/company/query/${isFirstQuery.toString()}/${pageNum}`)
@@ -23,7 +24,8 @@ export const getCompanyInfo = async (isFirstQuery: boolean, pageNum: number): Pr
 
 /**
  * 添加企业信息接口
- * @param companyName 企业名称
+ *
+ * @param {string} companyName 企业名称
  */
 export const addCompanyInfo = async (companyName: string): Promise<Response<void>> => {
   const res = await instance.post<Response<void>>('/wizz/aftersale/account/company/add', {
@@ -34,8 +36,9 @@ export const addCompanyInfo = async (companyName: string): Promise<Response<void
 
 /**
  * 修改企业信息接口
- * @param companyId 要修改的企业id
- * @param companyName 修改后的企业名称
+ *
+ * @param {number} companyId 要修改的企业id
+ * @param {string} companyName 修改后的企业名称
  */
 export const updateCompanyInfo = async (companyId: number, companyName: string): Promise<Response<void>> => {
   const res = await instance.put<Response<void>>('/wizz/aftersale/account/company/update', {
@@ -47,7 +50,8 @@ export const updateCompanyInfo = async (companyId: number, companyName: string):
 
 /**
  * 删除企业信息接口
- * @param companyId 企业id
+ *
+ * @param {number} companyId 企业id
  */
 export const removeCompanyInfo = async (companyId: number): Promise<Response<void>> => {
   const res = await instance.delete<Response<void>>(`/wizz/aftersale/account/company/delete/${companyId}`)
@@ -56,6 +60,7 @@ export const removeCompanyInfo = async (companyId: number): Promise<Response<voi
 
 /**
  * 查询全部企业信息合成方法
+ * todo
  */
 export const getAllCompanyInfo = async (): Promise<Company[]> => {
   const res = await getCompanyInfo(true, 1)

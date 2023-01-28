@@ -5,7 +5,7 @@ import { IdcardFilled, LockFilled } from '@ant-design/icons'
 import { adminLogin, resetPassword, manageCustomerService, getDepartmentsAndStaffs } from '@/api'
 import bgImg from '@/asset/bg-img-login.png'
 import { DEFAULT_REDIRECT_PATH, SESSION_EXPIRE } from '@/config'
-import { Storage } from '@/util'
+import { getStorage, setStorage } from '@/util'
 import type { LoginStorage } from '@/model'
 
 const LoginPage: React.FC = () => {
@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
   const [encryptedPassword, setEncryptedPassword] = useState('')
 
   useEffect(() => {
-    const configs = Storage.getStorage<LoginStorage>('login')
+    const configs = getStorage<LoginStorage>('login')
     if (configs != null) {
       setUser(configs.user)
       setPassword(configs.remember ? configs.password ?? '' : '')
@@ -76,9 +76,9 @@ const LoginPage: React.FC = () => {
           })
           const { admin_uuid: uuid, has_set_general_kf: isSet, jwt_token: token } = res.data
           if (!configs.remember) configs.password = undefined
-          Storage.setStorage<string>('token', token, SESSION_EXPIRE)
-          Storage.setStorage<string>('uuid', uuid, SESSION_EXPIRE)
-          Storage.setStorage<LoginStorage>('login', configs, Number.MAX_VALUE)
+          setStorage<string>('token', token, SESSION_EXPIRE)
+          setStorage<string>('uuid', uuid, SESSION_EXPIRE)
+          setStorage<LoginStorage>('login', configs, Number.MAX_VALUE)
           if (!isSet) void initManager()
           navigate(DEFAULT_REDIRECT_PATH)
         } else {

@@ -1,8 +1,7 @@
 /**
  * 请求基础数据结构
  */
-
-interface BaseResponse<C extends number, D = unknown> {
+interface BaseResponse<C extends number = 0, D = unknown> {
   /** 自定义的响应码 */
   code: C
   /** 笼统的提示信息 */

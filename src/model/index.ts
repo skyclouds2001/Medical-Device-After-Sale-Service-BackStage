@@ -15,3 +15,5 @@ export type { default as Response } from './response'
 export type { default as Service } from './service'
 
 export type { default as User } from './user'
+
+export type { default as WorkOrder } from './work-order'

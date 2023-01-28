@@ -1,14 +1,15 @@
 # MedicalDeviceAfterSaleServiceBackstage
 
-## 页面及路由
+## 页面路由
 
 ```markdown
-- 登录页 `/` LoginPage
-- 客服管理-用户管理 `/customer/user` UserManage
-- 客服管理-企业管理 `/customer/company` CompanyManage
-- 客服管理 `/service` CustomerServiceManage
-- 产品管理-产品大类管理 `/product` ProductTypeManage
-- 产品管理-产品模型管理 `/product/model/:id` ProductModelManage
+- 登录页 `/`
+- 客服管理-用户管理 `/customer/user`
+- 客服管理-企业管理 `/customer/company`
+- 客服管理 `/service`
+- 产品管理-产品大类管理 `/product`
+- 产品管理-产品模型管理 `/product/model/:id`
+- 工单管理 `/order`
 ```
 
 ## 测试账号
