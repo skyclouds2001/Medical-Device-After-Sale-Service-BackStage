@@ -1,75 +1,46 @@
-import React, { useState, forwardRef, useImperativeHandle, useRef, useEffect } from 'react'
-import { Form, Input, Select } from 'antd'
-import { getAllCompanyInfo } from '@/api'
-import type { Company } from '@/model'
+import React, { useRef } from 'react'
+import { Form, Input, Modal } from 'antd'
+import type { InputRef } from 'antd'
+import CompanySelector from '@/component/CompanySelector'
+import type { Customer } from '@/model'
 
 interface AddCustomerProps {
-  crf: ReturnType<typeof useRef>
+  open: boolean
+  onSubmit: (props: Omit<Customer, 'customer_id' | 'company_name'>) => void
+  onCancel: () => void
 }
 
-export default forwardRef(function AddCustomer(props: AddCustomerProps, _ref): JSX.Element {
-  const [name, setName] = useState('')
-  const [mobile, setMobile] = useState('')
-  const [company, setCompany] = useState(0)
-  const [companies, setCompanies] = useState<Company[]>([])
+const AddCustomer: React.FC<AddCustomerProps> = props => {
+  const name = useRef<InputRef>(null)
+  const mobile = useRef<InputRef>(null)
+  const company = useRef(-1)
 
-  useImperativeHandle(props.crf, () => ({
-    getCustomer: () => ({
-      name,
-      company,
-      mobile,
-    }),
-  }))
-
-  useEffect(() => {
-    getAllCompanyInfo()
-      .then(res => {
-        setCompanies(res)
-      })
-      .catch(err => {
-        console.error(err)
-      })
-  }, [])
+  const submit = (): void => {
+    props.onSubmit({
+      customer_name: name.current?.input?.value ?? '',
+      mobile: mobile.current?.input?.value ?? '',
+      company_id: company.current,
+    })
+  }
+  const cancel = (): void => {
+    props.onCancel()
+  }
 
   return (
-    <Form labelCol={{ span: 8 }} colon={false}>
-      <Form.Item label="客户名称" name="name">
-        <Input
-          className="rounded-sm mx-2"
-          autoComplete="off"
-          placeholder="请输入客户名称"
-          value={name}
-          onChange={e => {
-            setName(e.target.value)
-          }}
-        />
-      </Form.Item>
-      <Form.Item label="客户联系方式" name="mobile">
-        <Input
-          className="rounded-sm mx-2"
-          autoComplete="off"
-          placeholder="请输入客户联系方式"
-          value={mobile}
-          onChange={e => {
-            setMobile(e.target.value)
-          }}
-        />
-      </Form.Item>
-      <Form.Item label="客户所属公司" name="company">
-        <Select
-          className="rounded-sm mx-2"
-          placeholder="请选择客户所属公司"
-          onChange={(value: number) => {
-            setCompany(value)
-          }}
-        >
-          {companies.map(v => (
-            <Select.Option key={v.company_id} value={v.company_id}>
-              {v.company_name}
-            </Select.Option>
-          ))}
-        </Select>
-      </Form.Item>
-    </Form>
+    <Modal open={props.open} title="添加客户信息" closable onOk={submit} onCancel={cancel}>
+      <Form labelCol={{ span: 8 }} colon={false}>
+        <Form.Item label="客户名称" name="name">
+          <Input ref={name} className="rounded-sm mx-2" autoComplete="off" placeholder="请输入客户名称" />
+        </Form.Item>
+        <Form.Item label="客户联系方式" name="mobile">
+          <Input ref={mobile} className="rounded-sm mx-2" autoComplete="off" placeholder="请输入客户联系方式" />
+        </Form.Item>
+        <Form.Item label="客户所属公司" name="company">
+          <CompanySelector onSelect={com => (company.current = com)} />
+        </Form.Item>
+      </Form>
+    </Modal>
   )
-})
+}
+
+export default AddCustomer
