@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Input, Checkbox, Modal, App } from 'antd'
+import { Input, Checkbox, Modal, App, Image } from 'antd'
 import { IdcardFilled, LockFilled } from '@ant-design/icons'
 import { adminLogin, resetPassword, manageCustomerService, getDepartmentsAndStaffs } from '@/api'
-import bgImg from '@/asset/bg-img-login.png'
-import { DEFAULT_REDIRECT_PATH, SESSION_EXPIRE } from '@/config'
+import { DEFAULT_REDIRECT_PATH, SESSION_EXPIRE, LOGIN_PAGE_BACKGROUND_IMG as IMG } from '@/config'
 import { getStorage, setStorage } from '@/util'
 import type { LoginStorage } from '@/model'
 
@@ -120,7 +119,7 @@ const LoginPage: React.FC = () => {
     <>
       {/* 背景图片 */}
       <div className="fixed inset-0 mx-auto my-0 p-0 w-screen h-screen">
-        <img src={bgImg} alt="" className="object-cover object-center w-full h-full" />
+        <Image src={IMG} alt="" width="100vw" height="100vh" preview={false} />
       </div>
 
       {/* 重设密码表单 */}
