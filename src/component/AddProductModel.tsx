@@ -12,10 +12,16 @@ interface AddProductModelProps {
 }
 
 const AddProductModel: React.FC<AddProductModelProps> = props => {
+  /** 产品类型名称 */
   const name = useRef<InputRef>(null)
+  /** 产品类型所属大类 */
   const type = useRef<number>(-1)
+  /** 产品类型对应客服 */
   const services = useRef<string[]>([])
 
+  /**
+   * 提交表单
+   */
   const submit = (): void => {
     props.onSubmit({
       model_name: name.current?.input?.value ?? '',
@@ -24,6 +30,9 @@ const AddProductModel: React.FC<AddProductModelProps> = props => {
     })
   }
 
+  /**
+   * 取消提交表单
+   */
   const cancel = (): void => {
     props.onCancel()
   }

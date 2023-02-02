@@ -22,7 +22,9 @@ const CustomerServiceManage: React.FC = () => {
   /** 客户列表当前页数 */
   const [pageNum, setPageNum] = useState(1)
 
+  /** 控制编辑产品类型对应客服信息表单显示 */
   const [showEdit, setShowEdit] = useState(false)
+  /** 当前产品类型信息 */
   const current = useRef<ProductModel>()
 
   useEffect(() => {
@@ -64,6 +66,9 @@ const CustomerServiceManage: React.FC = () => {
 
   /**
    * 加载产品列表（即当前表格显示产品列表）
+   *
+   * @param all 所有产品列表
+   * @param page 当前产品表格页数
    */
   const loadProductModels = (all: ProductModel[] = allProducts, page = pageNum): void => {
     const products = all.slice((page - 1) * DEFAULT_PAGE_SIZE, DEFAULT_PAGE_SIZE)
@@ -94,7 +99,8 @@ const CustomerServiceManage: React.FC = () => {
   }
 
   /**
-   *  编辑产品对应客服
+   * 编辑产品对应客服
+   *
    * @param ids 客服ids
    */
   const editService = async (ids: string[]): Promise<void> => {
@@ -172,6 +178,7 @@ const CustomerServiceManage: React.FC = () => {
         />
       </Table>
 
+      {/* 管理客服表单 */}
       <ManageCustomerService
         open={showEdit}
         onSubmit={props => {

@@ -10,14 +10,21 @@ interface AddProductTypeProps {
 }
 
 const AddProductType: React.FC<AddProductTypeProps> = props => {
+  /** 产品大类名称 */
   const name = useRef<InputRef>(null)
 
+  /**
+   * 提交表单
+   */
   const submit = (): void => {
     props.onSubmit({
       type_name: name.current?.input?.value ?? '',
     })
   }
 
+  /**
+   * 取消提交表单
+   */
   const cancel = (): void => {
     props.onCancel()
   }

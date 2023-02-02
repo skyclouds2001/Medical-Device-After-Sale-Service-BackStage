@@ -10,16 +10,23 @@ const WorkOrderManage: React.FC = () => {
   const { message } = App.useApp()
   const dispatch = useDispatch()
 
+  /** 工单列表 */
   const [workOrders, setWorkOrders] = useState<WorkOrder[]>([])
-  const [isLoading, setLoading] = useState(false)
-  const [pageNum, setPageNum] = useState(1)
+  /** 工单总数 */
   const [total, setTotal] = useState(0)
+  /** 工单表格是否加载中 */
+  const [isLoading, setLoading] = useState(false)
+  /** 工单表格页下标 */
+  const [pageNum, setPageNum] = useState(1)
 
   useEffect(() => {
     dispatch<CustomAction>({ type: 'title/update', title: '工单管理' })
     void loadWorkOrder()
   }, [])
 
+  /**
+   * 加载工单方法
+   */
   const loadWorkOrder = async (): Promise<void> => {
     setLoading(true)
     try {
@@ -43,6 +50,11 @@ const WorkOrderManage: React.FC = () => {
     }
   }
 
+  /**
+   * 删除工单方法
+   *
+   * @param order 订单信息
+   */
   const deleteWorkOrder = (order: WorkOrder): void => {
     Modal.confirm({
       title: '警告',
@@ -69,6 +81,7 @@ const WorkOrderManage: React.FC = () => {
 
   return (
     <>
+      {/* 工单表单 */}
       <Table
         dataSource={workOrders}
         bordered

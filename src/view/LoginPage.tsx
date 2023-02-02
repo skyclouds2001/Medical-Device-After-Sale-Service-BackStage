@@ -11,6 +11,7 @@ const LoginPage: React.FC = () => {
   const { message } = App.useApp()
   const navigate = useNavigate()
 
+  /** 标记重设密码表单是否显示 */
   const [isModalOpen, setModalOpen] = useState(false)
 
   /** 用户名 */
@@ -33,7 +34,7 @@ const LoginPage: React.FC = () => {
     }
   }, [])
 
-  /** 初始化管理员方法 */
+  /** 初始化管理员信息方法 */
   const initManager = async (): Promise<void> => {
     try {
       const res1 = await getDepartmentsAndStaffs(0)
@@ -59,7 +60,7 @@ const LoginPage: React.FC = () => {
   }
 
   /**
-   * 执行登录操作方法
+   * 登录方法
    */
   const handleLogin = (): void => {
     const configs: LoginStorage = {
@@ -92,7 +93,7 @@ const LoginPage: React.FC = () => {
   }
 
   /**
-   * 执行找回密码操作方法
+   * 找回密码方法
    */
   const handleForgetPassword = (): void => {
     resetPassword(user, encryptedPassword, newPassword)

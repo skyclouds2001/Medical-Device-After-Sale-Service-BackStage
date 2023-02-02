@@ -2,23 +2,35 @@ import React, { useRef } from 'react'
 import { Form, Modal } from 'antd'
 import CustomerServiceSelector from '@/component/CustomerServiceSelector'
 
-interface EditCustomerServiceProps {
+interface ManageCustomerServiceProps {
   open: boolean
   onSubmit: (ids: string[]) => void
   onCancel: () => void
 }
 
-const ManageCustomerService: React.FC<EditCustomerServiceProps> = props => {
+const ManageCustomerService: React.FC<ManageCustomerServiceProps> = props => {
+  /** 客服列表 */
   const groups = useRef<string[]>([])
 
+  /**
+   * 提交表单
+   */
   const submit = (): void => {
     props.onSubmit(groups.current)
   }
 
+  /**
+   * 取消提交表单
+   */
   const cancel = (): void => {
     props.onCancel()
   }
 
+  /**
+   * 选取客服方法
+   *
+   * @param ids 客服id
+   */
   const select = (ids: string[]): void => {
     groups.current = ids
   }

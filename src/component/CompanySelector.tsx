@@ -8,6 +8,7 @@ interface CompanySelectorProps {
 }
 
 const CompanySelector: React.FC<CompanySelectorProps> = props => {
+  /** 公司列表 */
   const [companies, setCompanies] = useState<Company[]>([])
 
   useEffect(() => {

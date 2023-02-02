@@ -21,8 +21,11 @@ const CustomerManage: React.FC = () => {
   /** 客户列表当前页数 */
   const [pageNum, setPageNum] = useState(1)
 
+  /** 控制添加客户信息表单显示 */
   const [showAddCustomer, setShowAddCustomer] = useState(false)
+  /** 控制编辑客户信息表单显示 */
   const [showEditCustomer, setShowEditCustomer] = useState(false)
+  /** 当前客户信息 */
   const current = useRef<Customer>()
 
   useEffect(() => {
@@ -60,7 +63,7 @@ const CustomerManage: React.FC = () => {
   /**
    * 添加客户
    *
-   * @param params
+   * @param params 待添加的客户信息
    */
   const addCustomer = async (params: Omit<Customer, 'customer_id' | 'company_name'>): Promise<void> => {
     try {
@@ -84,7 +87,7 @@ const CustomerManage: React.FC = () => {
   /**
    * 更新客户信息
    *
-   * @param params
+   * @param params 待更新的客户信息
    */
   const editCustomer = async (params: Omit<Customer, 'company_name'>): Promise<void> => {
     try {
@@ -107,7 +110,7 @@ const CustomerManage: React.FC = () => {
   /**
    * 移除客户信息
    *
-   * @param customer
+   * @param customer 客户信息
    */
   const removeCustomer = (customer: Customer): void => {
     Modal.confirm({
@@ -202,6 +205,7 @@ const CustomerManage: React.FC = () => {
         />
       </Table>
 
+      {/* 添加客户信息表格 */}
       <AddCustomer
         open={showAddCustomer}
         onSubmit={props => {
@@ -212,6 +216,7 @@ const CustomerManage: React.FC = () => {
         }}
       />
 
+      {/* 编辑客户信息表格 */}
       <EditCustomer
         open={showEditCustomer}
         onSubmit={props => {

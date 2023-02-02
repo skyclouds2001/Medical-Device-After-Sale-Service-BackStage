@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { Breadcrumb, Layout, Image } from 'antd'
+import { Breadcrumb, Layout } from 'antd'
 import SideBar from '@/component/SideBar'
-import logo from '@/asset/logo.png'
 import type { CustomState } from '@/store'
 
 const BasePage: React.FC = () => {
@@ -19,9 +18,6 @@ const BasePage: React.FC = () => {
           setCollapsed(value)
         }}
       >
-        <div className="h-8 m-4 overflow-hidden">
-          <Image src={logo} alt="" width="8em" height="2.5em" preview={false} />
-        </div>
         <SideBar />
       </Layout.Sider>
       <Layout className="site-layout">

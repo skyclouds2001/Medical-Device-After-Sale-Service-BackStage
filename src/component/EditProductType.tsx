@@ -11,8 +11,12 @@ interface EditProductTypeProps {
 }
 
 const EditProductType: React.FC<EditProductTypeProps> = props => {
+  /** 产品大类名称 */
   const name = useRef<InputRef>(null)
 
+  /**
+   * 提交表单
+   */
   const submit = (): void => {
     props.onSubmit({
       type_name: name.current?.input?.value ?? props.properties.type_name,
@@ -20,6 +24,9 @@ const EditProductType: React.FC<EditProductTypeProps> = props => {
     })
   }
 
+  /**
+   * 取消提交表单
+   */
   const cancel = (): void => {
     props.onCancel()
   }

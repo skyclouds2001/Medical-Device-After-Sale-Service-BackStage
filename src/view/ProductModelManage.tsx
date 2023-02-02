@@ -12,13 +12,20 @@ const ProductModelManage: React.FC = () => {
   const { message } = App.useApp()
   const dispatch = useDispatch()
 
+  /** 产品类型列表 */
   const [products, setProducts] = useState<ProductModel[]>([])
+  /** 产品类型表格加载中标记 */
   const [isLoading, setLoading] = useState(false)
+  /** 产品类型表格当前页数 */
   const [pageNum, setPageNum] = useState(1)
+  /** 产品类型总数 */
   const [total, setTotal] = useState(0)
 
+  /** 控制添加产品类型表单显示 */
   const [showAddProductModel, setShowAddProductModel] = useState(false)
+  /** 控制编辑产品类型表格显示 */
   const [showEditProductModel, setShowEditProductModel] = useState(false)
+  /** 当前产品类型 */
   const current = useRef<ProductModel>()
 
   useEffect(() => {
@@ -26,6 +33,9 @@ const ProductModelManage: React.FC = () => {
     void loadProductModels()
   }, [])
 
+  /**
+   * 加载产品类型信息方法
+   */
   const loadProductModels = async (): Promise<void> => {
     setLoading(true)
     try {
@@ -48,6 +58,11 @@ const ProductModelManage: React.FC = () => {
     }
   }
 
+  /**
+   * 添加产品类型方法
+   *
+   * @param params 待添加产品类型信息
+   */
   const addProductModels = async (params: Omit<ProductModel, 'model_id' | 'type_name' | 'services'> & { services: string[] }): Promise<void> => {
     try {
       const res1 = await addProductModel(params.model_name, params.type_id)
@@ -76,9 +91,14 @@ const ProductModelManage: React.FC = () => {
     }
   }
 
-  const editProductModel = async (params: Omit<ProductModel, 'type_name' | 'services'>): Promise<void> => {
+  /**
+   * 编辑产品类型方法
+   *
+   * @param model 待更新产品类型信息
+   */
+  const editProductModel = async (model: Omit<ProductModel, 'type_name' | 'services'>): Promise<void> => {
     try {
-      const res = await updateProductModel(params.model_id, params.model_name, params.type_id)
+      const res = await updateProductModel(model.model_id, model.model_name, model.type_id)
       if (res.code === 0) {
         void message.success({
           content: '更新成功',
@@ -95,6 +115,11 @@ const ProductModelManage: React.FC = () => {
     }
   }
 
+  /**
+   * 移除产品类型方法
+   *
+   * @param product 产品类型信息
+   */
   const deleteProductDetail = (product: ProductModel): void => {
     Modal.confirm({
       title: '警告',
@@ -195,6 +220,7 @@ const ProductModelManage: React.FC = () => {
         />
       </Table>
 
+      {/* 添加产品类型表单 */}
       <AddProductModel
         open={showAddProductModel}
         onSubmit={params => {
@@ -205,6 +231,7 @@ const ProductModelManage: React.FC = () => {
         }}
       />
 
+      {/* 编辑产品类型表单 */}
       <EditProductModel
         open={showEditProductModel}
         onSubmit={params => {

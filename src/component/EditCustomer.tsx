@@ -12,10 +12,16 @@ interface EditCustomerProps {
 }
 
 const EditCustomer: React.FC<EditCustomerProps> = props => {
+  /** 客户姓名 */
   const name = useRef<InputRef>(null)
+  /** 客户手机 */
   const mobile = useRef<InputRef>(null)
+  /** 客服所属公司 */
   const company = useRef<number>(-1)
 
+  /**
+   * 提交表单
+   */
   const submit = (): void => {
     props.onSubmit({
       customer_id: props.properties.customer_id,
@@ -25,6 +31,9 @@ const EditCustomer: React.FC<EditCustomerProps> = props => {
     })
   }
 
+  /**
+   * 取消提交表单
+   */
   const cancel = (): void => {
     props.onCancel()
   }

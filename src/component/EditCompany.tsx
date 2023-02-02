@@ -11,8 +11,12 @@ interface EditCompanyProps {
 }
 
 const EditCompany: React.FC<EditCompanyProps> = props => {
+  /** 公司名称 */
   const name = useRef<InputRef>(null)
 
+  /**
+   * 提交表单
+   */
   const submit = (): void => {
     props.onSubmit({
       company_name: name.current?.input?.value ?? props.properties.company_name,
@@ -20,6 +24,9 @@ const EditCompany: React.FC<EditCompanyProps> = props => {
     })
   }
 
+  /**
+   * 取消提交表单
+   */
   const cancel = (): void => {
     props.onCancel()
   }

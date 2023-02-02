@@ -12,9 +12,14 @@ interface EditProductModelProps {
 }
 
 const EditProductModel: React.FC<EditProductModelProps> = props => {
+  /** 产品类型名称 */
   const name = useRef<InputRef>(null)
+  /** 产品类型所属大类 */
   const type = useRef<number>(-1)
 
+  /**
+   * 提交表单
+   */
   const submit = (): void => {
     props.onSubmit({
       model_id: props.properties.model_id,
@@ -23,6 +28,9 @@ const EditProductModel: React.FC<EditProductModelProps> = props => {
     })
   }
 
+  /**
+   * 取消提交表单
+   */
   const cancel = (): void => {
     props.onCancel()
   }

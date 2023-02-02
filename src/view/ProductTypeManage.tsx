@@ -12,13 +12,20 @@ const ProductTypeManage: React.FC = () => {
   const { message } = App.useApp()
   const dispatch = useDispatch()
 
+  /** 产品大类列表 */
   const [productTypes, setProductTypes] = useState<ProductType[]>([])
+  /** 产品大类表格加载中标记 */
   const [isLoading, setLoading] = useState(false)
+  /** 产品大类表格当前页数 */
   const [pageNum, setPageNum] = useState(1)
+  /** 产品大类总数 */
   const [total, setTotal] = useState(0)
 
+  /** 控制添加产品大类表单显示 */
   const [showAddProductType, setShowAddProductType] = useState(false)
+  /** 控制编辑产品大类表格显示 */
   const [showEditProductType, setShowEditProductType] = useState(false)
+  /** 当前产品大类 */
   const current = useRef<ProductType>()
 
   useEffect(() => {
@@ -26,6 +33,9 @@ const ProductTypeManage: React.FC = () => {
     void loadProductTypes()
   }, [])
 
+  /**
+   * 加载产品大类信息方法
+   */
   const loadProductTypes = async (): Promise<void> => {
     setLoading(true)
     try {
@@ -48,6 +58,11 @@ const ProductTypeManage: React.FC = () => {
     }
   }
 
+  /**
+   * 添加产品大类方法
+   *
+   * @param params 待添加产品大类信息
+   */
   const addProductTypes = async (params: Omit<ProductType, 'type_id'>): Promise<void> => {
     try {
       const res = await addProductType(params.type_name)
@@ -67,6 +82,11 @@ const ProductTypeManage: React.FC = () => {
     }
   }
 
+  /**
+   * 编辑产品大类方法
+   *
+   * @param type 待更新产品大类信息
+   */
   const editProductType = async (type: ProductType): Promise<void> => {
     try {
       const res = await updateProductType(type.type_id, type.type_name)
@@ -86,6 +106,11 @@ const ProductTypeManage: React.FC = () => {
     }
   }
 
+  /**
+   * 移除产品大类方法
+   *
+   * @param product 产品大类信息
+   */
   const deleteProductType = (product: ProductType): void => {
     Modal.confirm({
       title: '警告',
@@ -185,6 +210,7 @@ const ProductTypeManage: React.FC = () => {
         />
       </Table>
 
+      {/* 添加产品大类表单 */}
       <AddProductType
         open={showAddProductType}
         onSubmit={params => {
@@ -195,6 +221,7 @@ const ProductTypeManage: React.FC = () => {
         }}
       />
 
+      {/* 编辑产品大类表单 */}
       <EditProductType
         open={showEditProductType}
         onSubmit={params => {
