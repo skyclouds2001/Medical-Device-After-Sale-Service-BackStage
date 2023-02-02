@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { App, Button, Modal, Table } from 'antd'
 import { getAllWorkOrder, removeWorkOrder } from '@/api'
 import { DEFAULT_PAGE_SIZE } from '@/config'
+import { services } from '@/data'
 import { CustomAction } from '@/store'
 import type { WorkOrder } from '@/model'
 
@@ -95,12 +96,23 @@ const WorkOrderManage: React.FC = () => {
         onChange={pagination => {
           setPageNum(pagination.current ?? 1)
         }}
-        className="w-[56rem]"
+        className="w-[68rem]"
       >
         <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
         <Table.Column width="200px" align="center" title="预约时间" dataIndex="appointment_time" key="appointment_time" />
         <Table.Column width="200px" align="center" title="客户ID" dataIndex="customer_id" key="customer_id" />
         <Table.Column width="200px" align="center" title="地址" dataIndex="address" key="address" />
+        <Table.Column
+          width="200px"
+          align="center"
+          title="类型"
+          key="address"
+          render={(_, record: WorkOrder) => (
+            <>
+              <span>{services.find(v => v.id === record.order_type)?.text}</span>
+            </>
+          )}
+        />
         <Table.Column
           width="100px"
           align="center"

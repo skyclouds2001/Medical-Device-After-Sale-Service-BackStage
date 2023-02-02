@@ -18,6 +18,8 @@ export interface Attachment {
 export default interface WorkOrder {
   /** 工单id */
   order_id: number
+  /** 工单类型（0-安调，1-维修，2-巡检，3-认证，4-培训，5-软件升级） */
+  order_type: 0 | 1 | 2 | 3 | 4 | 5
   /** 客户id */
   customer_id: number
   /** 产品型号id */
