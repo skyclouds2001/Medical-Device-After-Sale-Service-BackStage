@@ -23,10 +23,12 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   rules: {
     'jsdoc/require-param-type': 'off',
+    'jsdoc/require-returns-type': 'off',
     'react-hooks/exhaustive-deps': 'off',
     'n/no-missing-import': 'off',
     'import/no-named-as-default-member': 'off',
     'promise/always-return': 'off',
+    'import/default': 'off',
   },
   settings: {
     react: {
