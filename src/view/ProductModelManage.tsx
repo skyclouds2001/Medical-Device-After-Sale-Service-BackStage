@@ -99,10 +99,9 @@ const ProductModelManage: React.FC = () => {
     Modal.confirm({
       title: '警告',
       content: '确认移除当前产品？',
+      okText: '删除',
+      okType: 'danger',
       closable: true,
-      okButtonProps: {
-        className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent',
-      },
       onOk: async () => {
         try {
           const res1 = await removeProductModel(product.model_id)

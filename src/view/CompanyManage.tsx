@@ -141,6 +141,8 @@ const CompanyManage: React.FC = () => {
       {/* 添加企业信息按钮区域 */}
       <div className="my-5 text-right w-[25rem]">
         <Button
+          className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent"
+          type="primary"
           onClick={() => {
             setShowAddCompany(true)
           }}

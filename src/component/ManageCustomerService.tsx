@@ -24,7 +24,7 @@ const ManageCustomerService: React.FC<EditCustomerServiceProps> = props => {
   }
 
   return (
-    <Modal open={props.open} title="修改产品客服" closable={true} onOk={submit} onCancel={cancel}>
+    <Modal open={props.open} title="修改产品客服" okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} closable onOk={submit} onCancel={cancel}>
       <Form labelCol={{ span: 8 }} colon={false}>
         <Form.Item label="客服" name="customer_service">
           <CustomerServiceSelector onSelect={select} />

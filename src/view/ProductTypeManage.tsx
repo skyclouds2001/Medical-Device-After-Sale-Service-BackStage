@@ -90,10 +90,9 @@ const ProductTypeManage: React.FC = () => {
     Modal.confirm({
       title: '警告',
       content: '确认移除当前产品大类及其产品？',
+      okText: '删除',
+      okType: 'danger',
       closable: true,
-      okButtonProps: {
-        className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent',
-      },
       onOk: async () => {
         try {
           const res1 = await removeProductType(product.type_id)
@@ -127,7 +126,7 @@ const ProductTypeManage: React.FC = () => {
   return (
     <>
       {/* 添加产品及大类按钮区域 */}
-      <div className="my-5 text-right w-[31rem]">
+      <div className="my-5 text-right w-[25rem]">
         <Button
           className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent"
           type="primary"
@@ -153,11 +152,11 @@ const ProductTypeManage: React.FC = () => {
         onChange={pagination => {
           setPageNum(pagination.current ?? 1)
         }}
-        className="w-[31rem]"
+        className="w-[25rem]"
       >
         <Table.Column width="200px" align="center" title="产品大类名称" dataIndex="type_name" key="type_name" />
         <Table.Column
-          width="300px"
+          width="200px"
           align="center"
           title="操作"
           key="action"

@@ -142,7 +142,7 @@ const CustomerManage: React.FC = () => {
       {/* 添加客户信息按钮区域 */}
       <div className="my-5 text-right w-[50rem]">
         <Button
-          className="text-blue-500"
+          className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent"
           type="primary"
           onClick={() => {
             setShowAddCustomer(true)
