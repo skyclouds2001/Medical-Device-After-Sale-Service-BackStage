@@ -1,9 +1,12 @@
-import React, { useRef } from 'react'
-import { Form, Input, Modal } from 'antd'
-import type { InputRef } from 'antd'
+import React, { useRef, useState } from 'react'
+import { Form, Input, Modal, Upload, Image } from 'antd'
+import type { InputRef, UploadProps } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
+import { uploadFile } from '@/api'
 import ProductTypeSelector from '@/component/ProductTypeSelector'
 import CustomerServiceSelector from '@/component/CustomerServiceSelector'
 import type { ProductModel } from '@/model'
+import { getImageBase64 } from '@/util'
 
 interface AddProductModelProps {
   open: boolean
@@ -18,6 +21,8 @@ const AddProductModel: React.FC<AddProductModelProps> = props => {
   const type = useRef<number>(-1)
   /** 产品类型对应客服 */
   const services = useRef<string[]>([])
+  /** 产品图片 */
+  const [image, setImage] = useState<string>('')
 
   /**
    * 提交表单
@@ -27,6 +32,7 @@ const AddProductModel: React.FC<AddProductModelProps> = props => {
       model_name: name.current?.input?.value ?? '',
       type_id: type.current,
       services: services.current,
+      pic_url: '',
     })
   }
 
@@ -35,6 +41,32 @@ const AddProductModel: React.FC<AddProductModelProps> = props => {
    */
   const cancel = (): void => {
     props.onCancel()
+  }
+
+  /**
+   * 自定义上传图片方法
+   *
+   * @param e 上传图片事件
+   */
+  const uploadImage = (e: Parameters<Required<UploadProps>['customRequest']>[0]): void => {
+    let done = false
+    getImageBase64(e.file as File)
+      .then(res => {
+        if (!done) {
+          setImage(res)
+        }
+      })
+      .catch(err => {
+        console.error(err)
+      })
+    uploadFile(e.file as File)
+      .then(res => {
+        done = true
+        console.log(res)
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 
   return (
@@ -48,6 +80,17 @@ const AddProductModel: React.FC<AddProductModelProps> = props => {
         </Form.Item>
         <Form.Item label="产品所属客服" name="service">
           <CustomerServiceSelector onSelect={v => (services.current = v)} />
+        </Form.Item>
+        <Form.Item label="产品图片" name="image">
+          <Upload accept="image/*" listType="picture-card" maxCount={1} showUploadList={false} customRequest={uploadImage} fileList={[]}>
+            {image !== '' ? (
+              <Image src={image} alt="" />
+            ) : (
+              <div>
+                <PlusOutlined />
+              </div>
+            )}
+          </Upload>
         </Form.Item>
       </Form>
     </Modal>

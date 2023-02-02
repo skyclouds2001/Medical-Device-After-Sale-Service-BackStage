@@ -11,3 +11,5 @@ export * from './product-type'
 export * from './product-model'
 
 export * from './work-order'
+
+export * from './file'
