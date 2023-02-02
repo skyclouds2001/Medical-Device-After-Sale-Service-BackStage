@@ -8,6 +8,8 @@ export default interface ProductModel {
   model_id: number
   /** 产品型号名称 */
   model_name: string
+  /** 产品图片链接 */
+  pic_url: string
   /** 产品型号所属大类id */
   type_id: number
   /** 产品型号所属大类 */

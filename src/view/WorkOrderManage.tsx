@@ -106,7 +106,7 @@ const WorkOrderManage: React.FC = () => {
           width="200px"
           align="center"
           title="类型"
-          key="address"
+          key="order_type"
           render={(_, record: WorkOrder) => (
             <>
               <span>{services.find(v => v.id === record.order_type)?.text}</span>

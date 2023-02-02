@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Button, Modal, Table, App } from 'antd'
+import { Button, Modal, Table, App, Image } from 'antd'
 import { addProductModel, getAllProductModels, manageCustomerService, removeProductModel, removeSingleServer, updateProductModel } from '@/api'
+import img from '@/asset/img.svg'
 import AddProductModel from '@/component/AddProductModel'
 import EditProductModel from '@/component/EditProductModel'
 import { DEFAULT_PAGE_SIZE } from '@/config'
@@ -160,7 +161,7 @@ const ProductModelManage: React.FC = () => {
   return (
     <>
       {/* 添加产品按钮区域 */}
-      <div className="my-5 text-right w-[37rem]">
+      <div className="my-5 text-right w-[50rem]">
         <Button
           className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent"
           type="primary"
@@ -186,10 +187,21 @@ const ProductModelManage: React.FC = () => {
         onChange={pagination => {
           setPageNum(pagination.current ?? 1)
         }}
-        className="w-[37rem]"
+        className="w-[50rem]"
       >
         <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
         <Table.Column width="200px" align="center" title="产品大类" dataIndex="type_name" key="type_name" />
+        <Table.Column
+          width="200px"
+          align="center"
+          title="产品图片"
+          key="pic_url"
+          render={(_, record: ProductModel) => (
+            <>
+              <Image width={100} height={100} alt="" src={record.pic_url ?? img} fallback={img} preview={false} />
+            </>
+          )}
+        />
         <Table.Column
           width="200px"
           align="center"
