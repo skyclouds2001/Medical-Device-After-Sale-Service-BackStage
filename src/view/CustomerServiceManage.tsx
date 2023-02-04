@@ -39,6 +39,14 @@ const CustomerServiceManage: React.FC = () => {
     try {
       setLoading(true)
 
+      const commonCustomerService: ProductModel = {
+        model_id: -1,
+        model_name: '通用客服',
+        pic_url: '',
+        type_id: -1,
+        type_name: '——',
+      }
+
       const res = await getAllProductModels()
 
       if (res.code !== 0) {
@@ -48,6 +56,7 @@ const CustomerServiceManage: React.FC = () => {
       }
 
       const products = res.data
+      products.unshift(commonCustomerService)
       products.forEach(v => (v.services = []))
 
       setAllProducts(products)
@@ -104,7 +113,6 @@ const CustomerServiceManage: React.FC = () => {
    * @param ids 客服ids
    */
   const editService = async (ids: string[]): Promise<void> => {
-    console.log(ids)
     if (current.current === undefined) return
     try {
       const res = await manageCustomerService(current.current.model_id, ids)
@@ -113,6 +121,7 @@ const CustomerServiceManage: React.FC = () => {
         void message.success({
           content: '修改成功',
         })
+        setShowEdit(false)
       } else {
         void message.error({
           content: res.data,
