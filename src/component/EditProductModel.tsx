@@ -5,7 +5,6 @@ import { PlusOutlined } from '@ant-design/icons'
 import { uploadFile } from '@/api'
 import ProductTypeSelector from '@/component/ProductTypeSelector'
 import type { ProductModel } from '@/model'
-import { getImageBase64 } from '@/util'
 
 interface EditProductModelProps {
   open: boolean
@@ -30,7 +29,7 @@ const EditProductModel: React.FC<EditProductModelProps> = props => {
       model_id: props.properties.model_id,
       model_name: name.current?.input?.value ?? props.properties.model_name,
       type_id: type.current !== -1 ? type.current : props.properties.type_id,
-      pic_url: '',
+      pic_url: image,
     })
   }
 
@@ -47,16 +46,9 @@ const EditProductModel: React.FC<EditProductModelProps> = props => {
    * @param e 选择图片事件
    */
   const uploadImage = (e: Parameters<Required<UploadProps>['customRequest']>[0]): void => {
-    getImageBase64(e.file as File)
-      .then(res => {
-        setImage(res)
-      })
-      .catch(err => {
-        console.error(err)
-      })
     uploadFile(e.file as File)
       .then(res => {
-        console.log(res)
+        setImage(res.data)
       })
       .catch(err => {
         console.error(err)

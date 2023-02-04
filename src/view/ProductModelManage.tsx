@@ -66,7 +66,7 @@ const ProductModelManage: React.FC = () => {
    */
   const addProductModels = async (params: Omit<ProductModel, 'model_id' | 'type_name' | 'services'> & { services: string[] }): Promise<void> => {
     try {
-      const res1 = await addProductModel(params.model_name, params.type_id)
+      const res1 = await addProductModel(params.model_name, params.type_id, params.pic_url)
       if (res1.code !== 0) {
         void message.error({
           content: res1.data,
@@ -99,7 +99,7 @@ const ProductModelManage: React.FC = () => {
    */
   const editProductModel = async (model: Omit<ProductModel, 'type_name' | 'services'>): Promise<void> => {
     try {
-      const res = await updateProductModel(model.model_id, model.model_name, model.type_id)
+      const res = await updateProductModel(model.model_id, model.model_name, model.type_id, model.pic_url)
       if (res.code === 0) {
         void message.success({
           content: '更新成功',

@@ -6,9 +6,9 @@ import type { Response } from '@/model'
  *
  * @param file 文件
  */
-export const uploadFile = async (file: File): Promise<unknown> => {
-  const res = await instance.post<Response>(
-    '/media/upload',
+export const uploadFile = async (file: File): Promise<Response<string>> => {
+  const res = await instance.post<Response<string>>(
+    '/wizz/aftersale/media/upload',
     {
       file,
     },

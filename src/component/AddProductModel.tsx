@@ -6,7 +6,6 @@ import { uploadFile } from '@/api'
 import ProductTypeSelector from '@/component/ProductTypeSelector'
 import CustomerServiceSelector from '@/component/CustomerServiceSelector'
 import type { ProductModel } from '@/model'
-import { getImageBase64 } from '@/util'
 
 interface AddProductModelProps {
   open: boolean
@@ -32,7 +31,7 @@ const AddProductModel: React.FC<AddProductModelProps> = props => {
       model_name: name.current?.input?.value ?? '',
       type_id: type.current,
       services: services.current,
-      pic_url: '',
+      pic_url: image,
     })
   }
 
@@ -49,20 +48,9 @@ const AddProductModel: React.FC<AddProductModelProps> = props => {
    * @param e 上传图片事件
    */
   const uploadImage = (e: Parameters<Required<UploadProps>['customRequest']>[0]): void => {
-    let done = false
-    getImageBase64(e.file as File)
-      .then(res => {
-        if (!done) {
-          setImage(res)
-        }
-      })
-      .catch(err => {
-        console.error(err)
-      })
     uploadFile(e.file as File)
       .then(res => {
-        done = true
-        console.log(res)
+        setImage(res.data)
       })
       .catch(err => {
         console.error(err)
