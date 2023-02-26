@@ -163,7 +163,7 @@ const ProductModelManage: React.FC = () => {
       {/* 添加产品按钮区域 */}
       <div className="my-5 text-right w-[50rem]">
         <Button
-          className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent"
+          className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent"
           type="primary"
           onClick={() => {
             setShowAddProductModel(true)

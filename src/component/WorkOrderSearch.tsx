@@ -31,10 +31,14 @@ const WorkOrderSearch: React.FC<WorkOrderSearchProps> = props => {
           <Input name="product_name" placeholder="请输入产品名称" className="rounded" />
         </Form.Item>
         <Form.Item>
-          <Button onClick={onSearch}>搜索</Button>
+          <Button type="primary" className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" onClick={onSearch}>
+            搜索
+          </Button>
         </Form.Item>
         <Form.Item>
-          <Button onClick={onReset}>重置</Button>
+          <Button type="default" onClick={onReset}>
+            重置
+          </Button>
         </Form.Item>
       </Form>
     </>
