@@ -126,8 +126,10 @@ const LoginPage: React.FC = () => {
       {/* 重设密码表单 */}
       <Modal
         title="重设密码"
-        okButtonProps={{ className: 'text-black' }}
         open={isModalOpen}
+        okButtonProps={{
+          className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent',
+        }}
         onOk={handleForgetPassword}
         onCancel={() => {
           setModalOpen(false)
@@ -195,7 +197,7 @@ const LoginPage: React.FC = () => {
           </Checkbox>
         </div>
         <div className="mt-5 mb-2.5 mx-0">
-          <button className="w-40 text-lg text-white border-none focus:outline-none" onClick={handleLogin} style={{ backgroundImage: 'linear-gradient(135deg, rgb(70, 100, 230), rgb(70, 100, 190) 50%, rgb(40, 50, 150))' }}>
+          <button className="w-40 text-base text-white tracking-widest leading-8 rounded-sm saturate-100 active:saturate-[.9] transition-all" onClick={handleLogin} style={{ backgroundImage: 'linear-gradient(135deg, rgb(70, 100, 230), rgb(70, 100, 190) 50%, rgb(40, 50, 150))' }}>
             登录
           </button>
         </div>
