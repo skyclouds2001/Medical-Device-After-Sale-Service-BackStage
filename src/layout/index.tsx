@@ -5,7 +5,7 @@ import { Breadcrumb, Layout } from 'antd'
 import SideBar from '@/component/SideBar'
 import type { CustomState } from '@/store'
 
-const BasePage: React.FC = () => {
+const LayoutContainer: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false)
   const title = useSelector<CustomState, CustomState['title']>(state => state.title)
 
@@ -28,7 +28,7 @@ const BasePage: React.FC = () => {
           </Breadcrumb>
         </Layout.Header>
         <Layout.Content className="mx-8 my-5">
-          <div className="min-h-[600px] px-14 py-5 bg-white rounded">
+          <div className="min-h-[600px] px-14 py-5 bg-white rounded flex justify-start items-center flex-col">
             <Outlet />
           </div>
         </Layout.Content>
@@ -38,4 +38,4 @@ const BasePage: React.FC = () => {
   )
 }
 
-export default BasePage
+export default LayoutContainer
