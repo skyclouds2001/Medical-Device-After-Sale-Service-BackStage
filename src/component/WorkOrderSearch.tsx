@@ -23,7 +23,7 @@ const WorkOrderSearch: React.FC<WorkOrderSearchProps> = props => {
 
   return (
     <>
-      <Form form={form} name="work_order" layout="inline" className="my-5">
+      <Form form={form} name="work_order" layout="inline" className="my-5 self-start">
         <Form.Item name="work_order_type" label="工单类型">
           <Select placeholder="请选择工单类型" allowClear options={services.map(v => ({ label: v.text, value: v.id }))} style={{ width: '200px' }} />
         </Form.Item>
