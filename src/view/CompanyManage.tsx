@@ -96,6 +96,7 @@ const CompanyManage: React.FC = () => {
           content: '更新成功',
         })
         void loadCompany(false, pageNum)
+        setShowAddCompany(false)
       } else {
         void message.error({
           content: res.data,
@@ -127,6 +128,7 @@ const CompanyManage: React.FC = () => {
             })
             void loadCompany(false, pageNum)
             setTotal(total - 1)
+            setShowEditCompany(false)
           } else {
             void message.error({
               content: res.data,

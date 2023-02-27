@@ -74,6 +74,7 @@ const CustomerManage: React.FC = () => {
         })
         void loadCustomer(false, pageNum)
         setTotal(total + 1)
+        setShowAddCustomer(false)
       } else {
         void message.error({
           content: res.data,
@@ -97,6 +98,7 @@ const CustomerManage: React.FC = () => {
           content: '更新成功',
         })
         void loadCustomer(false, pageNum)
+        setShowEditCustomer(false)
       } else {
         void message.error({
           content: res.data,
