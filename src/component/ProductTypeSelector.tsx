@@ -9,6 +9,8 @@ interface ProductTypeSelectorProps {
 
 const ProductTypeSelector: React.FC<ProductTypeSelectorProps> = props => {
   const { message } = App.useApp()
+
+  /** 产品大类列表 */
   const [productTypes, setProductTypes] = useState<ProductType[]>([])
 
   useEffect(() => {

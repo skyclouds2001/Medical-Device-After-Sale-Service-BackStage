@@ -19,11 +19,13 @@ instance.interceptors.request.use(
     }
     return config
   },
+  // eslint-disable-next-line promise/no-promise-in-callback
   async error => await Promise.reject(error),
 )
 
 instance.interceptors.response.use(
   result => result,
+  // eslint-disable-next-line promise/no-promise-in-callback
   async error => await Promise.reject(error),
 )
 

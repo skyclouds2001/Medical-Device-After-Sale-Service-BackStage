@@ -24,11 +24,13 @@ export const getProductModel = async (productModelId: number): Promise<Response<
  *
  * @param {string} modelName 产品型号名称
  * @param {number} typeId 产品型号所属大类id
+ * @param {string} img 产品型号展示图片的url
  */
-export const addProductModel = async (modelName: string, typeId: number): Promise<Response<void>> => {
+export const addProductModel = async (modelName: string, typeId: number, img: string): Promise<Response<void>> => {
   const res = await instance.post<Response<void>>('/wizz/aftersale/product-model/add', {
     model_name: modelName,
     type_id: typeId,
+    pic_url: img,
   })
   return res.data
 }
@@ -39,12 +41,14 @@ export const addProductModel = async (modelName: string, typeId: number): Promis
  * @param {number} modelId 产品型号id
  * @param {string} modelName 产品型号名称
  * @param {number} typeId 产品型号所属大类id
+ * @param {string} img 产品型号展示图片的url
  */
-export const updateProductModel = async (modelId: number, modelName: string, typeId: number): Promise<Response<void>> => {
+export const updateProductModel = async (modelId: number, modelName: string, typeId: number, img: string): Promise<Response<void>> => {
   const res = await instance.post<Response<void>>('/wizz/aftersale/product-model/update', {
     model_id: modelId,
     model_name: modelName,
     type_id: typeId,
+    pic_url: img,
   })
   return res.data
 }

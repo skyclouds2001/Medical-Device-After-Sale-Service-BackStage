@@ -38,9 +38,11 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.0.1",
     "antd": "^5.1.2",
     "axios": "^1.2.2",
     "crypto-js": "^4.1.1",
+    "dayjs": "^1.11.7",
     "lodash-es": "^4.17.21",
     "prop-types": "^15.8.1",
     "qs": "^6.11.0",
@@ -73,6 +75,7 @@
     "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-config-standard-with-typescript": "^26.0.0",
+    "eslint-import-resolver-typescript": "^3.5.3",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsdoc": "^39.6.4",
     "eslint-plugin-n": "^15.6.0",

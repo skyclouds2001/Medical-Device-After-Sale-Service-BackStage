@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Input, Checkbox, Modal, App } from 'antd'
+import { Input, Checkbox, Modal, App, Image } from 'antd'
 import { IdcardFilled, LockFilled } from '@ant-design/icons'
 import { adminLogin, resetPassword, manageCustomerService, getDepartmentsAndStaffs } from '@/api'
-import bgImg from '@/asset/bg-img-login.png'
-import { DEFAULT_REDIRECT_PATH, SESSION_EXPIRE } from '@/config'
+import { DEFAULT_REDIRECT_PATH, SESSION_EXPIRE, LOGIN_PAGE_BACKGROUND_IMG as IMG } from '@/config'
 import { getStorage, setStorage } from '@/util'
 import type { LoginStorage } from '@/model'
 
@@ -12,6 +11,7 @@ const LoginPage: React.FC = () => {
   const { message } = App.useApp()
   const navigate = useNavigate()
 
+  /** 标记重设密码表单是否显示 */
   const [isModalOpen, setModalOpen] = useState(false)
 
   /** 用户名 */
@@ -34,7 +34,7 @@ const LoginPage: React.FC = () => {
     }
   }, [])
 
-  /** 初始化管理员方法 */
+  /** 初始化管理员信息方法 */
   const initManager = async (): Promise<void> => {
     try {
       const res1 = await getDepartmentsAndStaffs(0)
@@ -60,7 +60,7 @@ const LoginPage: React.FC = () => {
   }
 
   /**
-   * 执行登录操作方法
+   * 登录方法
    */
   const handleLogin = (): void => {
     const configs: LoginStorage = {
@@ -93,7 +93,7 @@ const LoginPage: React.FC = () => {
   }
 
   /**
-   * 执行找回密码操作方法
+   * 找回密码方法
    */
   const handleForgetPassword = (): void => {
     resetPassword(user, encryptedPassword, newPassword)
@@ -120,14 +120,16 @@ const LoginPage: React.FC = () => {
     <>
       {/* 背景图片 */}
       <div className="fixed inset-0 mx-auto my-0 p-0 w-screen h-screen">
-        <img src={bgImg} alt="" className="object-cover object-center w-full h-full" />
+        <Image src={IMG} alt="" width="100vw" height="100vh" preview={false} />
       </div>
 
       {/* 重设密码表单 */}
       <Modal
         title="重设密码"
-        okButtonProps={{ className: 'text-black' }}
         open={isModalOpen}
+        okButtonProps={{
+          className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent',
+        }}
         onOk={handleForgetPassword}
         onCancel={() => {
           setModalOpen(false)
@@ -195,7 +197,7 @@ const LoginPage: React.FC = () => {
           </Checkbox>
         </div>
         <div className="mt-5 mb-2.5 mx-0">
-          <button className="w-40 text-lg text-white border-none focus:outline-none" onClick={handleLogin} style={{ backgroundImage: 'linear-gradient(135deg, rgb(70, 100, 230), rgb(70, 100, 190) 50%, rgb(40, 50, 150))' }}>
+          <button className="w-40 text-base text-white tracking-widest leading-8 rounded-sm saturate-100 active:saturate-[.9] transition-all" onClick={handleLogin} style={{ backgroundImage: 'linear-gradient(135deg, rgb(70, 100, 230), rgb(70, 100, 190) 50%, rgb(40, 50, 150))' }}>
             登录
           </button>
         </div>
