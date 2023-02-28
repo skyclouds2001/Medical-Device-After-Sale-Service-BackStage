@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { Breadcrumb, Layout, Image } from 'antd'
+import { Breadcrumb, Layout } from 'antd'
 import SideBar from '@/component/SideBar'
-import logo from '@/asset/logo.png'
 import type { CustomState } from '@/store'
 
-const BasePage: React.FC = () => {
+const LayoutContainer: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false)
   const title = useSelector<CustomState, CustomState['title']>(state => state.title)
 
@@ -19,9 +18,6 @@ const BasePage: React.FC = () => {
           setCollapsed(value)
         }}
       >
-        <div className="h-8 m-4 overflow-hidden">
-          <Image src={logo} alt="" width="8em" height="2.5em" preview={false} />
-        </div>
         <SideBar />
       </Layout.Sider>
       <Layout className="site-layout">
@@ -32,7 +28,7 @@ const BasePage: React.FC = () => {
           </Breadcrumb>
         </Layout.Header>
         <Layout.Content className="mx-8 my-5">
-          <div className="min-h-[600px] px-14 py-5 bg-white rounded">
+          <div className="min-h-[600px] px-14 py-5 bg-white rounded flex justify-start items-center flex-col">
             <Outlet />
           </div>
         </Layout.Content>
@@ -42,4 +38,4 @@ const BasePage: React.FC = () => {
   )
 }
 
-export default BasePage
+export default LayoutContainer

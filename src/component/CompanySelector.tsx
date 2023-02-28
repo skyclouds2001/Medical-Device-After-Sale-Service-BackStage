@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Select } from 'antd'
 import { getCompanyInfo } from '@/api'
+import { DEFAULT_PAGE_SIZE } from '@/config'
 import type { Company } from '@/model'
 
 interface CompanySelectorProps {
@@ -8,16 +9,21 @@ interface CompanySelectorProps {
 }
 
 const CompanySelector: React.FC<CompanySelectorProps> = props => {
+  /** 公司列表 */
   const [companies, setCompanies] = useState<Company[]>([])
 
   useEffect(() => {
     const loadCompanies = async (): Promise<void> => {
       try {
+        let companies: Company[]
         const res = await getCompanyInfo(true, 1)
         const { total_num: num } = res.data
-        const result = await Promise.allSettled(new Array(num).fill([]).map(async (_, i) => await getCompanyInfo(false, i)))
-        result.reduce<Company[]>((p, c) => [...p, ...(c.status === 'fulfilled' ? c.value.data.company_list : [])], [])
-        setCompanies([])
+        companies = [...res.data.company_list]
+        for (let i = 2; i < num / DEFAULT_PAGE_SIZE + 1; ++i) {
+          const res = await getCompanyInfo(false, i)
+          companies = [...companies, ...res.data.company_list]
+        }
+        setCompanies(companies)
       } catch (err) {
         console.error(err)
       }

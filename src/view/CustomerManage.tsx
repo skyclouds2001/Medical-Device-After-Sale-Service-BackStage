@@ -21,8 +21,11 @@ const CustomerManage: React.FC = () => {
   /** 客户列表当前页数 */
   const [pageNum, setPageNum] = useState(1)
 
+  /** 控制添加客户信息表单显示 */
   const [showAddCustomer, setShowAddCustomer] = useState(false)
+  /** 控制编辑客户信息表单显示 */
   const [showEditCustomer, setShowEditCustomer] = useState(false)
+  /** 当前客户信息 */
   const current = useRef<Customer>()
 
   useEffect(() => {
@@ -60,7 +63,7 @@ const CustomerManage: React.FC = () => {
   /**
    * 添加客户
    *
-   * @param params
+   * @param params 待添加的客户信息
    */
   const addCustomer = async (params: Omit<Customer, 'customer_id' | 'company_name'>): Promise<void> => {
     try {
@@ -71,6 +74,7 @@ const CustomerManage: React.FC = () => {
         })
         void loadCustomer(false, pageNum)
         setTotal(total + 1)
+        setShowAddCustomer(false)
       } else {
         void message.error({
           content: res.data,
@@ -84,7 +88,7 @@ const CustomerManage: React.FC = () => {
   /**
    * 更新客户信息
    *
-   * @param params
+   * @param params 待更新的客户信息
    */
   const editCustomer = async (params: Omit<Customer, 'company_name'>): Promise<void> => {
     try {
@@ -94,6 +98,7 @@ const CustomerManage: React.FC = () => {
           content: '更新成功',
         })
         void loadCustomer(false, pageNum)
+        setShowEditCustomer(false)
       } else {
         void message.error({
           content: res.data,
@@ -107,7 +112,7 @@ const CustomerManage: React.FC = () => {
   /**
    * 移除客户信息
    *
-   * @param customer
+   * @param customer 客户信息
    */
   const removeCustomer = (customer: Customer): void => {
     Modal.confirm({
@@ -142,7 +147,7 @@ const CustomerManage: React.FC = () => {
       {/* 添加客户信息按钮区域 */}
       <div className="my-5 text-right w-[50rem]">
         <Button
-          className="text-blue-500"
+          className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent"
           type="primary"
           onClick={() => {
             setShowAddCustomer(true)
@@ -202,6 +207,7 @@ const CustomerManage: React.FC = () => {
         />
       </Table>
 
+      {/* 添加客户信息表格 */}
       <AddCustomer
         open={showAddCustomer}
         onSubmit={props => {
@@ -212,6 +218,7 @@ const CustomerManage: React.FC = () => {
         }}
       />
 
+      {/* 编辑客户信息表格 */}
       <EditCustomer
         open={showEditCustomer}
         onSubmit={props => {

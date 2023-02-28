@@ -12,10 +12,16 @@ interface EditCustomerProps {
 }
 
 const EditCustomer: React.FC<EditCustomerProps> = props => {
+  /** 客户姓名 */
   const name = useRef<InputRef>(null)
+  /** 客户手机 */
   const mobile = useRef<InputRef>(null)
+  /** 客服所属公司 */
   const company = useRef<number>(-1)
 
+  /**
+   * 提交表单
+   */
   const submit = (): void => {
     props.onSubmit({
       customer_id: props.properties.customer_id,
@@ -25,12 +31,15 @@ const EditCustomer: React.FC<EditCustomerProps> = props => {
     })
   }
 
+  /**
+   * 取消提交表单
+   */
   const cancel = (): void => {
     props.onCancel()
   }
 
   return (
-    <Modal open={props.open} title="修改客户信息" closable onOk={submit} onCancel={cancel}>
+    <Modal open={props.open} title="修改客户信息" closable okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} onOk={submit} onCancel={cancel}>
       <Form labelCol={{ span: 8 }} colon={false}>
         <Form.Item label="客户名称" name="name">
           <Input ref={name} className="rounded-sm mx-2" autoComplete="off" placeholder="请输入客户名称" />

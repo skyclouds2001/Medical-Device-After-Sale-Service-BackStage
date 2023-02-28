@@ -12,13 +12,20 @@ const ProductTypeManage: React.FC = () => {
   const { message } = App.useApp()
   const dispatch = useDispatch()
 
+  /** 产品大类列表 */
   const [productTypes, setProductTypes] = useState<ProductType[]>([])
+  /** 产品大类表格加载中标记 */
   const [isLoading, setLoading] = useState(false)
+  /** 产品大类表格当前页数 */
   const [pageNum, setPageNum] = useState(1)
+  /** 产品大类总数 */
   const [total, setTotal] = useState(0)
 
+  /** 控制添加产品大类表单显示 */
   const [showAddProductType, setShowAddProductType] = useState(false)
+  /** 控制编辑产品大类表格显示 */
   const [showEditProductType, setShowEditProductType] = useState(false)
+  /** 当前产品大类 */
   const current = useRef<ProductType>()
 
   useEffect(() => {
@@ -26,6 +33,9 @@ const ProductTypeManage: React.FC = () => {
     void loadProductTypes()
   }, [])
 
+  /**
+   * 加载产品大类信息方法
+   */
   const loadProductTypes = async (): Promise<void> => {
     setLoading(true)
     try {
@@ -48,6 +58,11 @@ const ProductTypeManage: React.FC = () => {
     }
   }
 
+  /**
+   * 添加产品大类方法
+   *
+   * @param params 待添加产品大类信息
+   */
   const addProductTypes = async (params: Omit<ProductType, 'type_id'>): Promise<void> => {
     try {
       const res = await addProductType(params.type_name)
@@ -67,6 +82,11 @@ const ProductTypeManage: React.FC = () => {
     }
   }
 
+  /**
+   * 编辑产品大类方法
+   *
+   * @param type 待更新产品大类信息
+   */
   const editProductType = async (type: ProductType): Promise<void> => {
     try {
       const res = await updateProductType(type.type_id, type.type_name)
@@ -86,14 +106,18 @@ const ProductTypeManage: React.FC = () => {
     }
   }
 
+  /**
+   * 移除产品大类方法
+   *
+   * @param product 产品大类信息
+   */
   const deleteProductType = (product: ProductType): void => {
     Modal.confirm({
       title: '警告',
       content: '确认移除当前产品大类及其产品？',
+      okText: '删除',
+      okType: 'danger',
       closable: true,
-      okButtonProps: {
-        className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent',
-      },
       onOk: async () => {
         try {
           const res1 = await removeProductType(product.type_id)
@@ -127,9 +151,9 @@ const ProductTypeManage: React.FC = () => {
   return (
     <>
       {/* 添加产品及大类按钮区域 */}
-      <div className="my-5 text-right w-[31rem]">
+      <div className="my-5 text-right w-[25rem]">
         <Button
-          className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent"
+          className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent"
           type="primary"
           onClick={() => {
             setShowAddProductType(true)
@@ -153,11 +177,11 @@ const ProductTypeManage: React.FC = () => {
         onChange={pagination => {
           setPageNum(pagination.current ?? 1)
         }}
-        className="w-[31rem]"
+        className="w-[25rem]"
       >
         <Table.Column width="200px" align="center" title="产品大类名称" dataIndex="type_name" key="type_name" />
         <Table.Column
-          width="300px"
+          width="200px"
           align="center"
           title="操作"
           key="action"
@@ -186,6 +210,7 @@ const ProductTypeManage: React.FC = () => {
         />
       </Table>
 
+      {/* 添加产品大类表单 */}
       <AddProductType
         open={showAddProductType}
         onSubmit={params => {
@@ -196,6 +221,7 @@ const ProductTypeManage: React.FC = () => {
         }}
       />
 
+      {/* 编辑产品大类表单 */}
       <EditProductType
         open={showEditProductType}
         onSubmit={params => {

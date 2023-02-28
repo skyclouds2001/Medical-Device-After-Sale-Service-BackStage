@@ -21,3 +21,6 @@ export const DEFAULT_PAGE_SIZE = 10
 
 /** 默认登录状态过期时间 !!!若修改需同时修改后端!!! */
 export const SESSION_EXPIRE = 3 * 24 * 60 * 60 * 1000
+
+/** 登录页背景图片URL */
+export const LOGIN_PAGE_BACKGROUND_IMG = 'https://divergentcloud-1311006069.cos.ap-chengdu.myqcloud.com/%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87.jpg'

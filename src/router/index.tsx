@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import { Outlet, useRoutes } from 'react-router-dom'
 
-const BasePage = lazy(async () => await import('@/view/BasePage'))
+const Layout = lazy(async () => await import('@/layout'))
 
 const LoginPage = lazy(async () => await import('@/view/LoginPage'))
 
@@ -33,7 +33,7 @@ const Routes: React.FC = () => {
       path: '/',
       element: (
         <Suspense>
-          <BasePage />
+          <Layout />
         </Suspense>
       ),
       children: [

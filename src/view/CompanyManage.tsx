@@ -16,13 +16,16 @@ const CompanyManage: React.FC = () => {
   const [company, setCompany] = useState<Company[]>([])
   /** 企业总数 */
   const [total, setTotal] = useState(0)
-  /** 标记企业列表是否处于加载状态 */
+  /** 标记企业表格是否处于加载状态 */
   const [isLoading, setLoading] = useState(false)
-  /** 企业列表当前页数 */
+  /** 企业表格当前页数 */
   const [pageNum, setPageNum] = useState(1)
 
+  /** 控制添加企业信息表单显示 */
   const [showAddCompany, setShowAddCompany] = useState(false)
+  /** 控制编辑企业信息表单显示 */
   const [showEditCompany, setShowEditCompany] = useState(false)
+  /** 当前企业信息 */
   const current = useRef<Company>()
 
   useEffect(() => {
@@ -31,7 +34,7 @@ const CompanyManage: React.FC = () => {
   }, [])
 
   /**
-   * 加载企业信息
+   * 加载企业信息方法
    *
    * @param isFirst 是否首次加载
    * @param num 当前页数
@@ -57,9 +60,9 @@ const CompanyManage: React.FC = () => {
   }
 
   /**
-   * 添加企业
+   * 添加企业方法
    *
-   * @param params
+   * @param params 企业信息
    */
   const addCompany = async (params: Omit<Company, 'company_id'>): Promise<void> => {
     try {
@@ -93,6 +96,7 @@ const CompanyManage: React.FC = () => {
           content: '更新成功',
         })
         void loadCompany(false, pageNum)
+        setShowAddCompany(false)
       } else {
         void message.error({
           content: res.data,
@@ -124,6 +128,7 @@ const CompanyManage: React.FC = () => {
             })
             void loadCompany(false, pageNum)
             setTotal(total - 1)
+            setShowEditCompany(false)
           } else {
             void message.error({
               content: res.data,
@@ -141,6 +146,8 @@ const CompanyManage: React.FC = () => {
       {/* 添加企业信息按钮区域 */}
       <div className="my-5 text-right w-[25rem]">
         <Button
+          className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent"
+          type="primary"
           onClick={() => {
             setShowAddCompany(true)
           }}
@@ -197,6 +204,7 @@ const CompanyManage: React.FC = () => {
         />
       </Table>
 
+      {/* 添加企业信息表单 */}
       <AddCompany
         open={showAddCompany}
         onSubmit={props => {
@@ -207,6 +215,7 @@ const CompanyManage: React.FC = () => {
         }}
       />
 
+      {/* 编辑企业信息表单 */}
       <EditCompany
         open={showEditCompany}
         onSubmit={props => {

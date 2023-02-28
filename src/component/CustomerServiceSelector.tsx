@@ -13,8 +13,18 @@ interface CustomerServiceSelectorProps {
 }
 
 const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props => {
+  /** 客服选项 */
   const [options, setOptions] = useState<Option[]>([])
 
+  useEffect(() => {
+    void initOptions()
+  }, [])
+
+  /**
+   * 加载部门下客服方法
+   *
+   * @param id 当前部门ID
+   */
   const transform = async (id: number): Promise<Option[]> => {
     const res = await getDepartmentsAndStaffs(id)
     const result: Option[] = []
@@ -37,6 +47,9 @@ const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props =>
     return result
   }
 
+  /**
+   * 初始化客服方法
+   */
   const initOptions = async (): Promise<void> => {
     try {
       const options = await transform(0)
@@ -46,10 +59,11 @@ const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props =>
     }
   }
 
-  useEffect(() => {
-    void initOptions()
-  }, [])
-
+  /**
+   * 选取客服方法
+   *
+   * @param value 客服信息
+   */
   const handleOptionChange = (value: Array<Array<string | number>>): void => {
     props.onSelect?.(
       value

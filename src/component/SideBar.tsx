@@ -1,8 +1,9 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Menu } from 'antd'
+import { Image, Menu } from 'antd'
 import { UserOutlined, ProjectOutlined, CustomerServiceOutlined, FormOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
+import logo from '@/asset/logo.png'
 
 const items: MenuProps['items'] = [
   {
@@ -61,6 +62,9 @@ const SideBar: React.FC = () => {
 
   return (
     <>
+      <div className="h-8 m-4 overflow-hidden">
+        <Image src={logo} alt="" width="8em" height="2.5em" preview={false} />
+      </div>
       <Menu theme="dark" mode="inline" defaultOpenKeys={['/customer', '/product']} defaultSelectedKeys={[location.pathname]} items={items} onClick={go} />
     </>
   )
