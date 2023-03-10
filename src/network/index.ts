@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/promise-function-async */
+/* eslint-disable promise/no-promise-in-callback */
+
 import axios from 'axios'
 import type { AxiosHeaders } from 'axios'
 import { BASE_URL, NETWORK_TIMEOUT, WHITE_LIST } from '@/config'
@@ -19,14 +22,12 @@ instance.interceptors.request.use(
     }
     return config
   },
-  // eslint-disable-next-line promise/no-promise-in-callback
-  async error => await Promise.reject(error),
+  error => Promise.reject(error),
 )
 
 instance.interceptors.response.use(
   result => result,
-  // eslint-disable-next-line promise/no-promise-in-callback
-  async error => await Promise.reject(error),
+  error => Promise.reject(error),
 )
 
 export default instance

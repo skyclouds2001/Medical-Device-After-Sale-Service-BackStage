@@ -1,23 +1,25 @@
+/* eslint-disable @typescript-eslint/promise-function-async */
+
 import React, { lazy, Suspense } from 'react'
 import { useRoutes } from 'react-router-dom'
 
-const LoginPage = lazy(async () => await import('@/view/LoginPage'))
+const LoginPage = lazy(() => import('@/view/LoginPage'))
 
-const CustomerManage = lazy(async () => await import('@/view/CustomerManage'))
+const CustomerManage = lazy(() => import('@/view/CustomerManage'))
 
-const CompanyManage = lazy(async () => await import('@/view/CompanyManage'))
+const CompanyManage = lazy(() => import('@/view/CompanyManage'))
 
-const CustomerServiceManage = lazy(async () => await import('@/view/CustomerServiceManage'))
+const CustomerServiceManage = lazy(() => import('@/view/CustomerServiceManage'))
 
-const ProductTypeManage = lazy(async () => await import('@/view/ProductTypeManage'))
+const ProductTypeManage = lazy(() => import('@/view/ProductTypeManage'))
 
-const ProductModelManage = lazy(async () => await import('@/view/ProductModelManage'))
+const ProductModelManage = lazy(() => import('@/view/ProductModelManage'))
 
-const WorkOrderManage = lazy(async () => await import('@/view/WorkOrderManage'))
+const WorkOrderManage = lazy(() => import('@/view/WorkOrderManage'))
 
-const FileManage = lazy(async () => await import('@/view/FileManage'))
+const FileManage = lazy(() => import('@/view/FileManage'))
 
-const NotFound = lazy(async () => await import('@/view/404'))
+const NotFound = lazy(() => import('@/view/404'))
 
 const Routes: React.FC = () => {
   return useRoutes([
