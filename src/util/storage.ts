@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { lowerCase } from 'lodash-es'
 import { APPLICATION_NAME, APPLICATION_VERSION } from '@/config'
 import { encrypt, decrypt } from '@/util'
@@ -11,9 +10,9 @@ const storage = window.localStorage
 /**
  * 存储数据的数据格式
  */
-interface Data <T = any> {
+interface Data<T = unknown> {
   /** 数据内容 */
-  value: any
+  value: T
   /** 存储时间戳 */
   time: number
   /** 超时时间长度 */
@@ -24,15 +23,16 @@ interface Data <T = any> {
  * 获取存储方法
  *
  * @param {string} key 键名
+ * @returns 取出的数据
  */
 export const getStorage = <T = unknown>(key: string): T | null => {
-  const s_key = prefix + '_' + key
+  const sKey = prefix + '_' + key
 
-  if (storage.getItem(s_key) == null) {
+  if (storage.getItem(sKey) == null) {
     return null
   }
 
-  const data: Data<T> = JSON.parse(decrypt(storage.getItem(s_key) as string))
+  const data: Data<T> = JSON.parse(decrypt(storage.getItem(sKey) as string))
 
   if (data.expire + data.time > Date.now()) {
     return data.value
@@ -50,7 +50,7 @@ export const getStorage = <T = unknown>(key: string): T | null => {
  * @param {number} expire 超时时间
  */
 export const setStorage = <T = unknown>(key: string, value: T | null, expire = 0): void => {
-  const s_key = prefix + '_' + key
+  const sKey = prefix + '_' + key
   if (value === null || value === undefined) {
     value = null
   }
@@ -66,7 +66,7 @@ export const setStorage = <T = unknown>(key: string, value: T | null, expire = 0
     }),
   )
 
-  storage.setItem(s_key, data)
+  storage.setItem(sKey, data)
 }
 
 /**
@@ -75,8 +75,8 @@ export const setStorage = <T = unknown>(key: string, value: T | null, expire = 0
  * @param {string} key 键名
  */
 export const removeStorage = (key: string): void => {
-  const s_key = prefix + '_' + key
-  storage.removeItem(s_key)
+  const sKey = prefix + '_' + key
+  storage.removeItem(sKey)
 }
 
 /**
@@ -88,5 +88,7 @@ export const clearStorage = (): void => {
 
 /**
  * 返回当前存储长度
+ *
+ * @returns 存储长度
  */
 export const length = (): number => storage.length
