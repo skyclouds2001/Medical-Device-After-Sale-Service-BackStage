@@ -12,4 +12,4 @@ export * from './product-model'
 
 export * from './work-order'
 
-export * from './file'
+export * from './media'
