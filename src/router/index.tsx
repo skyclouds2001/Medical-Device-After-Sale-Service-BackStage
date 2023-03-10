@@ -1,7 +1,5 @@
 import React, { lazy, Suspense } from 'react'
-import { Outlet, useRoutes } from 'react-router-dom'
-
-const Layout = lazy(async () => await import('@/layout'))
+import { useRoutes } from 'react-router-dom'
 
 const LoginPage = lazy(async () => await import('@/view/LoginPage'))
 
@@ -23,6 +21,7 @@ const NotFound = lazy(async () => await import('@/view/404'))
 
 const Routes: React.FC = () => {
   return useRoutes([
+    // 登录
     {
       path: '/',
       element: (
@@ -31,84 +30,74 @@ const Routes: React.FC = () => {
         </Suspense>
       ),
     },
+
+    // 客户管理
     {
-      path: '/',
+      path: '/customer/user',
       element: (
         <Suspense>
-          <Layout />
+          <CustomerManage />
         </Suspense>
       ),
-      children: [
-        {
-          path: '/customer',
-          element: <Outlet />,
-          children: [
-            {
-              path: '/customer/user',
-              element: (
-                <Suspense>
-                  <CustomerManage />
-                </Suspense>
-              ),
-            },
-            {
-              path: '/customer/company',
-              element: (
-                <Suspense>
-                  <CompanyManage />
-                </Suspense>
-              ),
-            },
-          ],
-        },
-        {
-          path: '/service',
-          element: (
-            <Suspense>
-              <CustomerServiceManage />
-            </Suspense>
-          ),
-        },
-        {
-          path: '/product',
-          element: <Outlet />,
-          children: [
-            {
-              path: '/product/type',
-              element: (
-                <Suspense>
-                  <ProductTypeManage />
-                </Suspense>
-              ),
-            },
-            {
-              path: '/product/model',
-              element: (
-                <Suspense>
-                  <ProductModelManage />
-                </Suspense>
-              ),
-            },
-          ],
-        },
-        {
-          path: '/order',
-          element: (
-            <Suspense>
-              <WorkOrderManage />
-            </Suspense>
-          ),
-        },
-        {
-          path: '/file',
-          element: (
-            <Suspense>
-              <FileManage />
-            </Suspense>
-          ),
-        },
-      ],
     },
+    {
+      path: '/customer/company',
+      element: (
+        <Suspense>
+          <CompanyManage />
+        </Suspense>
+      ),
+    },
+
+    // 客服管理
+    {
+      path: '/service',
+      element: (
+        <Suspense>
+          <CustomerServiceManage />
+        </Suspense>
+      ),
+    },
+
+    // 产品管理
+    {
+      path: '/product/type',
+      element: (
+        <Suspense>
+          <ProductTypeManage />
+        </Suspense>
+      ),
+    },
+    {
+      path: '/product/model',
+      element: (
+        <Suspense>
+          <ProductModelManage />
+        </Suspense>
+      ),
+    },
+
+    // 订单管理
+    {
+      path: '/order',
+      element: (
+        <Suspense>
+          <WorkOrderManage />
+        </Suspense>
+      ),
+    },
+
+    // 文件管理
+    {
+      path: '/file',
+      element: (
+        <Suspense>
+          <FileManage />
+        </Suspense>
+      ),
+    },
+
+    // 默认回退路由
     {
       path: '*',
       element: (

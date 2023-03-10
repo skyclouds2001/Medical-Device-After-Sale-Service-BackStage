@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Breadcrumb, Layout } from 'antd'
 import SideBar from '@/component/SideBar'
 import type { CustomState } from '@/store'
 
-const LayoutContainer: React.FC = () => {
+const LayoutContainer: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false)
   const title = useSelector<CustomState, CustomState['title']>(state => state.title)
 
@@ -28,9 +27,7 @@ const LayoutContainer: React.FC = () => {
           </Breadcrumb>
         </Layout.Header>
         <Layout.Content className="mx-8 my-5">
-          <div className="min-h-[600px] px-14 py-5 bg-white rounded flex justify-start items-center flex-col">
-            <Outlet />
-          </div>
+          <div className="min-h-[600px] px-14 py-5 bg-white rounded flex justify-start items-center flex-col">{children}</div>
         </Layout.Content>
         <Layout.Footer className="text-center hidden">Wizz Studio © 2022-PRESENT &nbsp;&nbsp;&nbsp;&nbsp; Created by skyclouds2001</Layout.Footer>
       </Layout>
