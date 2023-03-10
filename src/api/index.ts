@@ -13,3 +13,5 @@ export * from './product-model'
 export * from './work-order'
 
 export * from './media'
+
+export * from './file'
