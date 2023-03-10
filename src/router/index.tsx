@@ -17,6 +17,8 @@ const ProductModelManage = lazy(async () => await import('@/view/ProductModelMan
 
 const WorkOrderManage = lazy(async () => await import('@/view/WorkOrderManage'))
 
+const FileManage = lazy(async () => await import('@/view/FileManage'))
+
 const NotFound = lazy(async () => await import('@/view/404'))
 
 const Routes: React.FC = () => {
@@ -94,6 +96,14 @@ const Routes: React.FC = () => {
           element: (
             <Suspense>
               <WorkOrderManage />
+            </Suspense>
+          ),
+        },
+        {
+          path: '/file',
+          element: (
+            <Suspense>
+              <FileManage />
             </Suspense>
           ),
         },

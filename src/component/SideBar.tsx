@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Image, Menu } from 'antd'
-import { UserOutlined, ProjectOutlined, CustomerServiceOutlined, FormOutlined } from '@ant-design/icons'
+import { UserOutlined, ProjectOutlined, CustomerServiceOutlined, FormOutlined, FileOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import logo from '@/asset/logo.png'
 
@@ -49,6 +49,11 @@ const items: MenuProps['items'] = [
     label: '工单管理',
     key: '/order',
     icon: <FormOutlined />,
+  },
+  {
+    label: '文件管理',
+    key: '/file',
+    icon: <FileOutlined />,
   },
 ]
 
