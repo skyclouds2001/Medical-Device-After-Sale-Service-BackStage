@@ -46,14 +46,14 @@ const items: MenuProps['items'] = [
     ],
   },
   {
-    label: '工单管理',
-    key: '/order',
-    icon: <FormOutlined />,
-  },
-  {
     label: '文件管理',
     key: '/file',
     icon: <FileOutlined />,
+  },
+  {
+    label: '工单管理',
+    key: '/order',
+    icon: <FormOutlined />,
   },
 ]
 

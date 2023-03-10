@@ -77,22 +77,22 @@ const Routes: React.FC = () => {
       ),
     },
 
-    // 订单管理
-    {
-      path: '/order',
-      element: (
-        <Suspense>
-          <WorkOrderManage />
-        </Suspense>
-      ),
-    },
-
     // 文件管理
     {
       path: '/file',
       element: (
         <Suspense>
           <FileManage />
+        </Suspense>
+      ),
+    },
+
+    // 订单管理
+    {
+      path: '/order',
+      element: (
+        <Suspense>
+          <WorkOrderManage />
         </Suspense>
       ),
     },
