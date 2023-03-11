@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/promise-function-async */
+
 import qs from 'qs'
 import instance from '@/network'
 import type { Response, ProductType } from '@/model'
@@ -11,47 +13,45 @@ type GetProductTypeResponse = ProductType
  * 查询产品大类接口
  *
  * @param {number} productTypeId 产品大类ID
+ * @returns - 产品大类信息
  */
-export const getProductType = async (productTypeId: number): Promise<Response<GetProductTypeResponse>> => {
-  const res = await instance.get<Response<GetProductTypeResponse>>('/wizz/aftersale/product-type/get', {
+export const getProductType = (productTypeId: number): Promise<Response<GetProductTypeResponse>> =>
+  instance.get('/wizz/aftersale/product-type/get', {
     params: { productTypeId },
   })
-  return res.data
-}
 
 /**
  * 添加产品大类接口
  *
- * @param {string} typeName 产品大类名称
+ * @param {string} typeName - 产品大类名称
+ * @returns - NULL
  */
-export const addProductType = async (typeName: string): Promise<Response<void>> => {
-  const res = await instance.post<Response<void>>('/wizz/aftersale/product-type/add', {
+export const addProductType = (typeName: string): Promise<Response<void>> =>
+  instance.post('/wizz/aftersale/product-type/add', {
     type_name: typeName,
   })
-  return res.data
-}
 
 /**
  * 更新产品大类接口
  *
- * @param {number} typeId 产品大类id
- * @param {string} typeName 产品大类名称
+ * @param {number} typeId - 产品大类id
+ * @param {string} typeName - 产品大类名称
+ * @returns - NULL
  */
-export const updateProductType = async (typeId: number, typeName: string): Promise<Response<void>> => {
-  const res = await instance.post<Response<void>>('/wizz/aftersale/product-type/update', {
+export const updateProductType = (typeId: number, typeName: string): Promise<Response<void>> =>
+  instance.post('/wizz/aftersale/product-type/update', {
     type_id: typeId,
     type_name: typeName,
   })
-  return res.data
-}
 
 /**
  * 删除产品大类接口
  *
- * @param {number} productTypeId 产品大类id
+ * @param {number} productTypeId - 产品大类id
+ * @returns - NULL
  */
-export const removeProductType = async (productTypeId: number): Promise<Response<void>> => {
-  const res = await instance.delete<Response<void>>('/wizz/aftersale/product-type/delete', {
+export const removeProductType = (productTypeId: number): Promise<Response<void>> =>
+  instance.delete('/wizz/aftersale/product-type/delete', {
     data: qs.stringify({
       productTypeId,
     }),
@@ -59,8 +59,6 @@ export const removeProductType = async (productTypeId: number): Promise<Response
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   })
-  return res.data
-}
 
 /**
  * 查询产品大类接口返回数据结构
@@ -69,8 +67,7 @@ type GetAllProductTypeResponse = ProductType[]
 
 /**
  * 查询所有产品大类接口
+ *
+ * @returns - 所有产品大类列表
  */
-export const getAllProductTypes = async (): Promise<Response<GetAllProductTypeResponse>> => {
-  const res = await instance.get<Response<GetAllProductTypeResponse>>('/wizz/aftersale/product-type/all')
-  return res.data
-}
+export const getAllProductTypes = (): Promise<Response<GetAllProductTypeResponse>> => instance.get('/wizz/aftersale/product-type/all')

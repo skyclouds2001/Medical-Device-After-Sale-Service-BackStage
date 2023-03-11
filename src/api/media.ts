@@ -1,13 +1,16 @@
+/* eslint-disable @typescript-eslint/promise-function-async */
+
 import instance from '@/network'
 import type { Response } from '@/model'
 
 /**
  * 上传文件方法
  *
- * @param file 文件
+ * @param file - 文件
+ * @returns - 上传的文件URL
  */
-export const uploadFile = async (file: File): Promise<Response<string>> => {
-  const res = await instance.post<Response<string>>(
+export const uploadFile = (file: File): Promise<Response<string>> =>
+  instance.post(
     '/wizz/aftersale/media/upload',
     {
       file,
@@ -18,5 +21,3 @@ export const uploadFile = async (file: File): Promise<Response<string>> => {
       },
     },
   )
-  return res.data
-}

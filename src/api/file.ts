@@ -11,13 +11,11 @@ import type { Response } from '@/model'
  * @returns - 文件列表数据
  */
 export const getFileList = (type: 0 | 1): Promise<Response<unknown>> =>
-  instance
-    .get<Response<unknown>>('/wizz/aftersale/file/list', {
-      params: {
-        fileType: type,
-      },
-    })
-    .then(res => res.data)
+  instance.get('/wizz/aftersale/file/list', {
+    params: {
+      fileType: type,
+    },
+  })
 
 /**
  * 添加文件方法
@@ -28,21 +26,19 @@ export const getFileList = (type: 0 | 1): Promise<Response<unknown>> =>
  * @returns - null
  */
 export const addFile = (name: string, type: 0 | 1, url: string): Promise<Response<unknown>> =>
-  instance
-    .post<Response<unknown>>(
-      '/wizz/aftersale/file/add',
-      {
-        file_name: name,
-        file_type: type,
-        file_url: url,
+  instance.post(
+    '/wizz/aftersale/file/add',
+    {
+      file_name: name,
+      file_type: type,
+      file_url: url,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
       },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-    )
-    .then(res => res.data)
+    },
+  )
 
 /**
  * 移除文件方法
@@ -51,13 +47,11 @@ export const addFile = (name: string, type: 0 | 1, url: string): Promise<Respons
  * @returns - null
  */
 export const deleteFile = (id: string): Promise<Response<unknown>> =>
-  instance
-    .delete<Response<unknown>>('/wizz/aftersale/file/delete', {
-      data: qs.stringify({
-        id,
-      }),
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    })
-    .then(res => res.data)
+  instance.delete('/wizz/aftersale/file/delete', {
+    data: qs.stringify({
+      id,
+    }),
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  })

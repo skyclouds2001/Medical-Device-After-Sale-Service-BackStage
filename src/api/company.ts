@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/promise-function-async */
+
 import instance from '@/network'
 import type { Response, Company } from '@/model'
 
@@ -14,64 +16,40 @@ interface GetCompanyInfoResponse {
 /**
  * 查询企业信息接口
  *
- * @param {boolean} isFirstQuery 是否是第一次查询
- * @param {number} pageNum 页码，每页10条数据，页码从1开始
+ * @param {boolean} isFirstQuery - 是否是第一次查询
+ * @param {number} pageNum - 页码，每页10条数据，页码从1开始
+ * @returns - 分页的企业信息
  */
-export const getCompanyInfo = async (isFirstQuery: boolean, pageNum: number): Promise<Response<GetCompanyInfoResponse>> => {
-  const res = await instance.get<Response<GetCompanyInfoResponse>>(`/wizz/aftersale/account/company/query/${isFirstQuery.toString()}/${pageNum}`)
-  return res.data
-}
+export const getCompanyInfo = (isFirstQuery: boolean, pageNum: number): Promise<Response<GetCompanyInfoResponse>> => instance.get(`/wizz/aftersale/account/company/query/${isFirstQuery.toString()}/${pageNum}`)
 
 /**
  * 添加企业信息接口
  *
- * @param {string} companyName 企业名称
+ * @param {string} companyName - 企业名称
+ * @returns - NULL
  */
-export const addCompanyInfo = async (companyName: string): Promise<Response<void>> => {
-  const res = await instance.post<Response<void>>('/wizz/aftersale/account/company/add', {
+export const addCompanyInfo = (companyName: string): Promise<Response<void>> =>
+  instance.post('/wizz/aftersale/account/company/add', {
     company_name: companyName,
   })
-  return res.data
-}
 
 /**
  * 修改企业信息接口
  *
- * @param {number} companyId 要修改的企业id
- * @param {string} companyName 修改后的企业名称
+ * @param {number} companyId - 要修改的企业id
+ * @param {string} companyName - 修改后的企业名称
+ * @returns - NULL
  */
-export const updateCompanyInfo = async (companyId: number, companyName: string): Promise<Response<void>> => {
-  const res = await instance.put<Response<void>>('/wizz/aftersale/account/company/update', {
+export const updateCompanyInfo = (companyId: number, companyName: string): Promise<Response<void>> =>
+  instance.put('/wizz/aftersale/account/company/update', {
     company_id: companyId,
     company_name: companyName,
   })
-  return res.data
-}
 
 /**
  * 删除企业信息接口
  *
- * @param {number} companyId 企业id
+ * @param {number} companyId - 企业id
+ * @returns - NULL
  */
-export const removeCompanyInfo = async (companyId: number): Promise<Response<void>> => {
-  const res = await instance.delete<Response<void>>(`/wizz/aftersale/account/company/delete/${companyId}`)
-  return res.data
-}
-
-/**
- * 查询全部企业信息合成方法
- * todo
- */
-export const getAllCompanyInfo = async (): Promise<Company[]> => {
-  const res = await getCompanyInfo(true, 1)
-  const { total_num: num } = res.data
-  const pros = []
-  for (let i = 1; i <= num / 10; ++i) {
-    pros.push(getCompanyInfo(false, i))
-  }
-  const result = await Promise.allSettled(pros)
-  return result
-    .filter(v => v.status === 'fulfilled')
-    .map(v => (v.status === 'fulfilled' ? v.value.data.company_list : []))
-    .reduce((pre, cur) => [...pre, ...cur], [])
-}
+export const removeCompanyInfo = (companyId: number): Promise<Response<void>> => instance.delete(`/wizz/aftersale/account/company/delete/${companyId}`)

@@ -26,7 +26,7 @@ instance.interceptors.request.use(
 )
 
 instance.interceptors.response.use(
-  result => result,
+  result => result.data,
   error => Promise.reject(error),
 )
 
