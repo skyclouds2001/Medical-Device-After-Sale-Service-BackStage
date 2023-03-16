@@ -1,3 +1,10 @@
+import docx from '@/asset/file/word.svg'
+import xlsx from '@/asset/file/xlsx.svg'
+import pptx from '@/asset/file/ppt.svg'
+import pdf from '@/asset/file/pdf.svg'
+import zip from '@/asset/file/zip.svg'
+import unknown from '@/asset/file/unknown.svg'
+
 /**
  * 读取图片文件为base64
  *
@@ -44,4 +51,39 @@ export const getFileType = (url: string): FileType => {
     type = 'ZIP'
   }
   return type
+}
+
+/**
+ * 根据文件URL返回文件图标方法
+ *
+ * @param url 文件URL
+ * @returns 文件图标URL
+ */
+export const getFileIcon = (url: string): string => {
+  const type = getFileType(url)
+  let icon: string
+  switch (type) {
+    case 'DOCX':
+      icon = docx
+      break
+    case 'XLSX':
+      icon = xlsx
+      break
+    case 'PPTX':
+      icon = pptx
+      break
+    case 'PDF':
+      icon = pdf
+      break
+    case 'ZIP':
+      icon = zip
+      break
+    case 'unknown':
+      icon = unknown
+      break
+    default:
+      icon = unknown
+      break
+  }
+  return icon
 }
