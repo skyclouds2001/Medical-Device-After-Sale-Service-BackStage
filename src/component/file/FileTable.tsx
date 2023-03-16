@@ -66,21 +66,10 @@ const FileTable: React.FC<FileTableProps> = props => {
           key="action"
           render={(_, record: File) => (
             <>
-              <Button
-                type="link"
-                onClick={() => {
-                  downloadFile(record.file_url, record.file_name)
-                }}
-              >
+              <Button type="link" onClick={() => downloadFile(record.file_url, record.file_name)}>
                 下载
               </Button>
-              <Button
-                type="link"
-                danger
-                onClick={() => {
-                  removeFile(record.id)
-                }}
-              >
+              <Button type="link" danger onClick={() => removeFile(record.id)}>
                 删除
               </Button>
             </>

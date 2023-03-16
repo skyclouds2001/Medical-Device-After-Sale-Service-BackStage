@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/promise-function-async */
-
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, Menu, Row, Col, type MenuProps } from 'antd'
@@ -68,7 +66,7 @@ const FileManage: React.FC = () => {
           <Menu className="border" items={items} defaultSelectedKeys={['0']} onClick={handleSelectService} />
         </Col>
         <Col span={16}>
-          <FileTable service={type.toString() as '0' | '1'} files={data?.data.file_info_list ?? []} loading={isLoading} mutate={mutate} />
+          <FileTable service={type.toString() as '0' | '1'} files={Array.isArray(data?.data.file_info_list) ? data?.data.file_info_list ?? [] : []} loading={isLoading} mutate={mutate} />
         </Col>
       </Row>
 
