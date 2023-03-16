@@ -87,3 +87,20 @@ export const getFileIcon = (url: string): string => {
   }
   return icon
 }
+
+/**
+ * 下载文件方法
+ *
+ * @param url 文件URL
+ * @param name 文件名
+ */
+export const downloadFile = (url: string, name = 'file'): void => {
+  const a = document.createElement('a')
+  a.hidden = true
+  a.style.display = 'none'
+  a.href = url
+  a.download = name
+  document.documentElement.appendChild(a)
+  a.click()
+  document.documentElement.removeChild(a)
+}
