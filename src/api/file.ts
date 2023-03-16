@@ -2,7 +2,15 @@
 
 import qs from 'qs'
 import instance from '@/network'
-import type { Response } from '@/model'
+import type { Response, File } from '@/model'
+
+/**
+ * 获取文件列表返回接口数据结构
+ */
+interface GetFileListResponse {
+  /** 文件列表 */
+  file_info_list: File[]
+}
 
 /**
  * 获取文件列表方法
@@ -10,7 +18,7 @@ import type { Response } from '@/model'
  * @param type - 服务类型 0培训 | 1升级
  * @returns - 文件列表数据
  */
-export const getFileList = (type: 0 | 1): Promise<Response<unknown>> =>
+export const getFileList = (type: 0 | 1): Promise<Response<GetFileListResponse>> =>
   instance.get('/wizz/aftersale/file/list', {
     params: {
       fileType: type,
@@ -25,7 +33,7 @@ export const getFileList = (type: 0 | 1): Promise<Response<unknown>> =>
  * @param url - 文件URL
  * @returns - null
  */
-export const addFile = (name: string, type: 0 | 1, url: string): Promise<Response<unknown>> =>
+export const addFile = (name: string, type: 0 | 1, url: string): Promise<Response<null>> =>
   instance.post(
     '/wizz/aftersale/file/add',
     {
@@ -46,7 +54,7 @@ export const addFile = (name: string, type: 0 | 1, url: string): Promise<Respons
  * @param id - 文件ID
  * @returns - null
  */
-export const deleteFile = (id: string): Promise<Response<unknown>> =>
+export const deleteFile = (id: string): Promise<Response<null>> =>
   instance.delete('/wizz/aftersale/file/delete', {
     data: qs.stringify({
       id,
