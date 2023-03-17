@@ -22,9 +22,9 @@ export const getProductType = (productTypeId: number): Promise<Response<GetProdu
  * 添加产品大类接口
  *
  * @param {string} typeName - 产品大类名称
- * @returns - NULL
+ * @returns - 产品大类ID
  */
-export const addProductType = (typeName: string): Promise<Response<null>> =>
+export const addProductType = (typeName: string): Promise<Response<number>> =>
   instance.post('/wizz/aftersale/product-type/add', {
     type_name: typeName,
   })

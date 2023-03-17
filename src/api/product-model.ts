@@ -26,9 +26,9 @@ export const getProductModel = (productModelId: number): Promise<Response<GetPro
  * @param {string} modelName - 产品型号名称
  * @param {number} typeId - 产品型号所属大类id
  * @param {string} img - 产品型号展示图片的url
- * @returns - NULL
+ * @returns - 产品型号ID
  */
-export const addProductModel = (modelName: string, typeId: number, img: string): Promise<Response<null>> =>
+export const addProductModel = (modelName: string, typeId: number, img: string): Promise<Response<number>> =>
   instance.post('/wizz/aftersale/product-model/add', {
     model_name: modelName,
     type_id: typeId,
