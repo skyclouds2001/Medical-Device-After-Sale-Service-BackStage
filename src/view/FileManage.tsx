@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { Button, Menu, Row, Col, type MenuProps } from 'antd'
+import { App, Button, Menu, Row, Col, type MenuProps } from 'antd'
 import useSwr from 'swr'
-import { addFile, getFileList } from '@/api'
+import { addFile, deleteFile, getFileList } from '@/api'
 import FileTable from '@/component/file/FileTable'
 import UploadFileForm from '@/component/file/UploadFileForm'
 import { services } from '@/data'
 import type { CustomAction } from '@/store'
 
 const FileManage: React.FC = () => {
+  const { message } = App.useApp()
   const dispatch = useDispatch()
 
   const items: MenuProps['items'] = services.slice(-2).map(v => ({ label: v.text, key: String(v.id - 4) }))
@@ -22,7 +23,6 @@ const FileManage: React.FC = () => {
   /**
    * 选取服务类型方法
    *
-   * @param key.key
    * @param key 服务ID
    */
   const handleSelectService: MenuProps['onClick'] = ({ key }) => {
@@ -43,11 +43,45 @@ const FileManage: React.FC = () => {
     setOpen(false)
   }
 
+  /**
+   * 确认上传文件回调方法
+   *
+   * @param files 文件列表
+   */
   const handleSubmitFiles = (files: Array<{ name: string; url: string }>): void => {
     void Promise.allSettled(files.map(v => addFile(v.name, parseInt(type) as 0 | 1, v.url))).finally(() => {
       setOpen(false)
       void mutate()
     })
+  }
+
+  /**
+   * 删除文件方法
+   *
+   * @param id 文件ID
+   */
+  const removeFile = (id: number): void => {
+    // eslint-disable-next-line promise/catch-or-return
+    deleteFile(id.toString())
+      .then(res => {
+        if (res.code === 0) {
+          void message.success({
+            content: '删除成功',
+          })
+        } else {
+          void message.error({
+            content: res.data ?? '删除失败',
+          })
+        }
+      })
+      .catch(() => {
+        void message.error({
+          content: '删除失败',
+        })
+      })
+      .finally(() => {
+        void mutate()
+      })
   }
 
   useEffect(() => {
@@ -66,7 +100,7 @@ const FileManage: React.FC = () => {
           <Menu className="border" items={items} defaultSelectedKeys={['0']} onClick={handleSelectService} />
         </Col>
         <Col span={16}>
-          <FileTable service={type.toString() as '0' | '1'} files={Array.isArray(data?.data.file_info_list) ? data?.data.file_info_list ?? [] : []} loading={isLoading} mutate={mutate} />
+          <FileTable files={Array.isArray(data?.data.file_info_list) ? data?.data.file_info_list ?? [] : []} loading={isLoading} onDelete={removeFile} />
         </Col>
       </Row>
 
