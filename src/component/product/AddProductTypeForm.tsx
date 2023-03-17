@@ -9,7 +9,7 @@ interface AddProductTypeProps {
   onCancel: () => void
 }
 
-const AddProductType: React.FC<AddProductTypeProps> = props => {
+const AddProductTypeForm: React.FC<AddProductTypeProps> = props => {
   /** 产品大类名称 */
   const name = useRef<InputRef>(null)
 
@@ -40,4 +40,4 @@ const AddProductType: React.FC<AddProductTypeProps> = props => {
   )
 }
 
-export default AddProductType
+export default AddProductTypeForm
