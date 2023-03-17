@@ -23,5 +23,4 @@
 - [概念图](https://modao.cc/app/uojxAUBurl46enoCEJNZy)
 - [原型图](https://www.figma.com/file/AexzIo733ORZWnnNYJNRVo/%E5%AE%A2%E6%9C%8D%E5%B7%A5%E5%8D%95%E7%B3%BB%E7%BB%9F)
 - [接口文档说明](https://wizzstudio.feishu.cn/docx/QYondktQKoDH2vx6n0BcEedCnVh)
-- [账号管理&客户咨询模块接口文档|aftersale1119](https://www.eolink.com/share/index?shareCode=qvPkxP)
-- [工单模块接口文档|wizz](https://www.eolink.com/share/index?shareCode=Ynzy7T)
+- [新模块接口文档(aftersale1111)](https://www.apifox.cn/apidoc/shared-ca03532d-633b-4644-9756-b151620e0e20)
