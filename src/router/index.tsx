@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/promise-function-async */
-
 import React, { lazy, Suspense } from 'react'
 import { useRoutes } from 'react-router-dom'
 
@@ -11,9 +9,7 @@ const CompanyManage = lazy(() => import('@/view/CompanyManage'))
 
 const CustomerServiceManage = lazy(() => import('@/view/CustomerServiceManage'))
 
-const ProductTypeManage = lazy(() => import('@/view/ProductTypeManage'))
-
-const ProductModelManage = lazy(() => import('@/view/ProductModelManage'))
+const ProductManage = lazy(() => import('@/view/ProductManage'))
 
 const WorkOrderManage = lazy(() => import('@/view/WorkOrderManage'))
 
@@ -63,18 +59,10 @@ const Routes: React.FC = () => {
 
     // 产品管理
     {
-      path: '/product/type',
+      path: '/product',
       element: (
         <Suspense>
-          <ProductTypeManage />
-        </Suspense>
-      ),
-    },
-    {
-      path: '/product/model',
-      element: (
-        <Suspense>
-          <ProductModelManage />
+          <ProductManage />
         </Suspense>
       ),
     },

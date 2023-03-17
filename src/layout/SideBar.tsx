@@ -32,18 +32,6 @@ const items: MenuProps['items'] = [
     label: '产品管理',
     key: '/product',
     icon: <ProjectOutlined />,
-    children: [
-      {
-        label: '产品大类管理',
-        key: '/product/type',
-        icon: <ProjectOutlined />,
-      },
-      {
-        label: '产品型号管理',
-        key: '/product/model',
-        icon: <ProjectOutlined />,
-      },
-    ],
   },
   {
     label: '文件管理',
