@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/promise-function-async */
-
 import instance from '@/network'
 import type { Response } from '@/model'
 
@@ -38,7 +36,7 @@ export const adminLogin = (admin: string, password: string): Promise<Response<Ad
  * @param {string} newPw - 新密码
  * @returns - NULL
  */
-export const resetPassword = (admin: string, encrypt: string, newPw: string): Promise<Response<void>> =>
+export const resetPassword = (admin: string, encrypt: string, newPw: string): Promise<Response<null>> =>
   instance.put('/wizz/aftersale/account/admin/resetPassword', {
     admin_name: admin,
     encrypted_password: encrypt,

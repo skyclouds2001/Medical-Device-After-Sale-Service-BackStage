@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/promise-function-async */
-
 import qs from 'qs'
 import instance from '@/network'
 import type { Response, ProductType } from '@/model'
@@ -26,7 +24,7 @@ export const getProductType = (productTypeId: number): Promise<Response<GetProdu
  * @param {string} typeName - 产品大类名称
  * @returns - NULL
  */
-export const addProductType = (typeName: string): Promise<Response<void>> =>
+export const addProductType = (typeName: string): Promise<Response<null>> =>
   instance.post('/wizz/aftersale/product-type/add', {
     type_name: typeName,
   })
@@ -38,7 +36,7 @@ export const addProductType = (typeName: string): Promise<Response<void>> =>
  * @param {string} typeName - 产品大类名称
  * @returns - NULL
  */
-export const updateProductType = (typeId: number, typeName: string): Promise<Response<void>> =>
+export const updateProductType = (typeId: number, typeName: string): Promise<Response<null>> =>
   instance.post('/wizz/aftersale/product-type/update', {
     type_id: typeId,
     type_name: typeName,
@@ -50,7 +48,7 @@ export const updateProductType = (typeId: number, typeName: string): Promise<Res
  * @param {number} productTypeId - 产品大类id
  * @returns - NULL
  */
-export const removeProductType = (productTypeId: number): Promise<Response<void>> =>
+export const removeProductType = (productTypeId: number): Promise<Response<null>> =>
   instance.delete('/wizz/aftersale/product-type/delete', {
     data: qs.stringify({
       productTypeId,

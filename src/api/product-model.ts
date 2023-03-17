@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/promise-function-async */
-
 import qs from 'qs'
 import instance from '@/network'
 import type { Response, ProductModel } from '@/model'
@@ -30,7 +28,7 @@ export const getProductModel = (productModelId: number): Promise<Response<GetPro
  * @param {string} img - 产品型号展示图片的url
  * @returns - NULL
  */
-export const addProductModel = (modelName: string, typeId: number, img: string): Promise<Response<void>> =>
+export const addProductModel = (modelName: string, typeId: number, img: string): Promise<Response<null>> =>
   instance.post('/wizz/aftersale/product-model/add', {
     model_name: modelName,
     type_id: typeId,
@@ -46,7 +44,7 @@ export const addProductModel = (modelName: string, typeId: number, img: string):
  * @param {string} img - 产品型号展示图片的url
  * @returns - NULL
  */
-export const updateProductModel = (modelId: number, modelName: string, typeId: number, img: string): Promise<Response<void>> =>
+export const updateProductModel = (modelId: number, modelName: string, typeId: number, img: string): Promise<Response<null>> =>
   instance.post('/wizz/aftersale/product-model/update', {
     model_id: modelId,
     model_name: modelName,
@@ -60,7 +58,7 @@ export const updateProductModel = (modelId: number, modelName: string, typeId: n
  * @param {number} productModelId - 产品型号id
  * @returns - NULL
  */
-export const removeProductModel = (productModelId: number): Promise<Response<void>> =>
+export const removeProductModel = (productModelId: number): Promise<Response<null>> =>
   instance.delete('/wizz/aftersale/product-model/delete', {
     data: qs.stringify({
       productModelId,

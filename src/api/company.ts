@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/promise-function-async */
-
 import instance from '@/network'
 import type { Response, Company } from '@/model'
 
@@ -28,7 +26,7 @@ export const getCompanyInfo = (isFirstQuery: boolean, pageNum: number): Promise<
  * @param {string} companyName - 企业名称
  * @returns - NULL
  */
-export const addCompanyInfo = (companyName: string): Promise<Response<void>> =>
+export const addCompanyInfo = (companyName: string): Promise<Response<null>> =>
   instance.post('/wizz/aftersale/account/company/add', {
     company_name: companyName,
   })
@@ -40,7 +38,7 @@ export const addCompanyInfo = (companyName: string): Promise<Response<void>> =>
  * @param {string} companyName - 修改后的企业名称
  * @returns - NULL
  */
-export const updateCompanyInfo = (companyId: number, companyName: string): Promise<Response<void>> =>
+export const updateCompanyInfo = (companyId: number, companyName: string): Promise<Response<null>> =>
   instance.put('/wizz/aftersale/account/company/update', {
     company_id: companyId,
     company_name: companyName,
@@ -52,4 +50,4 @@ export const updateCompanyInfo = (companyId: number, companyName: string): Promi
  * @param {number} companyId - 企业id
  * @returns - NULL
  */
-export const removeCompanyInfo = (companyId: number): Promise<Response<void>> => instance.delete(`/wizz/aftersale/account/company/delete/${companyId}`)
+export const removeCompanyInfo = (companyId: number): Promise<Response<null>> => instance.delete(`/wizz/aftersale/account/company/delete/${companyId}`)

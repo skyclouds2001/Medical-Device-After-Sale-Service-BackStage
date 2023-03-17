@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/promise-function-async */
-
 import instance from '@/network'
 import type { Response, Customer } from '@/model'
 
@@ -30,7 +28,7 @@ export const getCustomerInfo = (isFirstQuery: boolean, pageNum: number): Promise
  * @param {string} mobile - 客户手机号
  * @returns - NULL
  */
-export const addCustomerInfo = (companyId: number, customerName: string, mobile: string): Promise<Response<void>> =>
+export const addCustomerInfo = (companyId: number, customerName: string, mobile: string): Promise<Response<null>> =>
   instance.post(`/wizz/aftersale/account/customer/add`, {
     company_id: companyId,
     customer_name: customerName,
@@ -46,7 +44,7 @@ export const addCustomerInfo = (companyId: number, customerName: string, mobile:
  * @param {string} mobile - 修改后的客户手机号
  * @returns - NULL
  */
-export const updateCustomerInfo = (companyId: number, customerId: number, customerName: string, mobile: string): Promise<Response<void>> =>
+export const updateCustomerInfo = (companyId: number, customerId: number, customerName: string, mobile: string): Promise<Response<null>> =>
   instance.put('/wizz/aftersale/account/customer/update', {
     company_id: companyId,
     customer_id: customerId,
@@ -60,4 +58,4 @@ export const updateCustomerInfo = (companyId: number, customerId: number, custom
  * @param {number} customerId - 客户id
  * @returns - NULL
  */
-export const removeCustomerInfo = (customerId: number): Promise<Response<void>> => instance.delete(`/wizz/aftersale/account/customer/delete/${customerId}`)
+export const removeCustomerInfo = (customerId: number): Promise<Response<null>> => instance.delete(`/wizz/aftersale/account/customer/delete/${customerId}`)

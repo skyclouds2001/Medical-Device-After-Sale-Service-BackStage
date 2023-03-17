@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/promise-function-async */
-
 import instance from '@/network'
 import type { Response, Service, Department, User } from '@/model'
 
@@ -40,7 +38,7 @@ export const getSingleServer = (productModelId: number): Promise<Response<GetSin
  * @param {number} productModelId - 产品型号id
  * @returns - NULL
  */
-export const removeSingleServer = (productModelId: number): Promise<Response<void>> => instance.delete(`/wizz/aftersale/account/kf/removeKfByModelId/${productModelId}`)
+export const removeSingleServer = (productModelId: number): Promise<Response<null>> => instance.delete(`/wizz/aftersale/account/kf/removeKfByModelId/${productModelId}`)
 
 /**
  * 管理指定产品型号客服接待人员接口
@@ -49,7 +47,7 @@ export const removeSingleServer = (productModelId: number): Promise<Response<voi
  * @param {string[]} userIdList - 要被指定为接待人员的员工的 id 列表。列表中元素个数最少为 1，最多为 100
  * @returns - NULL
  */
-export const manageCustomerService = (productModelId: number, userIdList: string[]): Promise<Response<void>> =>
+export const manageCustomerService = (productModelId: number, userIdList: string[]): Promise<Response<null>> =>
   instance.post('/wizz/aftersale/account/kf/setKfByModelId', {
     product_model_id: productModelId,
     user_id_list: userIdList,
@@ -61,4 +59,4 @@ export const manageCustomerService = (productModelId: number, userIdList: string
  * @param {number} productTypeId - 产品大类id
  * @returns - NULL
  */
-export const removeCustomerService = (productTypeId: number): Promise<Response<void>> => instance.delete(`/wizz/aftersale/account/kf/removeKfByTypeId/${productTypeId}`)
+export const removeCustomerService = (productTypeId: number): Promise<Response<null>> => instance.delete(`/wizz/aftersale/account/kf/removeKfByTypeId/${productTypeId}`)
