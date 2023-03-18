@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux'
 import { Table, Button, Modal, App } from 'antd'
 import { getCompanyInfo, addCompanyInfo, updateCompanyInfo, removeCompanyInfo } from '@/api'
 import { DEFAULT_PAGE_SIZE } from '@/config'
-import AddCompany from '@/component/AddCompany'
-import EditCompany from '@/component/EditCompany'
+import AddCompany from '@/component/customer/AddCompany'
+import EditCompany from '@/component/customer/EditCompany'
 import type { Company } from '@/model'
 import type { CustomAction } from '@/store'
 
@@ -48,7 +48,8 @@ const CompanyManage: React.FC = () => {
         if (isFirst) setTotal(res.data.total_num)
       } else {
         void message.error({
-          content: res.data,
+          // eslint-disable-next-line @typescript-eslint/no-base-to-string
+          content: res.data.toString(),
         })
       }
     } catch (err) {

@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux'
 import { Table, Button, Modal, App } from 'antd'
 import { getCustomerInfo, addCustomerInfo, updateCustomerInfo, removeCustomerInfo } from '@/api'
 import { DEFAULT_PAGE_SIZE } from '@/config'
-import AddCustomer from '@/component/AddCustomer'
-import EditCustomer from '@/component/EditCustomer'
+import AddCustomer from '@/component/customer/AddCustomer'
+import EditCustomer from '@/component/customer/EditCustomer'
 import type { Customer } from '@/model'
 import type { CustomAction } from '@/store'
 
@@ -49,7 +49,8 @@ const CustomerManage: React.FC = () => {
         if (isFirst) setTotal(res.data.total_num)
       } else {
         void message.error({
-          content: res.data,
+          // eslint-disable-next-line @typescript-eslint/no-base-to-string
+          content: res.data.toString(),
         })
       }
     } catch (err) {

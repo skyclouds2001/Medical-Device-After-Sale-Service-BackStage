@@ -1,30 +1,28 @@
 import React, { useRef } from 'react'
 import { Form, Input, Modal } from 'antd'
 import type { InputRef } from 'antd'
-import CompanySelector from '@/component/CompanySelector'
+import CompanySelector from '@/component/customer/CompanySelector'
 import type { Customer } from '@/model'
 
-interface EditCustomerProps {
+interface AddCustomerProps {
   open: boolean
-  onSubmit: (props: Omit<Customer, 'company_name'>) => void
+  onSubmit: (props: Omit<Customer, 'customer_id' | 'company_name'>) => void
   onCancel: () => void
-  properties: Customer
 }
 
-const EditCustomer: React.FC<EditCustomerProps> = props => {
+const AddCustomer: React.FC<AddCustomerProps> = props => {
   /** 客户姓名 */
   const name = useRef<InputRef>(null)
   /** 客户手机 */
   const mobile = useRef<InputRef>(null)
   /** 客服所属公司 */
-  const company = useRef<number>(-1)
+  const company = useRef(-1)
 
   /**
    * 提交表单
    */
   const submit = (): void => {
     props.onSubmit({
-      customer_id: props.properties.customer_id,
       customer_name: name.current?.input?.value ?? '',
       mobile: mobile.current?.input?.value ?? '',
       company_id: company.current,
@@ -39,7 +37,7 @@ const EditCustomer: React.FC<EditCustomerProps> = props => {
   }
 
   return (
-    <Modal open={props.open} title="修改客户信息" closable okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} onOk={submit} onCancel={cancel}>
+    <Modal open={props.open} title="添加客户信息" closable okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} onOk={submit} onCancel={cancel}>
       <Form labelCol={{ span: 8 }} colon={false}>
         <Form.Item label="客户名称" name="name">
           <Input ref={name} className="rounded-sm mx-2" autoComplete="off" placeholder="请输入客户名称" />
@@ -55,4 +53,4 @@ const EditCustomer: React.FC<EditCustomerProps> = props => {
   )
 }
 
-export default EditCustomer
+export default AddCustomer
