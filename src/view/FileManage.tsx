@@ -21,29 +21,6 @@ const FileManage: React.FC = () => {
   const { data, isLoading, mutate } = useSwr(['/wizz/aftersale/file/list', type], ([, type]) => getFileList(Number(type) as 0 | 1))
 
   /**
-   * 选取服务类型方法
-   *
-   * @param key 服务ID
-   */
-  const handleSelectService: MenuProps['onClick'] = ({ key }) => {
-    setType(key as '0' | '1')
-  }
-
-  /**
-   * 打开上传文件表单方法
-   */
-  const openUploadFileForm = (): void => {
-    setOpen(true)
-  }
-
-  /**
-   * 关闭上传文件表单方法
-   */
-  const closeUploadFileForm = (): void => {
-    setOpen(false)
-  }
-
-  /**
    * 确认上传文件回调方法
    *
    * @param files 文件列表
@@ -61,8 +38,7 @@ const FileManage: React.FC = () => {
    * @param id 文件ID
    */
   const removeFile = (id: number): void => {
-    // eslint-disable-next-line promise/catch-or-return
-    deleteFile(id.toString())
+    void deleteFile(id.toString())
       .then(res => {
         if (res.code === 0) {
           void message.success({
@@ -91,20 +67,20 @@ const FileManage: React.FC = () => {
   return (
     <>
       <div className="w-full px-2 py-5 text-right">
-        <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={openUploadFileForm}>
+        <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setOpen(true)}>
           上传文件
         </Button>
       </div>
       <Row className="w-full" gutter={16}>
         <Col span={8}>
-          <Menu className="border" items={items} defaultSelectedKeys={['0']} onClick={handleSelectService} />
+          <Menu className="border" items={items} defaultSelectedKeys={['0']} onClick={({ key }) => setType(key as '0' | '1')} />
         </Col>
         <Col span={16}>
           <FileTable files={Array.isArray(data?.data.file_info_list) ? data?.data.file_info_list ?? [] : []} loading={isLoading} onDelete={removeFile} />
         </Col>
       </Row>
 
-      <UploadFileForm open={open} onSubmit={handleSubmitFiles} onCancel={closeUploadFileForm} />
+      <UploadFileForm open={open} onSubmit={handleSubmitFiles} onCancel={() => setOpen(false)} />
     </>
   )
 }
