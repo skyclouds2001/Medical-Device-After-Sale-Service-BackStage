@@ -26,7 +26,7 @@ const ProductManage: React.FC = () => {
   const currentModel = useRef<ProductModel>()
   const currentType = useRef<ProductType>()
 
-  const handleAddProductTypes = async (params: Omit<ProductType, 'type_id'>): Promise<void> => {
+  const handleAddProductType = async (params: Omit<ProductType, 'type_id'>): Promise<void> => {
     try {
       const res = await addProductType(params.type_name)
       if (res.code === 0) {
@@ -48,7 +48,7 @@ const ProductManage: React.FC = () => {
     }
   }
 
-  const handleAddProductModels = async (params: Omit<ProductModel, 'model_id' | 'type_name'> & { services: string[] }): Promise<void> => {
+  const handleAddProductModel = async (params: Omit<ProductModel, 'model_id' | 'type_name'> & { services: string[]; avatar: string }): Promise<void> => {
     try {
       const res1 = await addProductModel(params.model_name, params.type_id, params.pic_url)
       if (res1.code !== 0) {
@@ -57,7 +57,7 @@ const ProductManage: React.FC = () => {
         })
       }
 
-      const res2 = await manageCustomerService(params.type_id, params.services)
+      const res2 = await manageCustomerService(res1.data, params.services, params.avatar)
       if (res2.code !== 0) {
         void message.error({
           content: res2.data,
@@ -101,7 +101,7 @@ const ProductManage: React.FC = () => {
     }
   }
 
-  const handleEditProductModel = async (product: ProductModel): Promise<void> => {
+  const handleEditProductModel = async (product: Omit<ProductModel, 'type_name'>): Promise<void> => {
     try {
       const res = await updateProductModel(product.model_id, product.model_name, product.type_id, product.pic_url)
       if (res.code === 0) {
@@ -218,14 +218,14 @@ const ProductManage: React.FC = () => {
   return (
     <>
       <Row className="w-full" gutter={16}>
-        <Col span={12}>
+        <Col span={8}>
           <div className="w-full py-5 text-right">
             <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setShowAddProductType(true)}>
               添加产品大类
             </Button>
           </div>
         </Col>
-        <Col span={12}>
+        <Col span={16}>
           <div className="w-full py-5 text-right">
             <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setShowAddProductModel(true)}>
               添加产品型号
@@ -235,21 +235,21 @@ const ProductManage: React.FC = () => {
       </Row>
 
       <Row className="w-full" gutter={16}>
-        <Col span={12}>
+        <Col span={8}>
           <ProductTypeTable products={Array.isArray(types?.data) ? types?.data ?? [] : []} loading={isTypeLoading} onEdit={openEditTypeForm} onRemove={handleRemoveProductType} />
         </Col>
-        <Col span={12}>
+        <Col span={16}>
           <ProductModelTable products={Array.isArray(models?.data) ? models?.data ?? [] : []} loading={isModelLoading} onEdit={openEditModelForm} onRemove={handleRemoveProductModel} />
         </Col>
       </Row>
 
-      <AddProductTypeForm open={showAddProductType} onSubmit={product => handleAddProductTypes(product)} onCancel={() => setShowAddProductType(false)} />
+      <AddProductTypeForm open={showAddProductType} onSubmit={handleAddProductType} onCancel={() => setShowAddProductType(false)} />
 
-      <AddProductModelForm open={showAddProductModel} onSubmit={product => handleAddProductModels(product)} onCancel={() => setShowAddProductModel(false)} />
+      <AddProductModelForm open={showAddProductModel} onSubmit={handleAddProductModel} onCancel={() => setShowAddProductModel(false)} />
 
-      <EditProductTypeForm open={showEditProductType} onSubmit={product => handleEditProductType(product)} onCancel={() => setShowEditProductType(false)} properties={currentType.current as ProductType} />
+      <EditProductTypeForm open={showEditProductType} onSubmit={handleEditProductType} onCancel={() => setShowEditProductType(false)} properties={currentType.current as ProductType} />
 
-      <EditProductModelForm open={showEditProductModel} onSubmit={product => handleEditProductModel(product)} onCancel={() => setShowEditProductModel(false)} properties={currentModel.current as ProductModel} />
+      <EditProductModelForm open={showEditProductModel} onSubmit={handleEditProductModel} onCancel={() => setShowEditProductModel(false)} properties={currentModel.current as ProductModel} />
     </>
   )
 }

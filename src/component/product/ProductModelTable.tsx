@@ -23,7 +23,7 @@ const ProductModelTable: React.FC<ProductModelTableProps> = props => {
           key="pic_url"
           render={(_, record: ProductModel) => (
             <>
-              <Image width={100} height={100} alt="" src={record.pic_url ?? img} fallback={img} preview={false} />
+              <Image width={100} alt={record.model_name} src={record.pic_url ?? img} fallback={img} preview={false} />
             </>
           )}
         />

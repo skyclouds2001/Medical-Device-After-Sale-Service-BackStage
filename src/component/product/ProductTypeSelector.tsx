@@ -21,7 +21,7 @@ const ProductTypeSelector: React.FC<ProductTypeSelectorProps> = props => {
           setProductTypes(res.data)
         } else {
           void message.error({
-            content: res.data,
+            content: res.data.toString(),
           })
         }
       } catch (err) {
