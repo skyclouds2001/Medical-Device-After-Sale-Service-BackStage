@@ -7,20 +7,20 @@ interface WorkOrderTableProps {
   workOrders: WorkOrder[]
   loading: boolean
   onRemove: (id: number) => void
+  onFinish: (id: number) => void
 }
 
 const WorkOrderTable: React.FC<WorkOrderTableProps> = props => {
   return (
     <>
       <Table dataSource={props.workOrders} bordered rowKey="order_id" loading={props.loading} pagination={{ hideOnSinglePage: true }}>
-        <Table.Column width="100px" align="center" title="工单ID" dataIndex="order_id" key="order_id" />
         <Table.Column width="200px" align="center" title="创建时间" dataIndex="create_time" key="create_time" />
         <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
         <Table.Column width="200px" align="center" title="预约时间" dataIndex="appointment_time" key="appointment_time" />
         <Table.Column width="200px" align="center" title="客户ID" dataIndex="customer_id" key="customer_id" />
         <Table.Column width="200px" align="center" title="预约地址" dataIndex="address" key="address" />
         <Table.Column
-          width="200px"
+          width="150px"
           align="center"
           title="类型"
           key="order_type"
@@ -30,8 +30,9 @@ const WorkOrderTable: React.FC<WorkOrderTableProps> = props => {
             </>
           )}
         />
+        <Table.Column width="150px" align="center" title="工单状态" dataIndex="order_status" key="order_status" render={(_, record: WorkOrder) => <>{['处理中', '已完成'][record.order_status]}</>} />
         <Table.Column
-          width="100px"
+          width="200px"
           align="center"
           title="操作"
           key="action"
@@ -39,6 +40,9 @@ const WorkOrderTable: React.FC<WorkOrderTableProps> = props => {
             <>
               <Button type="link" danger onClick={() => props.onRemove(record.order_id)}>
                 删除
+              </Button>
+              <Button type="link" onClick={() => props.onFinish(record.order_id)}>
+                完成
               </Button>
             </>
           )}

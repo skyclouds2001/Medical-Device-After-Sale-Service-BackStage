@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { App } from 'antd'
 import useSwr from 'swr'
-import { getAllWorkOrder, removeWorkOrder } from '@/api'
+import { getAllWorkOrder, removeWorkOrder, finishWorkOrder } from '@/api'
 import WorkOrderSearch from '@/component/work-order/WorkOrderSearch'
 import WorkOrderTable from '@/component/work-order/WorkOrderTable'
 import type { WorkOrder } from '@/model'
@@ -53,6 +53,27 @@ const WorkOrderManage: React.FC = () => {
     })
   }
 
+  const closeWorkOrder = async (id: number): Promise<void> => {
+    try {
+      const res = await finishWorkOrder(id)
+      if (res.code === 0) {
+        void message.success({
+          content: '设置成功',
+        })
+      } else {
+        void message.error({
+          content: res.data ?? '设置失败',
+        })
+      }
+    } catch {
+      void message.error({
+        content: '设置失败',
+      })
+    } finally {
+      void mutate()
+    }
+  }
+
   /**
    * 是否搜索模式 - 携带搜索参数
    */
@@ -96,7 +117,7 @@ const WorkOrderManage: React.FC = () => {
       <WorkOrderSearch onSearch={handleSearch} onReset={handleSearch} />
 
       {/* 工单表单 */}
-      <WorkOrderTable workOrders={data?.data?.filter(handleFilterWorkOrder) ?? []} loading={isLoading} onRemove={deleteWorkOrder} />
+      <WorkOrderTable workOrders={data?.data?.filter(handleFilterWorkOrder) ?? []} loading={isLoading} onRemove={deleteWorkOrder} onFinish={closeWorkOrder} />
     </>
   )
 }

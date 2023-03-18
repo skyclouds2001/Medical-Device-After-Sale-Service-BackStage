@@ -56,3 +56,16 @@ export const removeWorkOrder = (workOrderId: number): Promise<Response<null>> =>
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   })
+
+/**
+ * 设置工单状态为已完成接口
+ *
+ * @param workOrderId - 工单ID
+ * @returns - NULL
+ */
+export const finishWorkOrder = (workOrderId: number): Promise<Response<null>> =>
+  instance.get('/wizz/aftersale/order/closeWorkOrder', {
+    params: {
+      workOrderId,
+    },
+  })
