@@ -3,14 +3,13 @@ import { Form, Input, Modal } from 'antd'
 import type { InputRef } from 'antd'
 import type { Company } from '@/model'
 
-interface EditCompanyProps {
+interface AddCompanyProps {
   open: boolean
-  onSubmit: (props: Company) => void
+  onSubmit: (props: Omit<Company, 'company_id'>) => void
   onCancel: () => void
-  properties: Company
 }
 
-const EditCompany: React.FC<EditCompanyProps> = props => {
+const AddCompany: React.FC<AddCompanyProps> = props => {
   /** 公司名称 */
   const name = useRef<InputRef>(null)
 
@@ -19,8 +18,7 @@ const EditCompany: React.FC<EditCompanyProps> = props => {
    */
   const submit = (): void => {
     props.onSubmit({
-      company_name: name.current?.input?.value ?? props.properties.company_name,
-      company_id: props.properties.company_id,
+      company_name: name.current?.input?.value ?? '',
     })
   }
 
@@ -32,7 +30,7 @@ const EditCompany: React.FC<EditCompanyProps> = props => {
   }
 
   return (
-    <Modal open={props.open} title="修改企业信息" closable okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} onOk={submit} onCancel={cancel}>
+    <Modal open={props.open} title="添加企业信息" closable okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} destroyOnClose onOk={submit} onCancel={cancel}>
       <Form labelCol={{ span: 8 }} colon={false}>
         <Form.Item label="企业名称" name="name">
           <Input ref={name} className="rounded-xl mx-2" autoComplete="off" placeholder="请输入企业名称" />
@@ -42,4 +40,4 @@ const EditCompany: React.FC<EditCompanyProps> = props => {
   )
 }
 
-export default EditCompany
+export default AddCompany
