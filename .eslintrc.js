@@ -29,6 +29,9 @@ module.exports = {
     'import/no-named-as-default-member': 'off',
     'promise/always-return': 'off',
     'import/default': 'off',
+    '@typescript-eslint/no-confusing-void-expression': 'off',
+    '@typescript-eslint/promise-function-async': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
   },
   settings: {
     react: {
