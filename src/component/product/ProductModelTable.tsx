@@ -13,7 +13,7 @@ interface ProductModelTableProps {
 const ProductModelTable: React.FC<ProductModelTableProps> = props => {
   return (
     <>
-      <Table dataSource={props.products} bordered rowKey="model_id" loading={props.loading} pagination={false}>
+      <Table dataSource={props.products} bordered rowKey="model_id" loading={props.loading} pagination={{ hideOnSinglePage: true }}>
         <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
         <Table.Column width="200px" align="center" title="产品大类" dataIndex="type_name" key="type_name" />
         <Table.Column

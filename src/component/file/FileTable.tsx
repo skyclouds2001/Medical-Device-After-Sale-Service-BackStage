@@ -12,7 +12,7 @@ interface FileTableProps {
 const FileTable: React.FC<FileTableProps> = props => {
   return (
     <>
-      <Table dataSource={props.files ?? []} bordered rowKey="id" loading={props.loading} pagination={false}>
+      <Table dataSource={props.files ?? []} bordered rowKey="id" loading={props.loading} pagination={{ hideOnSinglePage: true }}>
         <Table.Column width="200px" align="center" title="文件名称" dataIndex="file_name" key="file_name" />
         <Table.Column
           width="200px"
