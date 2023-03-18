@@ -41,17 +41,18 @@ const LoginPage: React.FC = () => {
 
       if (res1.code !== 0) {
         void message.error({
-          content: res1.data,
+          // eslint-disable-next-line @typescript-eslint/no-base-to-string
+          content: res1.data.toString(),
         })
       }
 
       const ids = res1.data.element_list.filter(v => v.type === 'person').map(v => (v.type === 'person' ? v.user_id : v.department_id.toString()))
 
-      const res2 = await manageCustomerService(-1, ids)
+      const res2 = await manageCustomerService(-1, ids, 'null')
 
       if (res2.code !== 0) {
         void message.error({
-          content: res2.data,
+          content: res2.data ?? '设置通用客服失败',
         })
       }
     } catch (err) {
@@ -83,7 +84,8 @@ const LoginPage: React.FC = () => {
           navigate(DEFAULT_REDIRECT_PATH)
         } else {
           void message.error({
-            content: res.data,
+            // eslint-disable-next-line @typescript-eslint/no-base-to-string
+            content: res.data.toString(),
           })
         }
       })
