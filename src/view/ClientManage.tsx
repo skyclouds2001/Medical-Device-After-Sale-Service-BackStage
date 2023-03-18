@@ -213,10 +213,10 @@ const ClientManage: React.FC = () => {
 
       <Row className="w-full" gutter={16}>
         <Col span={8}>
-          <CompanyTable companies={companies?.data.company_list ?? []} loading={isCompanyLoading} onEdit={openEditCompanyForm} onRemove={handleRemoveCompany} />
+          <CompanyTable companies={companies?.data.company_list ?? []} total={companies?.data.total_num ?? 10} loading={isCompanyLoading} onEdit={openEditCompanyForm} onRemove={handleRemoveCompany} onChange={page => setCompanyPageNum(page)} />
         </Col>
         <Col span={16}>
-          <CustomerTable customers={customers?.data.customer_list ?? []} loading={isCustomerLoading} onEdit={openEditCustomerForm} onRemove={handleRemoveCustomer} />
+          <CustomerTable customers={customers?.data.customer_list ?? []} total={customers?.data.total_num ?? 10} loading={isCustomerLoading} onEdit={openEditCustomerForm} onRemove={handleRemoveCustomer} onChange={page => setCustomerPageNum(page)} />
         </Col>
       </Row>
 
