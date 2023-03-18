@@ -195,14 +195,14 @@ const ClientManage: React.FC = () => {
   return (
     <>
       <Row className="w-full" gutter={16}>
-        <Col span={8}>
+        <Col span={10}>
           <div className="w-full py-5 text-right">
             <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setShowAddCompany(true)}>
               添加公司
             </Button>
           </div>
         </Col>
-        <Col span={16}>
+        <Col span={14}>
           <div className="w-full py-5 text-right">
             <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setShowAddCustomer(true)}>
               添加客户
@@ -212,10 +212,10 @@ const ClientManage: React.FC = () => {
       </Row>
 
       <Row className="w-full" gutter={16}>
-        <Col span={8}>
+        <Col span={10}>
           <CompanyTable companies={companies?.data.company_list ?? []} total={companies?.data.total_num ?? 10} loading={isCompanyLoading} onEdit={openEditCompanyForm} onRemove={handleRemoveCompany} onChange={page => setCompanyPageNum(page)} />
         </Col>
-        <Col span={16}>
+        <Col span={14}>
           <CustomerTable customers={customers?.data.customer_list ?? []} total={customers?.data.total_num ?? 10} loading={isCustomerLoading} onEdit={openEditCustomerForm} onRemove={handleRemoveCustomer} onChange={page => setCustomerPageNum(page)} />
         </Col>
       </Row>

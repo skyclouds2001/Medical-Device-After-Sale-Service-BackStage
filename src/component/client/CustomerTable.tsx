@@ -17,7 +17,6 @@ const CustomerTable: React.FC<CustomerTableProps> = props => {
       <Table dataSource={props.customers} bordered rowKey="customer_id" loading={props.loading} pagination={{ hideOnSinglePage: true, total: props.total }} onChange={({ current }) => props.onChange(current ?? 1)}>
         <Table.Column width="200px" align="center" title="用户名称" dataIndex="customer_name" key="customer_name" />
         <Table.Column width="200px" align="center" title="企业名称" dataIndex="company_name" key="company_name" />
-        <Table.Column width="200px" align="center" title="联系方式" dataIndex="mobile" key="mobile" />
         <Table.Column
           width="200px"
           align="center"
