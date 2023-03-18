@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/promise-function-async */
-/* eslint-disable promise/no-promise-in-callback */
-
 import axios from 'axios'
 import type { AxiosHeaders } from 'axios'
 import { BASE_URL, NETWORK_TIMEOUT, WHITE_LIST } from '@/config'

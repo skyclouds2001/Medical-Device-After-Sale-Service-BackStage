@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/promise-function-async */
-
 import instance from '@/network'
 import type { Response } from '@/model'
 

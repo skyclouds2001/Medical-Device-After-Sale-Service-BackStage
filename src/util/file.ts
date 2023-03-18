@@ -11,7 +11,6 @@ import unknown from '@/asset/file/unknown.svg'
  * @param img 图片文件
  * @returns 图片Base64URL
  */
-// eslint-disable-next-line @typescript-eslint/promise-function-async
 export const getImageBase64 = (img: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
