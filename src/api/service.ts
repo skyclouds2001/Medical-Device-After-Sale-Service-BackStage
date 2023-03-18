@@ -20,6 +20,8 @@ export const getDepartmentsAndStaffs = (departmentId: number): Promise<Response<
  * 查询指定产品型号接待人员接口返回数据结构
  */
 interface GetSingleServerResponse {
+  /** 指定产品的客服账号头像url */
+  avatar_url: string
   /** 接待人员信息列表 */
   server_info_list: Service[]
 }
@@ -45,12 +47,14 @@ export const removeSingleServer = (productModelId: number): Promise<Response<nul
  *
  * @param {number} productModelId - 产品型号id（如果传入 -1，则管理的是【通用客服】的接待人员）
  * @param {string[]} userIdList - 要被指定为接待人员的员工的 id 列表。列表中元素个数最少为 1，最多为 100
+ * @param avatar - 客服头像url
  * @returns - NULL
  */
-export const manageCustomerService = (productModelId: number, userIdList: string[]): Promise<Response<null>> =>
+export const manageCustomerService = (productModelId: number, userIdList: string[], avatar: string): Promise<Response<null>> =>
   instance.post('/wizz/aftersale/account/kf/setKfByModelId', {
     product_model_id: productModelId,
     user_id_list: userIdList,
+    kefu_avatar: avatar,
   })
 
 /**
