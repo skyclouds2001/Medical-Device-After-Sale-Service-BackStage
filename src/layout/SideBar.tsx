@@ -10,18 +10,6 @@ const items: MenuProps['items'] = [
     label: '客户管理',
     key: '/customer',
     icon: <UserOutlined />,
-    children: [
-      {
-        label: '用户管理',
-        key: '/customer/user',
-        icon: <UserOutlined />,
-      },
-      {
-        label: '企业管理',
-        key: '/customer/company',
-        icon: <UserOutlined />,
-      },
-    ],
   },
   {
     label: '客服管理',

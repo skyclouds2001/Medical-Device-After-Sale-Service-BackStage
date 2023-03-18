@@ -3,9 +3,7 @@ import { useRoutes } from 'react-router-dom'
 
 const LoginPage = lazy(() => import('@/view/LoginPage'))
 
-const CustomerManage = lazy(() => import('@/view/CustomerManage'))
-
-const CompanyManage = lazy(() => import('@/view/CompanyManage'))
+const ClientManage = lazy(() => import('@/view/ClientManage'))
 
 const CustomerServiceManage = lazy(() => import('@/view/CustomerServiceManage'))
 
@@ -31,18 +29,10 @@ const Routes: React.FC = () => {
 
     // 客户管理
     {
-      path: '/customer/user',
+      path: '/customer',
       element: (
         <Suspense>
-          <CustomerManage />
-        </Suspense>
-      ),
-    },
-    {
-      path: '/customer/company',
-      element: (
-        <Suspense>
-          <CompanyManage />
+          <ClientManage />
         </Suspense>
       ),
     },
