@@ -50,7 +50,8 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1",
-    "redux": "^4.2.0"
+    "redux": "^4.2.0",
+    "swr": "^2.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",

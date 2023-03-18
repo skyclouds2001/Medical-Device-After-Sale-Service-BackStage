@@ -18,29 +18,27 @@ interface AdminLoginResponse {
 /**
  * 管理员登录接口
  *
- * @param {string} admin 管理员名称
- * @param {string} password 密码
+ * @param {string} admin - 管理员名称
+ * @param {string} password - 密码
+ * @returns - 登录成功用户数据
  */
-export const adminLogin = async (admin: string, password: string): Promise<Response<AdminLoginResponse>> => {
-  const res = await instance.post<Response<AdminLoginResponse>>('/wizz/aftersale/account/admin/login', {
+export const adminLogin = (admin: string, password: string): Promise<Response<AdminLoginResponse>> =>
+  instance.post('/wizz/aftersale/account/admin/login', {
     admin_name: admin,
     password,
   })
-  return res.data
-}
 
 /**
  * 管理员重设密码接口
  *
- * @param {string} admin 管理员名称
- * @param {string} encrypt 密文串
- * @param {string} newPw 新密码
+ * @param {string} admin - 管理员名称
+ * @param {string} encrypt - 密文串
+ * @param {string} newPw - 新密码
+ * @returns - NULL
  */
-export const resetPassword = async (admin: string, encrypt: string, newPw: string): Promise<Response<void>> => {
-  const res = await instance.put<Response<void>>('/wizz/aftersale/account/admin/resetPassword', {
+export const resetPassword = (admin: string, encrypt: string, newPw: string): Promise<Response<null>> =>
+  instance.put('/wizz/aftersale/account/admin/resetPassword', {
     admin_name: admin,
     encrypted_password: encrypt,
     new_password: newPw,
   })
-  return res.data
-}
