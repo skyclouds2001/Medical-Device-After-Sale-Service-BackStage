@@ -1,64 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { App, Button, Modal, Table } from 'antd'
+import { App } from 'antd'
+import useSwr from 'swr'
 import { getAllWorkOrder, removeWorkOrder } from '@/api'
-import WorkOrderSearch from '@/component/WorkOrderSearch'
-import { DEFAULT_PAGE_SIZE } from '@/config'
-import { services } from '@/data'
-import { CustomAction } from '@/store'
+import WorkOrderSearch from '@/component/work-order/WorkOrderSearch'
+import WorkOrderTable from '@/component/work-order/WorkOrderTable'
 import type { WorkOrder } from '@/model'
+import type { CustomAction } from '@/store'
 
 const WorkOrderManage: React.FC = () => {
-  const { message } = App.useApp()
+  const { message, modal } = App.useApp()
   const dispatch = useDispatch()
 
-  /** 工单列表 */
-  const [workOrders, setWorkOrders] = useState<WorkOrder[]>([])
-  /** 工单总数 */
-  const [total, setTotal] = useState(0)
-  /** 工单表格是否加载中 */
-  const [isLoading, setLoading] = useState(false)
-  /** 工单表格页下标 */
-  const [pageNum, setPageNum] = useState(1)
+  const { data, isLoading, mutate } = useSwr('/wizz/aftersale/work-order/get-all', getAllWorkOrder)
 
   useEffect(() => {
     dispatch<CustomAction>({ type: 'title/update', title: '工单管理' })
-    void loadWorkOrder()
   }, [])
-
-  /**
-   * 加载工单方法
-   */
-  const loadWorkOrder = async (): Promise<void> => {
-    setLoading(true)
-    try {
-      const res = await getAllWorkOrder()
-      if (res.code === 0) {
-        const workOrders = isSearch === null ? res.data : res.data.filter(v => v.order_type === isSearch.type && (v.model_name ?? '').includes(isSearch.name))
-        setWorkOrders(workOrders)
-        setPageNum(1)
-        setTotal(workOrders.length)
-      } else {
-        void message.error({
-          content: res.data,
-        })
-      }
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setTimeout(() => {
-        setLoading(false)
-      }, 250)
-    }
-  }
 
   /**
    * 删除工单方法
    *
-   * @param order 订单信息
+   * @param id 工单ID
    */
-  const deleteWorkOrder = (order: WorkOrder): void => {
-    Modal.confirm({
+  const deleteWorkOrder = (id: number): void => {
+    modal.confirm({
       title: '警告',
       content: '确认移除当前工单？',
       okText: '删除',
@@ -66,16 +32,22 @@ const WorkOrderManage: React.FC = () => {
       closable: true,
       onOk: async () => {
         try {
-          const res = await removeWorkOrder(order.order_id)
-          if (res.code !== 0) {
+          const res = await removeWorkOrder(id)
+          if (res.code === 0) {
+            void message.success({
+              content: '删除成功',
+            })
+          } else {
             void message.error({
-              content: res.data,
+              content: res.data ?? '删除失败',
             })
           }
-
-          void loadWorkOrder()
-        } catch (err) {
-          console.error(err)
+        } catch {
+          void message.error({
+            content: '删除失败',
+          })
+        } finally {
+          void mutate()
         }
       },
     })
@@ -87,7 +59,7 @@ const WorkOrderManage: React.FC = () => {
   const [isSearch, setSearch] = useState<{ name: string; type: number } | null>(null)
 
   useEffect(() => {
-    void loadWorkOrder()
+    void mutate()
   }, [isSearch])
 
   /**
@@ -108,64 +80,23 @@ const WorkOrderManage: React.FC = () => {
     }
   }
 
+  /**
+   * 筛选工单方法
+   *
+   * @param o - 工单
+   * @returns - 判别结果
+   */
+  const handleFilterWorkOrder = (o: WorkOrder): boolean => {
+    return isSearch === null || (o.model_name.includes(isSearch.name) && o.order_type === isSearch.type)
+  }
+
   return (
     <>
       {/* 工单搜索功能 */}
       <WorkOrderSearch onSearch={handleSearch} onReset={handleSearch} />
 
       {/* 工单表单 */}
-      <Table
-        dataSource={workOrders}
-        bordered
-        rowKey="order_id"
-        loading={isLoading}
-        pagination={{
-          current: pageNum,
-          total,
-          pageSize: DEFAULT_PAGE_SIZE,
-        }}
-        onChange={pagination => {
-          setPageNum(pagination.current ?? 1)
-        }}
-        className="w-[87rem]"
-      >
-        <Table.Column width="100px" align="center" title="工单ID" dataIndex="order_id" key="order_id" />
-        <Table.Column width="200px" align="center" title="创建时间" dataIndex="create_time" key="create_time" />
-        <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
-        <Table.Column width="200px" align="center" title="预约时间" dataIndex="appointment_time" key="appointment_time" />
-        <Table.Column width="200px" align="center" title="客户ID" dataIndex="customer_id" key="customer_id" />
-        <Table.Column width="200px" align="center" title="预约地址" dataIndex="address" key="address" />
-        <Table.Column
-          width="200px"
-          align="center"
-          title="类型"
-          key="order_type"
-          render={(_, record: WorkOrder) => (
-            <>
-              <span>{services.find(v => v.id === record.order_type)?.text}</span>
-            </>
-          )}
-        />
-        <Table.Column
-          width="100px"
-          align="center"
-          title="操作"
-          key="action"
-          render={(_, record: WorkOrder) => (
-            <>
-              <Button
-                type="link"
-                danger
-                onClick={() => {
-                  deleteWorkOrder(record)
-                }}
-              >
-                删除
-              </Button>
-            </>
-          )}
-        />
-      </Table>
+      <WorkOrderTable workOrders={data?.data?.filter(handleFilterWorkOrder) ?? []} loading={isLoading} onRemove={deleteWorkOrder} />
     </>
   )
 }
