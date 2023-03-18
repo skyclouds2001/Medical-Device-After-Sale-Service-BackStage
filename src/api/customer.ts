@@ -23,16 +23,16 @@ export const getCustomerInfo = (isFirstQuery: boolean, pageNum: number): Promise
 /**
  * 添加客户信息接口
  *
- * @param {number} companyId - 企业id
- * @param {string} customerName - 客户名称
- * @param {string} mobile - 客户手机号
+ * @param {number} company - 企业id
+ * @param {string} name - 客户账号名称
+ * @param {string} password - 客户账号密码
  * @returns - NULL
  */
-export const addCustomerInfo = (companyId: number, customerName: string, mobile: string): Promise<Response<null>> =>
+export const addCustomerInfo = (company: number, name: string, password: string): Promise<Response<null>> =>
   instance.post(`/wizz/aftersale/account/customer/add`, {
-    company_id: companyId,
-    customer_name: customerName,
-    mobile,
+    company_id: company,
+    customer_name: name,
+    customer_password: password,
   })
 
 /**
@@ -41,15 +41,15 @@ export const addCustomerInfo = (companyId: number, customerName: string, mobile:
  * @param {number} companyId - 修改后的企业id
  * @param {number} customerId - 要修改的的客户的id
  * @param {string} customerName - 修改后的客户名称
- * @param {string} mobile - 修改后的客户手机号
+ * @param customerPwd - 修改后的客户密码
  * @returns - NULL
  */
-export const updateCustomerInfo = (companyId: number, customerId: number, customerName: string, mobile: string): Promise<Response<null>> =>
+export const updateCustomerInfo = (companyId: number, customerId: number, customerName: string, customerPwd: string): Promise<Response<null>> =>
   instance.put('/wizz/aftersale/account/customer/update', {
     company_id: companyId,
     customer_id: customerId,
     customer_name: customerName,
-    mobile,
+    customer_password: customerPwd,
   })
 
 /**

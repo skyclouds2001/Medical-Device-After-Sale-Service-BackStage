@@ -5,10 +5,10 @@ import useSwr from 'swr'
 import { addCompanyInfo, addCustomerInfo, getCompanyInfo, getCustomerInfo, removeCompanyInfo, removeCustomerInfo, updateCompanyInfo, updateCustomerInfo } from '@/api'
 import CompanyTable from '@/component/client/CompanyTable'
 import CustomerTable from '@/component/client/CustomerTable'
-import AddCompany from '@/component/client/AddCompany'
-import AddCustomer from '@/component/client/AddCustomer'
-import EditCompany from '@/component/client/EditCompany'
-import EditCustomer from '@/component/client/EditCustomer'
+import AddCompanyForm from '@/component/client/AddCompanyForm'
+import AddCustomerForm from '@/component/client/AddCustomerForm'
+import EditCompanyForm from '@/component/client/EditCompanyForm'
+import EditCustomerForm from '@/component/client/EditCustomerForm'
 import type { Company, Customer } from '@/model'
 import type { CustomAction } from '@/store'
 
@@ -56,9 +56,9 @@ const ClientManage: React.FC = () => {
     }
   }
 
-  const handleAddCustomer = async (customer: Omit<Customer, 'company_name' | 'customer_id'>): Promise<void> => {
+  const handleAddCustomer = async (customer: Omit<Customer, 'customer_id' | 'company_name' | 'mobile'> & { customer_password: string }): Promise<void> => {
     try {
-      const res = await addCustomerInfo(customer.company_id, customer.customer_name, customer.mobile)
+      const res = await addCustomerInfo(customer.company_id, customer.customer_name, customer.customer_password)
       if (res.code === 0) {
         void message.success({
           content: '更新成功',
@@ -100,9 +100,9 @@ const ClientManage: React.FC = () => {
     }
   }
 
-  const handleEditCustomer = async (customer: Omit<Customer, 'company_name'>): Promise<void> => {
+  const handleEditCustomer = async (customer: Omit<Customer, 'company_name' | 'mobile'> & { customer_password: string }): Promise<void> => {
     try {
-      const res = await updateCustomerInfo(customer.company_id, customer.customer_id, customer.customer_name, customer.mobile)
+      const res = await updateCustomerInfo(customer.company_id, customer.customer_id, customer.customer_name, customer.customer_password)
       if (res.code === 0) {
         void message.success({
           content: '更新成功',
@@ -220,13 +220,13 @@ const ClientManage: React.FC = () => {
         </Col>
       </Row>
 
-      <AddCompany open={showAddCompany} onSubmit={company => handleAddCompany(company)} onCancel={() => setShowAddCompany(false)} />
+      <AddCompanyForm open={showAddCompany} onSubmit={company => handleAddCompany(company)} onCancel={() => setShowAddCompany(false)} />
 
-      <EditCompany open={showEditCompany} onSubmit={company => handleEditCompany(company)} onCancel={() => setShowEditCompany(false)} properties={currentCompany.current as Company} />
+      <EditCompanyForm open={showEditCompany} onSubmit={company => handleEditCompany(company)} onCancel={() => setShowEditCompany(false)} properties={currentCompany.current as Company} />
 
-      <AddCustomer open={showAddCustomer} onSubmit={customer => handleAddCustomer(customer)} onCancel={() => setShowAddCustomer(false)} />
+      <AddCustomerForm open={showAddCustomer} onSubmit={customer => handleAddCustomer(customer)} onCancel={() => setShowAddCustomer(false)} />
 
-      <EditCustomer open={showEditCustomer} onSubmit={customer => handleEditCustomer(customer)} onCancel={() => setShowEditCustomer(false)} properties={currentCustomer.current as Customer} />
+      <EditCustomerForm open={showEditCustomer} onSubmit={customer => handleEditCustomer(customer)} onCancel={() => setShowEditCustomer(false)} properties={currentCustomer.current as Customer} />
     </>
   )
 }
