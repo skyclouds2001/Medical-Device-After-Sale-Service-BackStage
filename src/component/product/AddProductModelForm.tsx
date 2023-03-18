@@ -4,7 +4,7 @@ import type { InputRef, UploadProps } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { uploadFile } from '@/api'
 import ProductTypeSelector from '@/component/product/ProductTypeSelector'
-import CustomerServiceSelector from '@/component/CustomerServiceSelector'
+import CustomerServiceSelector from '@/component/customer-service/CustomerServiceSelector'
 import type { ProductModel } from '@/model'
 
 interface AddProductModelProps {
@@ -104,7 +104,7 @@ const AddProductModelForm: React.FC<AddProductModelProps> = props => {
         <Form.Item label="产品图片" name="image">
           <Upload accept="image/*" listType="picture-card" maxCount={1} showUploadList={false} customRequest={e => uploadImage(e, 'image')} fileList={[]}>
             {image !== '' ? (
-              <Image src={image} alt="" />
+              <Image src={image} alt="" preview={false} />
             ) : (
               <div>
                 <PlusOutlined />

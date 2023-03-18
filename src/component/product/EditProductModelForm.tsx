@@ -76,7 +76,7 @@ const EditProductModelForm: React.FC<EditProductModelProps> = props => {
         <Form.Item label="产品图片" name="image">
           <Upload accept="image/*" listType="picture-card" maxCount={1} showUploadList={false} customRequest={uploadImage} fileList={[]}>
             {image !== '' ? (
-              <Image src={image} alt="" />
+              <Image src={image} alt="" preview={false} />
             ) : (
               <div>
                 <PlusOutlined />
