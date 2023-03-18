@@ -4,11 +4,10 @@
 
 ```markdown
 - 登录页 `/`
-- 客服管理-用户管理 `/customer/user`
-- 客服管理-企业管理 `/customer/company`
+- 客户管理 `/customer`
 - 客服管理 `/service`
-- 产品管理-产品大类管理 `/product/type`
-- 产品管理-产品模型管理 `/product/model`
+- 产品管理 `/product`
+- 文件管理 `/file`
 - 工单管理 `/order`
 ```
 
