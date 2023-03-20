@@ -19,7 +19,7 @@ const CustomerServiceManage: React.FC = () => {
 
   const { isLoading, mutate } = useSwr('/wizz/aftersale/product-model/all', getAllProductModels, {
     onSuccess: data => {
-      const pros = [...(data?.data ?? [])] as ProductModelWithService[]
+      const pros = [{ model_name: '通用客服', model_id: -1 }, ...(data?.data ?? [])] as ProductModelWithService[]
       if (products.length === 0) setProducts(pros)
       void Promise.allSettled(
         pros.map(v =>
