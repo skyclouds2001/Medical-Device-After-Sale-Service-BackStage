@@ -5,7 +5,7 @@ export const APPLICATION_NAME = 'MedicalDeviceAfterSaleServiceBackstage'
 export const APPLICATION_VERSION = '0.0.0'
 
 /** 网络请求HOST */
-export const BASE_URL = 'http://aftersale.divergentcloud.com'
+export const BASE_URL = 'https://aftersale.divergentcloud.com'
 
 /** 默认网络超时时间 */
 export const NETWORK_TIMEOUT = 10000
