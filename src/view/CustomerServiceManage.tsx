@@ -17,7 +17,7 @@ const CustomerServiceManage: React.FC = () => {
   const { message } = App.useApp()
   const dispatch = useDispatch()
 
-  const { isLoading, mutate } = useSwr('/wizz/aftersale/product-model/all', getAllProductModels, {
+  const { isLoading, mutate } = useSwr('/wizz/aftersale/product-model/all | service', getAllProductModels, {
     onSuccess: data => {
       const pros = [{ model_name: '通用客服', model_id: -1 }, ...(data?.data ?? [])] as ProductModelWithService[]
       if (products.length === 0) setProducts(pros)
