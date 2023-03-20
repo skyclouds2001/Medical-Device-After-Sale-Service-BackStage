@@ -38,6 +38,10 @@ const AddProductModelForm: React.FC<AddProductModelProps> = props => {
       avatar,
       pic_url: image,
     })
+    setTimeout(() => {
+      setImage('')
+      setAvatar('')
+    }, 3000)
   }
 
   /**
@@ -45,6 +49,10 @@ const AddProductModelForm: React.FC<AddProductModelProps> = props => {
    */
   const cancel = (): void => {
     props.onCancel()
+    setTimeout(() => {
+      setImage('')
+      setAvatar('')
+    }, 3000)
   }
 
   /**

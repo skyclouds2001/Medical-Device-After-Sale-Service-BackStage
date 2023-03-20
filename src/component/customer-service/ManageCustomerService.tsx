@@ -28,6 +28,9 @@ const ManageCustomerService: React.FC<ManageCustomerServiceProps> = props => {
    */
   const submit = (): void => {
     props.onSubmit(groups.current.length > 0 ? groups.current : props.current?.services?.map(v => v.user_id) ?? [], image !== '' ? image : props.current?.avatar ?? '')
+    setTimeout(() => {
+      setImage('')
+    }, 3000)
   }
 
   /**
@@ -35,6 +38,9 @@ const ManageCustomerService: React.FC<ManageCustomerServiceProps> = props => {
    */
   const cancel = (): void => {
     props.onCancel()
+    setTimeout(() => {
+      setImage('')
+    }, 3000)
   }
 
   /**
