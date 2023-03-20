@@ -41,7 +41,7 @@ const WorkOrderTable: React.FC<WorkOrderTableProps> = props => {
               <Button type="link" danger onClick={() => props.onRemove(record.order_id)}>
                 删除
               </Button>
-              <Button type="link" onClick={() => props.onFinish(record.order_id)}>
+              <Button type="link" disabled={record.order_status === 1} onClick={() => props.onFinish(record.order_id)}>
                 完成
               </Button>
             </>
