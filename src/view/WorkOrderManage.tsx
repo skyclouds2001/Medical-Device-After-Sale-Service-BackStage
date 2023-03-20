@@ -108,7 +108,7 @@ const WorkOrderManage: React.FC = () => {
    * @returns - 判别结果
    */
   const handleFilterWorkOrder = (o: WorkOrder): boolean => {
-    return isSearch === null || (o.model_name?.includes(isSearch.name) && o.order_type === isSearch.type)
+    return isSearch === null || ((o.model_name ?? '').includes(isSearch.name) && (isSearch.type === undefined || isSearch.type === o.order_type))
   }
 
   return (
