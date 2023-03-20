@@ -55,6 +55,7 @@ const ProductManage: React.FC = () => {
         void message.error({
           content: res1.data,
         })
+        return
       }
 
       const res2 = await manageCustomerService(res1.data, params.services, params.avatar)
@@ -62,14 +63,14 @@ const ProductManage: React.FC = () => {
         void message.error({
           content: res2.data,
         })
+        void removeProductModel(res1.data)
+        return
       }
 
-      if (res1.code === 0 && res2.code === 0) {
-        void message.success({
-          content: '添加成功',
-        })
-        setShowAddProductModel(false)
-      }
+      void message.success({
+        content: '添加成功',
+      })
+      setShowAddProductModel(false)
     } catch {
       void message.error({
         content: '添加失败',
