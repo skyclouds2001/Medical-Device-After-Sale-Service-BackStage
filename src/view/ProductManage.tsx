@@ -19,10 +19,13 @@ const ProductManage: React.FC = () => {
   const { data: types, isLoading: isTypeLoading, mutate: typeMutate } = useSwr('/wizz/aftersale/product-model/getByTypeId', getAllProductTypes)
   const { data: models, isLoading: isModelLoading, mutate: modelMutate } = useSwr('/wizz/aftersale/product-model/all', getAllProductModels)
 
+  const [activeProductType, setActiveProductType] = useState<number | null>(null)
+
   const [showAddProductType, setShowAddProductType] = useState(false)
   const [showEditProductType, setShowEditProductType] = useState(false)
   const [showAddProductModel, setShowAddProductModel] = useState(false)
   const [showEditProductModel, setShowEditProductModel] = useState(false)
+
   const currentModel = useRef<ProductModel>()
   const currentType = useRef<ProductType>()
 
@@ -239,10 +242,10 @@ const ProductManage: React.FC = () => {
 
       <Row className="w-full" gutter={16}>
         <Col span={8}>
-          <ProductTypeTable products={Array.isArray(types?.data) ? types?.data ?? [] : []} loading={isTypeLoading} onEdit={openEditTypeForm} onRemove={handleRemoveProductType} />
+          <ProductTypeTable products={Array.isArray(types?.data) ? types?.data ?? [] : []} loading={isTypeLoading} onEdit={openEditTypeForm} onRemove={handleRemoveProductType} current={activeProductType} onSelect={id => setActiveProductType(id === activeProductType ? null : id)} />
         </Col>
         <Col span={16}>
-          <ProductModelTable products={Array.isArray(models?.data) ? models?.data ?? [] : []} loading={isModelLoading} onEdit={openEditModelForm} onRemove={handleRemoveProductModel} />
+          <ProductModelTable products={Array.isArray(models?.data) ? models?.data.filter(v => activeProductType === null || v.type_id === activeProductType) ?? [] : []} loading={isModelLoading} onEdit={openEditModelForm} onRemove={handleRemoveProductModel} />
         </Col>
       </Row>
 

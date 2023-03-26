@@ -5,6 +5,8 @@ import type { ProductType } from '@/model'
 interface ProductModelTableProps {
   products: ProductType[]
   loading: boolean
+  current: number | null
+  onSelect: (id: number) => void
   onEdit: (product: ProductType) => void
   onRemove: (id: number) => void
 }
@@ -12,7 +14,7 @@ interface ProductModelTableProps {
 const ProductTypeTable: React.FC<ProductModelTableProps> = props => {
   return (
     <>
-      <Table dataSource={props.products} bordered rowKey="type_id" loading={props.loading} pagination={{ hideOnSinglePage: true }}>
+      <Table dataSource={props.products} bordered rowKey="type_id" loading={props.loading} pagination={{ hideOnSinglePage: true }} rowSelection={{ selectedRowKeys: props.current !== null ? [props.current] : [], type: 'radio' }} onRow={record => ({ onClick: () => props.onSelect(record.type_id) })}>
         <Table.Column width="200px" align="center" title="产品大类名称" dataIndex="type_name" key="type_name" />
         <Table.Column
           width="200px"
