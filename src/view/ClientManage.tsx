@@ -128,6 +128,7 @@ const ClientManage: React.FC = () => {
       content: '确认移除企业信息？',
       okText: '删除',
       okType: 'danger',
+      cancelText: '取消',
       closable: true,
       onOk: async () => {
         try {
@@ -158,6 +159,7 @@ const ClientManage: React.FC = () => {
       content: '确认移除客户信息？',
       okText: '删除',
       okType: 'danger',
+      cancelText: '取消',
       closable: true,
       onOk: async () => {
         try {

@@ -28,6 +28,7 @@ const WorkOrderManage: React.FC = () => {
       content: '确认移除当前工单？',
       okText: '删除',
       okType: 'danger',
+      cancelText: '取消',
       closable: true,
       onOk: async () => {
         try {

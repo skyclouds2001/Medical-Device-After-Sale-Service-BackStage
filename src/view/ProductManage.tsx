@@ -130,6 +130,7 @@ const ProductManage: React.FC = () => {
       content: '确认移除当前产品大类？',
       okText: '删除',
       okType: 'danger',
+      cancelText: '取消',
       closable: true,
       onOk: async () => {
         try {
@@ -169,6 +170,7 @@ const ProductManage: React.FC = () => {
       content: '确认移除当前产品？',
       okText: '删除',
       okType: 'danger',
+      cancelText: '取消',
       closable: true,
       onOk: async () => {
         try {
