@@ -117,7 +117,7 @@ const WorkOrderManage: React.FC = () => {
       <WorkOrderSearch onSearch={handleSearch} onReset={handleSearch} />
 
       {/* 工单表单 */}
-      <WorkOrderTable workOrders={data?.data?.filter(handleFilterWorkOrder) ?? []} loading={isLoading} onRemove={deleteWorkOrder} onFinish={closeWorkOrder} />
+      <WorkOrderTable workOrders={data?.data?.filter(handleFilterWorkOrder).sort((a, b) => (a.appointment_time < b.appointment_time ? 1 : -1)) ?? []} loading={isLoading} onRemove={deleteWorkOrder} onFinish={closeWorkOrder} />
     </>
   )
 }
