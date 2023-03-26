@@ -5,7 +5,6 @@ import useSwr from 'swr'
 import { getAllWorkOrder, removeWorkOrder, finishWorkOrder } from '@/api'
 import WorkOrderSearch from '@/component/work-order/WorkOrderSearch'
 import WorkOrderTable from '@/component/work-order/WorkOrderTable'
-import type { WorkOrder } from '@/model'
 import type { CustomAction } from '@/store'
 
 const WorkOrderManage: React.FC = () => {
@@ -101,15 +100,11 @@ const WorkOrderManage: React.FC = () => {
     }
   }
 
-  /**
-   * 筛选工单方法
-   *
-   * @param o - 工单
-   * @returns - 判别结果
-   */
-  const handleFilterWorkOrder = (o: WorkOrder): boolean => {
-    return isSearch === null || ((o.model_name ?? '').includes(isSearch.name) && (isSearch.type === undefined || isSearch.type === o.order_type))
-  }
+  const orders =
+    data?.data
+      ?.filter(o => isSearch === null || ((o.model_name ?? '').includes(isSearch.name) && (isSearch.type === undefined || isSearch.type === o.order_type)))
+      .sort((a, b) => (a.appointment_time < b.appointment_time ? 1 : -1))
+      .sort((a, b) => (a.order_status < b.order_status ? -1 : 1)) ?? []
 
   return (
     <>
@@ -117,7 +112,7 @@ const WorkOrderManage: React.FC = () => {
       <WorkOrderSearch onSearch={handleSearch} onReset={handleSearch} />
 
       {/* 工单表单 */}
-      <WorkOrderTable workOrders={data?.data?.filter(handleFilterWorkOrder).sort((a, b) => (a.appointment_time < b.appointment_time ? 1 : -1)) ?? []} loading={isLoading} onRemove={deleteWorkOrder} onFinish={closeWorkOrder} />
+      <WorkOrderTable workOrders={orders} loading={isLoading} onRemove={deleteWorkOrder} onFinish={closeWorkOrder} />
     </>
   )
 }
