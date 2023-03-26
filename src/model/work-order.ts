@@ -32,6 +32,16 @@ export default interface WorkOrder {
   appointment_time: string
   /** 地址 */
   address: string
+  /** 问题描述 */
+  order_description: string
   /** 附件列表 */
   order_attachment_list: Attachment[]
+  /** 工单提交时间 */
+  create_time: string
+  /** 企业名称 */
+  customer_company: string
+  /** 客户名称 */
+  customer_name: string
+  /** 接待人员名称 */
+  servicer_name: string
 }
