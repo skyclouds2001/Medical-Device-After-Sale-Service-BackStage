@@ -16,6 +16,8 @@ const ClientManage: React.FC = () => {
   const { message, modal } = App.useApp()
   const dispatch = useDispatch()
 
+  const [activeCompany, setActiveCompany] = useState<number | null>(null)
+
   const [companyPageNum, setCompanyPageNum] = useState(1)
   const [customerPageNum, setCustomerPageNum] = useState(1)
 
@@ -215,10 +217,10 @@ const ClientManage: React.FC = () => {
 
       <Row className="w-full" gutter={16}>
         <Col span={10}>
-          <CompanyTable companies={companies?.data.company_list ?? []} total={companies?.data.total_num ?? 10} loading={isCompanyLoading} onEdit={openEditCompanyForm} onRemove={handleRemoveCompany} onChange={page => setCompanyPageNum(page)} />
+          <CompanyTable companies={companies?.data.company_list ?? []} total={companies?.data.total_num ?? 10} loading={isCompanyLoading} onEdit={openEditCompanyForm} onRemove={handleRemoveCompany} onChange={page => setCompanyPageNum(page)} current={activeCompany} onSelect={id => setActiveCompany(id === activeCompany ? null : id)} />
         </Col>
         <Col span={14}>
-          <CustomerTable customers={customers?.data.customer_list ?? []} total={customers?.data.total_num ?? 10} loading={isCustomerLoading} onEdit={openEditCustomerForm} onRemove={handleRemoveCustomer} onChange={page => setCustomerPageNum(page)} />
+          <CustomerTable customers={customers?.data.customer_list.filter(v => activeCompany === null || v.company_id === activeCompany) ?? []} total={customers?.data.total_num ?? 10} loading={isCustomerLoading} onEdit={openEditCustomerForm} onRemove={handleRemoveCustomer} onChange={page => setCustomerPageNum(page)} />
         </Col>
       </Row>
 
