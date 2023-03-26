@@ -17,7 +17,8 @@ const WorkOrderTable: React.FC<WorkOrderTableProps> = props => {
         <Table.Column width="200px" align="center" title="创建时间" dataIndex="create_time" key="create_time" />
         <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
         <Table.Column width="200px" align="center" title="预约时间" dataIndex="appointment_time" key="appointment_time" />
-        <Table.Column width="200px" align="center" title="客户ID" dataIndex="customer_id" key="customer_id" />
+        <Table.Column width="200px" align="center" title="客户用户名" dataIndex="customer_name" key="customer_name" />
+        <Table.Column width="200px" align="center" title="客户公司" dataIndex="customer_company" key="customer_company" />
         <Table.Column width="200px" align="center" title="预约地址" dataIndex="address" key="address" />
         <Table.Column
           width="150px"
