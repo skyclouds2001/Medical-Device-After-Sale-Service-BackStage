@@ -16,7 +16,7 @@ interface CompanyTableProps {
 const CompanyTable: React.FC<CompanyTableProps> = props => {
   return (
     <>
-      <Table dataSource={props.companies} bordered rowKey="company_id" loading={props.loading} pagination={{ hideOnSinglePage: true, total: props.total }} onChange={({ current }) => props.onChange(current ?? 1)} rowSelection={{ selectedRowKeys: props.current !== null ? [props.current] : [], type: 'radio' }} onRow={record => ({ onClick: () => props.onSelect(record.company_id) })}>
+      <Table dataSource={props.companies} bordered rowKey="company_id" loading={props.loading} pagination={{ hideOnSinglePage: true, total: props.total }} onChange={({ current }) => props.onChange(current ?? 1)} rowSelection={{ selectedRowKeys: props.current !== null ? [props.current] : [], type: 'radio', onSelect: company => props.onSelect(company.company_id) }} onRow={record => ({ onClick: () => props.onSelect(record.company_id) })}>
         <Table.Column width="200px" align="center" title="企业名称" dataIndex="company_name" key="company_name" />
         <Table.Column
           width="200px"
