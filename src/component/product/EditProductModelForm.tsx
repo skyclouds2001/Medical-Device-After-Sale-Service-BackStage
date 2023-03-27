@@ -32,6 +32,9 @@ const EditProductModelForm: React.FC<EditProductModelProps> = props => {
       type_id: type.current !== 0 ? type.current : props.properties.type_id,
       pic_url: image !== '' ? image : props.properties.pic_url,
     })
+    setTimeout(() => {
+      setImage('')
+    }, 3000)
   }
 
   /**
@@ -39,6 +42,9 @@ const EditProductModelForm: React.FC<EditProductModelProps> = props => {
    */
   const cancel = (): void => {
     props.onCancel()
+    setTimeout(() => {
+      setImage('')
+    }, 3000)
   }
 
   /**

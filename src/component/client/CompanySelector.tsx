@@ -33,7 +33,7 @@ const CompanySelector: React.FC<CompanySelectorProps> = props => {
   }, [])
 
   return (
-    <Select className="rounded-sm mx-2" placeholder="请选择产品所属大类" onSelect={props.onSelect}>
+    <Select className="rounded-sm mx-2" placeholder="请选择客户所属公司" onSelect={props.onSelect}>
       {companies.map(v => (
         <Select.Option key={v.company_id} value={v.company_id}>
           {v.company_name}

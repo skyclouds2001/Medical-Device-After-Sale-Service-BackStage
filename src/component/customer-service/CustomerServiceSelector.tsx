@@ -75,7 +75,7 @@ const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props =>
 
   return (
     <>
-      <Cascader options={options} onChange={handleOptionChange} placeholder="请选择客服" multiple maxTagCount="responsive" />
+      <Cascader options={options} onChange={handleOptionChange} placeholder="请选择客服" multiple maxTagCount="responsive" notFoundContent="加载中..." />
     </>
   )
 }

@@ -66,16 +66,20 @@ const FileManage: React.FC = () => {
 
   return (
     <>
-      <div className="w-full px-2 py-5 text-right">
-        <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setOpen(true)}>
-          上传文件
-        </Button>
-      </div>
-      <Row className="w-full" gutter={16}>
-        <Col span={8}>
+      <Row className="w-full" gutter={40}>
+        <Col span={24}>
+          <div className="w-full py-5 text-right">
+            <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setOpen(true)}>
+              上传文件
+            </Button>
+          </div>
+        </Col>
+      </Row>
+      <Row className="w-full" gutter={40}>
+        <Col span={6}>
           <Menu className="border" items={items} defaultSelectedKeys={['0']} onClick={({ key }) => setType(key as '0' | '1')} />
         </Col>
-        <Col span={16}>
+        <Col span={18}>
           <FileTable files={Array.isArray(data?.data.file_info_list) ? data?.data.file_info_list ?? [] : []} loading={isLoading} onDelete={removeFile} />
         </Col>
       </Row>

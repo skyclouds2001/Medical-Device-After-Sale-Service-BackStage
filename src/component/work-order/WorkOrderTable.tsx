@@ -13,11 +13,12 @@ interface WorkOrderTableProps {
 const WorkOrderTable: React.FC<WorkOrderTableProps> = props => {
   return (
     <>
-      <Table dataSource={props.workOrders} bordered rowKey="order_id" loading={props.loading} pagination={{ hideOnSinglePage: true }}>
+      <Table dataSource={props.workOrders} bordered rowKey="order_id" loading={props.loading} pagination={{ hideOnSinglePage: true }} expandable={{ expandedRowRender: record => <p>{record.order_description ?? '暂无更多描述'}</p> }}>
         <Table.Column width="200px" align="center" title="创建时间" dataIndex="create_time" key="create_time" />
         <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
         <Table.Column width="200px" align="center" title="预约时间" dataIndex="appointment_time" key="appointment_time" />
-        <Table.Column width="200px" align="center" title="客户ID" dataIndex="customer_id" key="customer_id" />
+        <Table.Column width="200px" align="center" title="客户用户名" dataIndex="customer_name" key="customer_name" />
+        <Table.Column width="200px" align="center" title="客户公司" dataIndex="customer_company" key="customer_company" />
         <Table.Column width="200px" align="center" title="预约地址" dataIndex="address" key="address" />
         <Table.Column
           width="150px"
@@ -41,7 +42,7 @@ const WorkOrderTable: React.FC<WorkOrderTableProps> = props => {
               <Button type="link" danger onClick={() => props.onRemove(record.order_id)}>
                 删除
               </Button>
-              <Button type="link" onClick={() => props.onFinish(record.order_id)}>
+              <Button type="link" disabled={record.order_status === 1} onClick={() => props.onFinish(record.order_id)}>
                 完成
               </Button>
             </>

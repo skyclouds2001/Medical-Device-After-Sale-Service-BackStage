@@ -17,12 +17,12 @@ const CustomerServiceManage: React.FC = () => {
   const { message } = App.useApp()
   const dispatch = useDispatch()
 
-  const { isLoading, mutate } = useSwr('/wizz/aftersale/product-model/all', getAllProductModels, {
+  const { isLoading, mutate } = useSwr('/wizz/aftersale/product-model/all | service', getAllProductModels, {
     onSuccess: data => {
-      const products = [...(data?.data ?? [])] as ProductModelWithService[]
-      setProducts(products)
+      const pros = [{ model_name: '通用客服', model_id: -1 }, ...(data?.data ?? [])] as ProductModelWithService[]
+      if (products.length === 0) setProducts(pros)
       void Promise.allSettled(
-        products.map(v =>
+        pros.map(v =>
           getSingleServer(v.model_id).then(res => {
             if (res.code === 0) {
               v.services = res.data.server_info_list
@@ -33,7 +33,7 @@ const CustomerServiceManage: React.FC = () => {
             }
           }),
         ),
-      ).finally(() => setProducts([...products]))
+      ).finally(() => setProducts([...pros]))
     },
   })
 
@@ -113,7 +113,7 @@ const CustomerServiceManage: React.FC = () => {
           key="avatar"
           render={(_, record: ProductModelWithService) => (
             <>
-              <Image width={100} alt={record.model_name} src={record.avatar ?? img} fallback={img} preview={false} />
+              <Image width={record.avatar != null ? 100 : 50} alt={record.model_name} src={record.avatar ?? img} fallback={img} preview={false} />
             </>
           )}
         />

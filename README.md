@@ -22,4 +22,4 @@
 - [概念图](https://modao.cc/app/uojxAUBurl46enoCEJNZy)
 - [原型图](https://www.figma.com/file/AexzIo733ORZWnnNYJNRVo/%E5%AE%A2%E6%9C%8D%E5%B7%A5%E5%8D%95%E7%B3%BB%E7%BB%9F)
 - [接口文档说明](https://wizzstudio.feishu.cn/docx/QYondktQKoDH2vx6n0BcEedCnVh)
-- [新模块接口文档(aftersale1111)](https://www.apifox.cn/apidoc/shared-ca03532d-633b-4644-9756-b151620e0e20)
+- [新模块接口文档](https://www.apifox.cn/apidoc/shared-b274c37a-1f50-414f-97d8-b5ec3975541c?pwd=aftersale1111)
