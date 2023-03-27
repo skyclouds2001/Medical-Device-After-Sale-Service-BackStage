@@ -198,7 +198,7 @@ const ClientManage: React.FC = () => {
 
   return (
     <>
-      <Row className="w-full" gutter={16}>
+      <Row className="w-full" gutter={40}>
         <Col span={10}>
           <div className="w-full py-5 text-right">
             <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setShowAddCompany(true)}>
@@ -215,7 +215,7 @@ const ClientManage: React.FC = () => {
         </Col>
       </Row>
 
-      <Row className="w-full" gutter={16}>
+      <Row className="w-full" gutter={40}>
         <Col span={10}>
           <CompanyTable companies={companies?.data.company_list ?? []} total={companies?.data.total_num ?? 10} loading={isCompanyLoading} onEdit={openEditCompanyForm} onRemove={handleRemoveCompany} onChange={page => setCompanyPageNum(page)} current={activeCompany} onSelect={id => setActiveCompany(id === activeCompany ? null : id)} />
         </Col>

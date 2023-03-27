@@ -223,7 +223,7 @@ const ProductManage: React.FC = () => {
 
   return (
     <>
-      <Row className="w-full" gutter={16}>
+      <Row className="w-full" gutter={40}>
         <Col span={8}>
           <div className="w-full py-5 text-right">
             <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setShowAddProductType(true)}>
@@ -240,7 +240,7 @@ const ProductManage: React.FC = () => {
         </Col>
       </Row>
 
-      <Row className="w-full" gutter={16}>
+      <Row className="w-full" gutter={40}>
         <Col span={8}>
           <ProductTypeTable products={Array.isArray(types?.data) ? types?.data ?? [] : []} loading={isTypeLoading} onEdit={openEditTypeForm} onRemove={handleRemoveProductType} current={activeProductType} onSelect={id => setActiveProductType(id === activeProductType ? null : id)} />
         </Col>
