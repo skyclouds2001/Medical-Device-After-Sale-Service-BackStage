@@ -13,7 +13,7 @@ interface WorkOrderTableProps {
 const WorkOrderTable: React.FC<WorkOrderTableProps> = props => {
   return (
     <>
-      <Table dataSource={props.workOrders} bordered rowKey="order_id" loading={props.loading} pagination={{ hideOnSinglePage: true }}>
+      <Table dataSource={props.workOrders} bordered rowKey="order_id" loading={props.loading} pagination={{ hideOnSinglePage: true }} expandable={{ expandedRowRender: record => <p>{record.order_description ?? '暂无更多描述'}</p> }}>
         <Table.Column width="200px" align="center" title="创建时间" dataIndex="create_time" key="create_time" />
         <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
         <Table.Column width="200px" align="center" title="预约时间" dataIndex="appointment_time" key="appointment_time" />
