@@ -12,6 +12,16 @@ interface ProductModelTableProps {
 }
 
 const ProductTypeTable: React.FC<ProductModelTableProps> = props => {
+  const handleEdit = (e: React.MouseEvent, type: ProductType): void => {
+    e.stopPropagation()
+    props.onEdit(type)
+  }
+
+  const handleRemove = (e: React.MouseEvent, type: ProductType): void => {
+    e.stopPropagation()
+    props.onRemove(type.type_id)
+  }
+
   return (
     <>
       <Table dataSource={props.products} bordered rowKey="type_id" loading={props.loading} pagination={{ hideOnSinglePage: true }} rowSelection={{ selectedRowKeys: props.current !== null ? [props.current] : [], type: 'radio', onSelect: type => props.onSelect(type.type_id) }} onRow={record => ({ onClick: () => props.onSelect(record.type_id) })}>
@@ -23,10 +33,10 @@ const ProductTypeTable: React.FC<ProductModelTableProps> = props => {
           key="action"
           render={(_, record: ProductType) => (
             <>
-              <Button type="link" onClick={() => props.onEdit?.(record)}>
+              <Button type="link" onClick={e => handleEdit(e, record)}>
                 编辑
               </Button>
-              <Button type="link" danger onClick={() => props.onRemove?.(record.type_id)}>
+              <Button type="link" danger onClick={e => handleRemove(e, record)}>
                 删除
               </Button>
             </>
