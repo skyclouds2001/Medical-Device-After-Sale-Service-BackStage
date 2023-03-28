@@ -25,7 +25,7 @@ const CustomerTable: React.FC<CustomerTableProps> = props => {
           render={(_, record: Customer) => (
             <>
               <Button type="link" onClick={() => props.onEdit(record)}>
-                编辑
+                修改
               </Button>
               <Button type="link" danger onClick={() => props.onRemove(record.customer_id)}>
                 删除

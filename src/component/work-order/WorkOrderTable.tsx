@@ -43,7 +43,7 @@ const WorkOrderTable: React.FC<WorkOrderTableProps> = props => {
                 删除
               </Button>
               <Button type="link" disabled={record.order_status === 1} onClick={() => props.onFinish(record.order_id)}>
-                完成
+                处理完成
               </Button>
             </>
           )}

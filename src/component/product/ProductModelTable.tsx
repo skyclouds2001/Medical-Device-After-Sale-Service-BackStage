@@ -35,7 +35,7 @@ const ProductModelTable: React.FC<ProductModelTableProps> = props => {
           render={(_, record: ProductModel) => (
             <>
               <Button type="link" onClick={() => props.onEdit?.(record)}>
-                编辑
+                修改
               </Button>
               <Button type="link" danger onClick={() => props.onRemove?.(record.model_id)}>
                 删除

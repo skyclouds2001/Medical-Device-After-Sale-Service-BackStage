@@ -202,7 +202,7 @@ const ClientManage: React.FC = () => {
         <Col span={10}>
           <div className="w-full py-5 text-right">
             <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setShowAddCompany(true)}>
-              添加公司
+              添加企业
             </Button>
           </div>
         </Col>

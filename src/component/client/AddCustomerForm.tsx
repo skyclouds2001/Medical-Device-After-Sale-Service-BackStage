@@ -39,13 +39,13 @@ const AddCustomerForm: React.FC<AddCustomerProps> = props => {
   return (
     <Modal open={props.open} title="添加客户信息" closable okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} destroyOnClose onOk={submit} onCancel={cancel}>
       <Form labelCol={{ span: 8 }} colon={false}>
-        <Form.Item label="客户账号名称" name="name">
+        <Form.Item label="用户名" name="name">
           <Input ref={name} className="rounded-sm mx-2" autoComplete="off" placeholder="请输入账号名称" />
         </Form.Item>
-        <Form.Item label="客户账号密码" name="mobile">
+        <Form.Item label="密码" name="mobile">
           <Input ref={pwd} className="rounded-sm mx-2" autoComplete="off" placeholder="请输入客户账号密码" />
         </Form.Item>
-        <Form.Item label="客户所属公司" name="company">
+        <Form.Item label="所属公司" name="company">
           <CompanySelector onSelect={com => (company.current = com)} />
         </Form.Item>
       </Form>

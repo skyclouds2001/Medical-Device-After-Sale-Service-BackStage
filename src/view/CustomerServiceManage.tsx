@@ -125,7 +125,7 @@ const CustomerServiceManage: React.FC = () => {
           render={(_, record: ProductModelWithService) => (
             <>
               <Button type="link" onClick={() => openEditServiceForm(record)}>
-                管理客服
+                更改客服
               </Button>
             </>
           )}
