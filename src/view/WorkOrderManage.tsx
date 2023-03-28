@@ -77,7 +77,7 @@ const WorkOrderManage: React.FC = () => {
   /**
    * 是否搜索模式 - 携带搜索参数
    */
-  const [isSearch, setSearch] = useState<{ name: string; type: number } | null>(null)
+  const [isSearch, setSearch] = useState<{ id?: number; type?: number } | null>(null)
 
   useEffect(() => {
     void mutate()
@@ -87,13 +87,13 @@ const WorkOrderManage: React.FC = () => {
    * 搜索工单方法
    *
    * @param params 搜索信息
-   * @param params.product_name 工单产品名称
+   * @param params.product_id 工单产品ID
    * @param params.work_order_type 工单类型
    */
-  const handleSearch = (params?: { product_name?: string; work_order_type: number }): void => {
+  const handleSearch = (params?: { product_id?: number; work_order_type?: number }): void => {
     if (params !== undefined) {
       setSearch({
-        name: params.product_name ?? '',
+        id: params.product_id,
         type: params.work_order_type,
       })
     } else {
@@ -103,7 +103,7 @@ const WorkOrderManage: React.FC = () => {
 
   const orders =
     data?.data
-      ?.filter(o => isSearch === null || ((o.model_name ?? '').includes(isSearch.name) && (isSearch.type === undefined || isSearch.type === o.order_type)))
+      ?.filter(o => isSearch === null || ((isSearch.id === undefined || isSearch.id === o.model_id) && (isSearch.type === undefined || isSearch.type === o.order_type)))
       .sort((a, b) => (a.appointment_time < b.appointment_time ? 1 : -1))
       .sort((a, b) => (a.order_status < b.order_status ? -1 : 1)) ?? []
 
