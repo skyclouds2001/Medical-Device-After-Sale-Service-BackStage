@@ -11,8 +11,13 @@ interface WorkOrderTableExpandableProps {
 const WorkOrderTableExpandable: React.FC<WorkOrderTableExpandableProps> = ({ order }) => {
   return (
     <>
-      <p>{order.address ?? '预约地址'}</p>
-      <p>{order.order_description ?? '暂无更多描述'}</p>
+      <p>预约地址：{order.address ?? '预约地址'}</p>
+      <p>工单描述：{order.order_description ?? '暂无'}</p>
+      {order.order_attachment_list.map(v => (
+        <p key={v.order_attachment_id}>
+          <img src={v.storage_path} alt="" />
+        </p>
+      ))}
     </>
   )
 }
