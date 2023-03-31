@@ -6,7 +6,7 @@ import { getAllProductModels, removeProductModel, removeSingleServer, addProduct
 import AddProductModelForm from '@/component/product/AddProductModelForm'
 import EditProductModelForm from '@/component/product/EditProductModelForm'
 import ProductModelTable from '@/component/product/ProductModelTable'
-import type { ProductModel } from '@/model'
+import type { Product } from '@/model'
 import type { CustomAction } from '@/store'
 
 const ProductManage: React.FC = () => {
@@ -18,9 +18,9 @@ const ProductManage: React.FC = () => {
   const [showAddProductModel, setShowAddProductModel] = useState(false)
   const [showEditProductModel, setShowEditProductModel] = useState(false)
 
-  const currentModel = useRef<ProductModel>()
+  const currentModel = useRef<Product>()
 
-  const handleAddProductModel = async (params: Omit<ProductModel, 'model_id'>): Promise<void> => {
+  const handleAddProductModel = async (params: Omit<Product, 'model_id'>): Promise<void> => {
     try {
       const res = await addProductModel(params.model_name, params.pic_url)
       if (res.code === 0) {
@@ -42,7 +42,7 @@ const ProductManage: React.FC = () => {
     }
   }
 
-  const handleEditProductModel = async (product: ProductModel): Promise<void> => {
+  const handleEditProductModel = async (product: Product): Promise<void> => {
     try {
       const res = await updateProductModel(product.model_id, product.model_name, product.pic_url)
       if (res.code === 0) {
@@ -104,7 +104,7 @@ const ProductManage: React.FC = () => {
     })
   }
 
-  const openEditModelForm = (product: ProductModel): void => {
+  const openEditModelForm = (product: Product): void => {
     currentModel.current = product
     setShowEditProductModel(true)
   }

@@ -5,10 +5,10 @@ import useSwr from 'swr'
 import { getAllProductModels, manageCustomerService, getSingleServer } from '@/api'
 import img from '@/asset/img.svg'
 import ManageCustomerService from '@/component/customer-service/ManageCustomerService'
-import type { ProductModel, Service } from '@/model'
+import type { Product, Service } from '@/model'
 import type { CustomAction } from '@/store'
 
-interface ProductModelWithService extends ProductModel {
+interface ProductModelWithService extends Product {
   services?: Service[]
   avatar: string
 }

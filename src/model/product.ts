@@ -1,7 +1,7 @@
 /**
  * 产品型号数据结构
  */
-export default interface ProductModel {
+export default interface Product {
   /** 产品型号id */
   model_id: number
   /** 产品型号名称 */

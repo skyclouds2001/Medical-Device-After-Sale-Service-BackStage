@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { App, Form, Image, Input, Modal, Upload, type UploadProps } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { uploadFile } from '@/api'
-import type { ProductModel } from '@/model'
+import type { Product } from '@/model'
 
 interface EditProductModelProps {
   open: boolean
-  onSubmit: (props: ProductModel) => void
+  onSubmit: (props: Product) => void
   onCancel: () => void
-  properties?: ProductModel
+  properties?: Product
 }
 
 const EditProductModelForm: React.FC<EditProductModelProps> = props => {

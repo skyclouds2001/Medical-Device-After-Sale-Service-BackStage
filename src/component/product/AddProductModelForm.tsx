@@ -3,11 +3,11 @@ import { App, Form, Input, Modal, Upload, Image } from 'antd'
 import type { InputRef, UploadProps } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { uploadFile } from '@/api'
-import type { ProductModel } from '@/model'
+import type { Product } from '@/model'
 
 interface AddProductModelProps {
   open: boolean
-  onSubmit: (props: Omit<ProductModel, 'model_id'>) => void
+  onSubmit: (props: Omit<Product, 'model_id'>) => void
   onCancel: () => void
 }
 

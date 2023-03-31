@@ -1,11 +1,11 @@
 import qs from 'qs'
 import instance from '@/network'
-import type { Response, ProductModel } from '@/model'
+import type { Response, Product } from '@/model'
 
 /**
  * 根据 ID 查询产品型号接口返回数据结构
  */
-type GetProductModelResponse = ProductModel
+type GetProductModelResponse = Product
 
 /**
  * 根据 ID 查询产品型号接口
@@ -67,7 +67,7 @@ export const removeProductModel = (productModelId: number): Promise<Response<nul
 /**
  * 查询所有产品型号接口返回数据结构
  */
-type GetAllProductModelResponse = ProductModel[]
+type GetAllProductModelResponse = Product[]
 
 /**
  * 查询所有产品型号接口
