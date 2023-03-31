@@ -1,15 +1,14 @@
-import React, { useRef, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { App, Form, Image, Input, Modal, Upload, type UploadProps } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { uploadFile } from '@/api'
-import ProductTypeSelector from '@/component/product/ProductTypeSelector'
-import type { ProductModel } from '@/model'
+import type { Product } from '@/model'
 
 interface EditProductModelProps {
   open: boolean
-  onSubmit: (props: Omit<ProductModel, 'type_name'>) => void
+  onSubmit: (props: Product) => void
   onCancel: () => void
-  properties: Omit<ProductModel, 'type_name'>
+  properties?: Product
 }
 
 const EditProductModelForm: React.FC<EditProductModelProps> = props => {
@@ -17,24 +16,23 @@ const EditProductModelForm: React.FC<EditProductModelProps> = props => {
 
   /** 产品类型名称 */
   const [name, setName] = useState('')
-  /** 产品类型所属大类 */
-  const type = useRef(0)
-  /** 产品图片 */
+  /** 产品图标 */
   const [image, setImage] = useState<string>('')
+
+  useEffect(() => {
+    setName(props.properties?.model_name ?? '')
+    setImage(props.properties?.pic_url ?? '')
+  }, [props.properties])
 
   /**
    * 提交表单
    */
   const submit = (): void => {
     props.onSubmit({
-      model_id: props.properties.model_id,
-      model_name: name !== '' ? name : props.properties.model_name,
-      type_id: type.current !== 0 ? type.current : props.properties.type_id,
-      pic_url: image !== '' ? image : props.properties.pic_url,
+      model_id: props.properties?.model_id ?? -1,
+      model_name: name !== '' ? name : props.properties?.model_name ?? '',
+      pic_url: image !== '' ? image : props.properties?.pic_url ?? '',
     })
-    setTimeout(() => {
-      setImage('')
-    }, 3000)
   }
 
   /**
@@ -42,9 +40,6 @@ const EditProductModelForm: React.FC<EditProductModelProps> = props => {
    */
   const cancel = (): void => {
     props.onCancel()
-    setTimeout(() => {
-      setImage('')
-    }, 3000)
   }
 
   /**
@@ -52,7 +47,7 @@ const EditProductModelForm: React.FC<EditProductModelProps> = props => {
    *
    * @param e 选择图片事件
    */
-  const uploadImage = (e: Parameters<Required<UploadProps>['customRequest']>[0]): void => {
+  const uploadImage: UploadProps['customRequest'] = e => {
     uploadFile(e.file as File)
       .then(res => {
         if (res.code === 0) {
@@ -71,24 +66,24 @@ const EditProductModelForm: React.FC<EditProductModelProps> = props => {
   }
 
   return (
-    <Modal open={props.open} title="修改产品型号" closable okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} destroyOnClose onOk={submit} onCancel={cancel}>
-      <Form labelCol={{ span: 8 }} colon={false}>
+    <Modal open={props.open} title="修改产品" closable okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} destroyOnClose onOk={submit} onCancel={cancel}>
+      <Form labelCol={{ span: 8 }} colon={false} preserve={false}>
         <Form.Item label="产品名称" name="name">
-          <Input value={name} className="rounded-xl mx-2" autoComplete="off" placeholder="请输入产品名称" onChange={e => setName(e.target.value)} />
+          <Input name="name" value={name} className="rounded-xl" autoComplete="off" placeholder="请输入产品名称" onChange={e => setName(e.target.value)} />
         </Form.Item>
-        <Form.Item label="产品所属大类" name="type">
-          <ProductTypeSelector onSelect={v => (type.current = v)} />
-        </Form.Item>
-        <Form.Item label="产品图片" name="image">
-          <Upload accept="image/*" listType="picture-card" maxCount={1} showUploadList={false} customRequest={uploadImage} fileList={[]}>
-            {image !== '' ? (
-              <Image src={image} alt="" preview={false} />
-            ) : (
-              <div>
-                <PlusOutlined />
-              </div>
-            )}
-          </Upload>
+        <Form.Item label="产品图标">
+          <Form.Item name="image" className="m-0">
+            <Upload name="image" accept="image/*" listType="picture-card" maxCount={1} showUploadList={false} customRequest={uploadImage} fileList={[]}>
+              {image !== '' ? (
+                <Image src={image} alt="" preview={false} />
+              ) : (
+                <div>
+                  <PlusOutlined />
+                </div>
+              )}
+            </Upload>
+          </Form.Item>
+          <p className="text-gray-500 text-xs">点击修改图标</p>
         </Form.Item>
       </Form>
     </Modal>

@@ -11,7 +11,7 @@ interface ManageCustomerServiceProps {
     services?: Service[]
     avatar: string
   }
-  onSubmit: (ids: string[], avatar: string) => void
+  onSubmit: (ids: Array<string | number>, avatar: string) => void
   onCancel: () => void
 }
 
@@ -19,7 +19,7 @@ const ManageCustomerService: React.FC<ManageCustomerServiceProps> = props => {
   const { message } = App.useApp()
 
   /** 客服列表 */
-  const groups = useRef<string[]>([])
+  const groups = useRef<Array<string | number>>([])
   /** 产品图片 */
   const [image, setImage] = useState('')
 

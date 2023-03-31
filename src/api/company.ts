@@ -14,8 +14,8 @@ interface GetCompanyInfoResponse {
 /**
  * 查询企业信息接口
  *
- * @param {boolean} isFirstQuery - 是否是第一次查询
- * @param {number} pageNum - 页码，每页10条数据，页码从1开始
+ * @param isFirstQuery - 是否是第一次查询
+ * @param pageNum - 页码，每页10条数据，页码从1开始
  * @returns - 分页的企业信息
  */
 export const getCompanyInfo = (isFirstQuery: boolean, pageNum: number): Promise<Response<GetCompanyInfoResponse>> => instance.get(`/wizz/aftersale/account/company/query/${isFirstQuery.toString()}/${pageNum}`)
@@ -23,7 +23,7 @@ export const getCompanyInfo = (isFirstQuery: boolean, pageNum: number): Promise<
 /**
  * 添加企业信息接口
  *
- * @param {string} companyName - 企业名称
+ * @param companyName - 企业名称
  * @returns - NULL
  */
 export const addCompanyInfo = (companyName: string): Promise<Response<null>> =>
@@ -34,8 +34,8 @@ export const addCompanyInfo = (companyName: string): Promise<Response<null>> =>
 /**
  * 修改企业信息接口
  *
- * @param {number} companyId - 要修改的企业id
- * @param {string} companyName - 修改后的企业名称
+ * @param companyId - 要修改的企业id
+ * @param companyName - 修改后的企业名称
  * @returns - NULL
  */
 export const updateCompanyInfo = (companyId: number, companyName: string): Promise<Response<null>> =>
@@ -47,7 +47,7 @@ export const updateCompanyInfo = (companyId: number, companyName: string): Promi
 /**
  * 删除企业信息接口
  *
- * @param {number} companyId - 企业id
+ * @param companyId - 企业id
  * @returns - NULL
  */
 export const removeCompanyInfo = (companyId: number): Promise<Response<null>> => instance.delete(`/wizz/aftersale/account/company/delete/${companyId}`)

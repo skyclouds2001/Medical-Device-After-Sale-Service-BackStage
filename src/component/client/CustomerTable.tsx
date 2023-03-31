@@ -6,7 +6,6 @@ interface CustomerTableProps {
   customers: Customer[]
   total: number
   loading: boolean
-  onChange: (current: number) => void
   onEdit: (customer: Customer) => void
   onRemove: (id: number) => void
 }
@@ -14,9 +13,8 @@ interface CustomerTableProps {
 const CustomerTable: React.FC<CustomerTableProps> = props => {
   return (
     <>
-      <Table dataSource={props.customers} bordered rowKey="customer_id" loading={props.loading} pagination={{ hideOnSinglePage: true, total: props.total }} onChange={({ current }) => props.onChange(current ?? 1)}>
+      <Table dataSource={props.customers} bordered rowKey="customer_id" loading={props.loading} pagination={{ hideOnSinglePage: true, total: props.total }}>
         <Table.Column width="200px" align="center" title="用户名称" dataIndex="customer_name" key="customer_name" />
-        <Table.Column width="200px" align="center" title="企业名称" dataIndex="company_name" key="company_name" />
         <Table.Column
           width="200px"
           align="center"
@@ -25,7 +23,7 @@ const CustomerTable: React.FC<CustomerTableProps> = props => {
           render={(_, record: Customer) => (
             <>
               <Button type="link" onClick={() => props.onEdit(record)}>
-                编辑
+                修改
               </Button>
               <Button type="link" danger onClick={() => props.onRemove(record.customer_id)}>
                 删除

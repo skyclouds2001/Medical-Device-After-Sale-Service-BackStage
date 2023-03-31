@@ -14,8 +14,8 @@ interface GetCustomerInfoResponse {
 /**
  * 查询客户信息接口
  *
- * @param {boolean} isFirstQuery - 是否是第一次查询
- * @param {number} pageNum - 页码，每页10条数据，页码从1开始
+ * @param isFirstQuery - 是否是第一次查询
+ * @param pageNum - 页码，每页10条数据，页码从1开始
  * @returns - 分页的客户信息
  */
 export const getCustomerInfo = (isFirstQuery: boolean, pageNum: number): Promise<Response<GetCustomerInfoResponse>> => instance.get(`/wizz/aftersale/account/customer/query/${isFirstQuery.toString()}/${pageNum}`)
@@ -23,9 +23,9 @@ export const getCustomerInfo = (isFirstQuery: boolean, pageNum: number): Promise
 /**
  * 添加客户信息接口
  *
- * @param {number} company - 企业id
- * @param {string} name - 客户账号名称
- * @param {string} password - 客户账号密码
+ * @param company - 企业id
+ * @param name - 客户账号名称
+ * @param password - 客户账号密码
  * @returns - NULL
  */
 export const addCustomerInfo = (company: number, name: string, password: string): Promise<Response<null>> =>
@@ -38,9 +38,9 @@ export const addCustomerInfo = (company: number, name: string, password: string)
 /**
  * 修改客户信息接口
  *
- * @param {number} companyId - 修改后的企业id
- * @param {number} customerId - 要修改的的客户的id
- * @param {string} customerName - 修改后的客户名称
+ * @param companyId - 修改后的企业id
+ * @param customerId - 要修改的的客户的id
+ * @param customerName - 修改后的客户名称
  * @param customerPwd - 修改后的客户密码
  * @returns - NULL
  */
@@ -55,7 +55,15 @@ export const updateCustomerInfo = (companyId: number, customerId: number, custom
 /**
  * 删除客户信息接口
  *
- * @param {number} customerId - 客户id
+ * @param customerId - 客户id
  * @returns - NULL
  */
 export const removeCustomerInfo = (customerId: number): Promise<Response<null>> => instance.delete(`/wizz/aftersale/account/customer/delete/${customerId}`)
+
+/**
+ * 根据企业ID查询客户信息接口
+ *
+ * @param companyId - 企业ID
+ * @returns - 客户信息
+ */
+export const getCustomerInfoByCompany = (companyId: number): Promise<Response<GetCustomerInfoResponse>> => instance.get(`/wizz/aftersale/account/customer/queryByCompany/${companyId}`)

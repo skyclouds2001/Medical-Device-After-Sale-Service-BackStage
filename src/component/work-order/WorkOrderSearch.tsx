@@ -1,14 +1,18 @@
 import React from 'react'
-import { Form, Input, Select, Button } from 'antd'
+import { Form, Select, Button, Spin } from 'antd'
+import useSwr from 'swr'
+import { getAllProductModels } from '@/api'
 import { services } from '@/data'
 
 interface WorkOrderSearchProps {
-  onSearch: (params: { product_name?: string; work_order_type: number }) => void
+  onSearch: (params: { product_id?: number; work_order_type?: number }) => void
   onReset: () => void
 }
 
 const WorkOrderSearch: React.FC<WorkOrderSearchProps> = props => {
   const [form] = Form.useForm()
+
+  const { data: products, isLoading } = useSwr('/wizz/aftersale/product-model/all', getAllProductModels)
 
   /** 发起搜索 */
   const onSearch = (): void => {
@@ -24,11 +28,11 @@ const WorkOrderSearch: React.FC<WorkOrderSearchProps> = props => {
   return (
     <>
       <Form form={form} name="work_order" layout="inline" className="my-5 self-start">
+        <Form.Item name="product_id" label="产品">
+          <Select placeholder="请选择产品" allowClear options={(products?.data ?? []).map(v => ({ label: v.model_name, value: v.model_id }))} notFoundContent={isLoading ? <Spin /> : '暂无数据'} style={{ width: '200px' }} />
+        </Form.Item>
         <Form.Item name="work_order_type" label="工单类型">
           <Select placeholder="请选择工单类型" allowClear options={services.map(v => ({ label: v.text, value: v.id }))} style={{ width: '200px' }} />
-        </Form.Item>
-        <Form.Item name="product_name" label="产品名称">
-          <Input name="product_name" placeholder="请输入产品名称" className="rounded" />
         </Form.Item>
         <Form.Item>
           <Button type="primary" className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" onClick={onSearch}>

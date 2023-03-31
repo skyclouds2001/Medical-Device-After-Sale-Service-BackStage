@@ -5,10 +5,10 @@ import useSwr from 'swr'
 import { getAllProductModels, manageCustomerService, getSingleServer } from '@/api'
 import img from '@/asset/img.svg'
 import ManageCustomerService from '@/component/customer-service/ManageCustomerService'
-import type { ProductModel, Service } from '@/model'
+import type { Product, Service } from '@/model'
 import type { CustomAction } from '@/store'
 
-interface ProductModelWithService extends ProductModel {
+interface ProductModelWithService extends Product {
   services?: Service[]
   avatar: string
 }
@@ -54,7 +54,7 @@ const CustomerServiceManage: React.FC = () => {
    * @param ids 客服ids
    * @param avatar 客服头像
    */
-  const handleEditService = async (ids: string[], avatar: string): Promise<void> => {
+  const handleEditService = async (ids: Array<string | number>, avatar: string): Promise<void> => {
     if (current.current === undefined) return
     try {
       const res = await manageCustomerService(current.current.model_id, ids, avatar)
@@ -125,7 +125,7 @@ const CustomerServiceManage: React.FC = () => {
           render={(_, record: ProductModelWithService) => (
             <>
               <Button type="link" onClick={() => openEditServiceForm(record)}>
-                管理客服
+                更改客服
               </Button>
             </>
           )}

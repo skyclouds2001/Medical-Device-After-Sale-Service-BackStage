@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { App, Row, Col, Button } from 'antd'
 import useSwr from 'swr'
-import { addCompanyInfo, addCustomerInfo, getCompanyInfo, getCustomerInfo, removeCompanyInfo, removeCustomerInfo, updateCompanyInfo, updateCustomerInfo } from '@/api'
+import { addCompanyInfo, addCustomerInfo, getCompanyInfo, getCustomerInfoByCompany, removeCompanyInfo, removeCustomerInfo, updateCompanyInfo, updateCustomerInfo } from '@/api'
 import CompanyTable from '@/component/client/CompanyTable'
 import CustomerTable from '@/component/client/CustomerTable'
 import AddCompanyForm from '@/component/client/AddCompanyForm'
@@ -19,18 +19,17 @@ const ClientManage: React.FC = () => {
   const [activeCompany, setActiveCompany] = useState<number | null>(null)
 
   const [companyPageNum, setCompanyPageNum] = useState(1)
-  const [customerPageNum, setCustomerPageNum] = useState(1)
 
-  const { data: companies, isLoading: isCompanyLoading, mutate: companyMutate } = useSwr(['/wizz/aftersale/account/company/query', companyPageNum], ([, page]) => getCompanyInfo(true, page))
-  const { data: customers, isLoading: isCustomerLoading, mutate: customerMutate } = useSwr(['/wizz/aftersale/account/customer/query', customerPageNum], ([, page]) => getCustomerInfo(true, page))
+  const { data: companies, isLoading: isCompanyLoading, mutate: companyMutate } = useSwr(['/wizz/aftersale/account/company/query', companyPageNum], ([, page]) => getCompanyInfo(true, page), { onSuccess: data => setActiveCompany(data.data.company_list[0].company_id) })
+  const { data: customers, isLoading: isCustomerLoading, mutate: customerMutate } = useSwr(['/wizz/aftersale/account/customer/query', activeCompany], ([, company]) => getCustomerInfoByCompany(company ?? -1))
 
   const [showAddCompany, setShowAddCompany] = useState(false)
   const [showEditCompany, setShowEditCompany] = useState(false)
   const [showAddCustomer, setShowAddCustomer] = useState(false)
   const [showEditCustomer, setShowEditCustomer] = useState(false)
 
-  const currentCompany = useRef<Company | null>(null)
-  const currentCustomer = useRef<Customer | null>(null)
+  const currentCompany = useRef<Company>()
+  const currentCustomer = useRef<Customer>()
 
   useEffect(() => {
     dispatch<CustomAction>({ type: 'title/update', title: '客户管理' })
@@ -58,9 +57,9 @@ const ClientManage: React.FC = () => {
     }
   }
 
-  const handleAddCustomer = async (customer: Omit<Customer, 'customer_id' | 'company_name' | 'mobile'> & { customer_password: string }): Promise<void> => {
+  const handleAddCustomer = async (customer: Omit<Customer, 'customer_id' | 'company_name' | 'mobile' | 'company_id'> & { customer_password: string }): Promise<void> => {
     try {
-      const res = await addCustomerInfo(customer.company_id, customer.customer_name, customer.customer_password)
+      const res = await addCustomerInfo(activeCompany as number, customer.customer_name, customer.customer_password)
       if (res.code === 0) {
         void message.success({
           content: '更新成功',
@@ -202,7 +201,7 @@ const ClientManage: React.FC = () => {
         <Col span={10}>
           <div className="w-full py-5 text-right">
             <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setShowAddCompany(true)}>
-              添加公司
+              添加企业
             </Button>
           </div>
         </Col>
@@ -220,17 +219,17 @@ const ClientManage: React.FC = () => {
           <CompanyTable companies={companies?.data.company_list ?? []} total={companies?.data.total_num ?? 10} loading={isCompanyLoading} onEdit={openEditCompanyForm} onRemove={handleRemoveCompany} onChange={page => setCompanyPageNum(page)} current={activeCompany} onSelect={id => setActiveCompany(id === activeCompany ? null : id)} />
         </Col>
         <Col span={14}>
-          <CustomerTable customers={customers?.data.customer_list.filter(v => activeCompany === null || v.company_id === activeCompany) ?? []} total={customers?.data.total_num ?? 10} loading={isCustomerLoading} onEdit={openEditCustomerForm} onRemove={handleRemoveCustomer} onChange={page => setCustomerPageNum(page)} />
+          <CustomerTable customers={customers?.data.customer_list.filter(v => activeCompany === null || v.company_id === activeCompany) ?? []} total={customers?.data.total_num ?? 10} loading={isCustomerLoading} onEdit={openEditCustomerForm} onRemove={handleRemoveCustomer} />
         </Col>
       </Row>
 
       <AddCompanyForm open={showAddCompany} onSubmit={company => handleAddCompany(company)} onCancel={() => setShowAddCompany(false)} />
 
-      <EditCompanyForm open={showEditCompany} onSubmit={company => handleEditCompany(company)} onCancel={() => setShowEditCompany(false)} properties={currentCompany.current as Company} />
+      <EditCompanyForm open={showEditCompany} onSubmit={company => handleEditCompany(company)} onCancel={() => setShowEditCompany(false)} properties={currentCompany.current} />
 
       <AddCustomerForm open={showAddCustomer} onSubmit={customer => handleAddCustomer(customer)} onCancel={() => setShowAddCustomer(false)} />
 
-      <EditCustomerForm open={showEditCustomer} onSubmit={customer => handleEditCustomer(customer)} onCancel={() => setShowEditCustomer(false)} properties={currentCustomer.current as Customer} />
+      <EditCustomerForm open={showEditCustomer} onSubmit={customer => handleEditCustomer(customer)} onCancel={() => setShowEditCustomer(false)} properties={currentCustomer.current} />
     </>
   )
 }

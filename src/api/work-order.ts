@@ -5,7 +5,7 @@ import type { Response, WorkOrder } from '@/model'
 /**
  * 查询工单接口
  *
- * @param {number} workOrderId - 工单ID
+ * @param workOrderId - 工单ID
  * @returns - 对应工单信息
  */
 export const getWorkOrder = (workOrderId: number): Promise<Response<WorkOrder>> =>
@@ -25,11 +25,11 @@ export const getAllWorkOrder = (): Promise<Response<WorkOrder[]>> => instance.ge
 /**
  * 添加工单接口
  *
- * @param {string} ad - 地址
- * @param {string} time - 上门预约时间
- * @param {number} cid - 客户id
- * @param {number} mid - 产品型号ID
- * @param {WorkOrder['order_attachment_list']} accessories - 附件列表
+ * @param ad - 地址
+ * @param time - 上门预约时间
+ * @param cid - 客户id
+ * @param mid - 产品型号ID
+ * @param accessories - 附件列表
  * @returns - NULL
  */
 export const postWorkOrder = (ad: string, time: string, cid: number, mid: number, accessories: WorkOrder['order_attachment_list']): Promise<Response<null>> =>
@@ -44,7 +44,7 @@ export const postWorkOrder = (ad: string, time: string, cid: number, mid: number
 /**
  * 删除工单接口
  *
- * @param {number} workOrderId - 工单ID
+ * @param workOrderId - 工单ID
  * @returns - NULL
  */
 export const removeWorkOrder = (workOrderId: number): Promise<Response<null>> =>

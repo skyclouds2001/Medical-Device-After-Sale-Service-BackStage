@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Cascader } from 'antd'
+import { Button, Cascader, Divider } from 'antd'
 import { getDepartmentsAndStaffs } from '@/api'
 
 interface Option {
@@ -9,7 +9,7 @@ interface Option {
 }
 
 interface CustomerServiceSelectorProps {
-  onSelect: (value: string[]) => void
+  onSelect: (value: Array<string | number>) => void
 }
 
 const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props => {
@@ -54,28 +54,50 @@ const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props =>
     try {
       const options = await transform(0)
       setOptions(options)
+      console.log(options)
     } catch (err) {
       console.error(err)
     }
   }
 
-  /**
-   * 选取客服方法
-   *
-   * @param value 客服信息
-   */
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState<Array<Array<string | number>>>([])
+
   const handleOptionChange = (value: Array<Array<string | number>>): void => {
-    props.onSelect?.(
-      value
-        .map(v => v.at(-1))
-        .filter(v => v)
-        .map(v => v as string),
+    console.log(value)
+    setValue(value)
+    props.onSelect(value.map(v => v[v.length - 1]))
+  }
+
+  const dropdownRender = (menus: React.ReactElement): React.ReactElement => {
+    const confirm = (): void => {
+      setOpen(false)
+    }
+    const cancel = (): void => {
+      setValue([])
+      setOpen(false)
+      props.onSelect([])
+    }
+
+    return (
+      <div>
+        {menus}
+        <Divider className="m-0" />
+        <div className="p-2">
+          <Button type="link" onClick={confirm}>
+            确认
+          </Button>
+          <Button type="link" onClick={cancel}>
+            取消
+          </Button>
+        </div>
+      </div>
     )
   }
 
   return (
     <>
-      <Cascader options={options} onChange={handleOptionChange} placeholder="请选择客服" multiple maxTagCount="responsive" notFoundContent="加载中..." />
+      <Cascader open={open} value={value} options={options} showCheckedStrategy={Cascader.SHOW_CHILD} placeholder="请选择客服" multiple maxTagCount="responsive" notFoundContent="加载中..." dropdownRender={dropdownRender} onChange={handleOptionChange} onDropdownVisibleChange={value => setOpen(value)} />
     </>
   )
 }
