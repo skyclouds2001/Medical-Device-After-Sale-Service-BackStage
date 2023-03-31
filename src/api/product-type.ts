@@ -10,7 +10,7 @@ type GetProductTypeResponse = ProductType
 /**
  * 查询产品大类接口
  *
- * @param {number} productTypeId 产品大类ID
+ * @param productTypeId - 产品大类ID
  * @returns - 产品大类信息
  */
 export const getProductType = (productTypeId: number): Promise<Response<GetProductTypeResponse>> =>
@@ -21,7 +21,7 @@ export const getProductType = (productTypeId: number): Promise<Response<GetProdu
 /**
  * 添加产品大类接口
  *
- * @param {string} typeName - 产品大类名称
+ * @param typeName - 产品大类名称
  * @returns - 产品大类ID
  */
 export const addProductType = (typeName: string): Promise<Response<number>> =>
@@ -32,8 +32,8 @@ export const addProductType = (typeName: string): Promise<Response<number>> =>
 /**
  * 更新产品大类接口
  *
- * @param {number} typeId - 产品大类id
- * @param {string} typeName - 产品大类名称
+ * @param typeId - 产品大类id
+ * @param typeName - 产品大类名称
  * @returns - NULL
  */
 export const updateProductType = (typeId: number, typeName: string): Promise<Response<null>> =>
@@ -45,7 +45,7 @@ export const updateProductType = (typeId: number, typeName: string): Promise<Res
 /**
  * 删除产品大类接口
  *
- * @param {number} productTypeId - 产品大类id
+ * @param productTypeId - 产品大类id
  * @returns - NULL
  */
 export const removeProductType = (productTypeId: number): Promise<Response<null>> =>

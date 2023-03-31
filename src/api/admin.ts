@@ -18,8 +18,8 @@ interface AdminLoginResponse {
 /**
  * 管理员登录接口
  *
- * @param {string} admin - 管理员名称
- * @param {string} password - 密码
+ * @param admin - 管理员名称
+ * @param password - 密码
  * @returns - 登录成功用户数据
  */
 export const adminLogin = (admin: string, password: string): Promise<Response<AdminLoginResponse>> =>
@@ -31,9 +31,9 @@ export const adminLogin = (admin: string, password: string): Promise<Response<Ad
 /**
  * 管理员重设密码接口
  *
- * @param {string} admin - 管理员名称
- * @param {string} encrypt - 密文串
- * @param {string} newPw - 新密码
+ * @param admin - 管理员名称
+ * @param encrypt - 密文串
+ * @param newPw - 新密码
  * @returns - NULL
  */
 export const resetPassword = (admin: string, encrypt: string, newPw: string): Promise<Response<null>> =>
