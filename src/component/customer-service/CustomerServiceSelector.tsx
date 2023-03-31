@@ -65,17 +65,16 @@ const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props =>
    * @param value 客服信息
    */
   const handleOptionChange = (value: Array<Array<string | number>>): void => {
-    props.onSelect?.(
-      value
-        .map(v => v.at(-1))
-        .filter(v => v)
-        .map(v => v as string),
-    )
+    const current = value
+      .map(v => v.at(-1))
+      .filter(v => v)
+      .map(v => v as string)
+    props.onSelect?.(current)
   }
 
   return (
     <>
-      <Cascader options={options} onChange={handleOptionChange} placeholder="请选择客服" multiple maxTagCount="responsive" notFoundContent="加载中..." />
+      <Cascader options={options} showCheckedStrategy={Cascader.SHOW_CHILD} onChange={handleOptionChange} placeholder="请选择客服" multiple maxTagCount="responsive" notFoundContent="加载中..." />
     </>
   )
 }
