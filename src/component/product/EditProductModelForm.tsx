@@ -8,7 +8,7 @@ interface EditProductModelProps {
   open: boolean
   onSubmit: (props: ProductModel) => void
   onCancel: () => void
-  properties: ProductModel
+  properties?: ProductModel
 }
 
 const EditProductModelForm: React.FC<EditProductModelProps> = props => {
@@ -20,10 +20,8 @@ const EditProductModelForm: React.FC<EditProductModelProps> = props => {
   const [image, setImage] = useState<string>('')
 
   useEffect(() => {
-    if (props.properties !== undefined) {
-      setName(props.properties.model_name)
-      setImage(props.properties.pic_url)
-    }
+    setName(props.properties?.model_name ?? '')
+    setImage(props.properties?.pic_url ?? '')
   }, [props.properties])
 
   /**
@@ -31,9 +29,9 @@ const EditProductModelForm: React.FC<EditProductModelProps> = props => {
    */
   const submit = (): void => {
     props.onSubmit({
-      model_id: props.properties.model_id,
-      model_name: name !== '' ? name : props.properties.model_name,
-      pic_url: image !== '' ? image : props.properties.pic_url,
+      model_id: props.properties?.model_id ?? -1,
+      model_name: name !== '' ? name : props.properties?.model_name ?? '',
+      pic_url: image !== '' ? image : props.properties?.pic_url ?? '',
     })
   }
 

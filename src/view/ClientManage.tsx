@@ -28,8 +28,8 @@ const ClientManage: React.FC = () => {
   const [showAddCustomer, setShowAddCustomer] = useState(false)
   const [showEditCustomer, setShowEditCustomer] = useState(false)
 
-  const currentCompany = useRef<Company | null>(null)
-  const currentCustomer = useRef<Customer | null>(null)
+  const currentCompany = useRef<Company>()
+  const currentCustomer = useRef<Customer>()
 
   useEffect(() => {
     dispatch<CustomAction>({ type: 'title/update', title: '客户管理' })
@@ -225,11 +225,11 @@ const ClientManage: React.FC = () => {
 
       <AddCompanyForm open={showAddCompany} onSubmit={company => handleAddCompany(company)} onCancel={() => setShowAddCompany(false)} />
 
-      <EditCompanyForm open={showEditCompany} onSubmit={company => handleEditCompany(company)} onCancel={() => setShowEditCompany(false)} properties={currentCompany.current as Company} />
+      <EditCompanyForm open={showEditCompany} onSubmit={company => handleEditCompany(company)} onCancel={() => setShowEditCompany(false)} properties={currentCompany.current} />
 
       <AddCustomerForm open={showAddCustomer} onSubmit={customer => handleAddCustomer(customer)} onCancel={() => setShowAddCustomer(false)} />
 
-      <EditCustomerForm open={showEditCustomer} onSubmit={customer => handleEditCustomer(customer)} onCancel={() => setShowEditCustomer(false)} properties={currentCustomer.current as Customer} />
+      <EditCustomerForm open={showEditCustomer} onSubmit={customer => handleEditCustomer(customer)} onCancel={() => setShowEditCustomer(false)} properties={currentCustomer.current} />
     </>
   )
 }

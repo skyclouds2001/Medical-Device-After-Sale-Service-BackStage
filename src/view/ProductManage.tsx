@@ -133,7 +133,7 @@ const ProductManage: React.FC = () => {
 
       <AddProductModelForm open={showAddProductModel} onSubmit={handleAddProductModel} onCancel={() => setShowAddProductModel(false)} />
 
-      <EditProductModelForm open={showEditProductModel} onSubmit={handleEditProductModel} onCancel={() => setShowEditProductModel(false)} properties={currentModel.current as ProductModel} />
+      <EditProductModelForm open={showEditProductModel} onSubmit={handleEditProductModel} onCancel={() => setShowEditProductModel(false)} properties={currentModel.current} />
     </>
   )
 }
