@@ -54,7 +54,7 @@ const CustomerServiceManage: React.FC = () => {
    * @param ids 客服ids
    * @param avatar 客服头像
    */
-  const handleEditService = async (ids: string[], avatar: string): Promise<void> => {
+  const handleEditService = async (ids: Array<string | number>, avatar: string): Promise<void> => {
     if (current.current === undefined) return
     try {
       const res = await manageCustomerService(current.current.model_id, ids, avatar)

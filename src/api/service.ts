@@ -50,7 +50,7 @@ export const removeSingleServer = (productModelId: number): Promise<Response<nul
  * @param avatar - 客服头像url
  * @returns - NULL
  */
-export const manageCustomerService = (productModelId: number, userIdList: string[], avatar: string): Promise<Response<null>> =>
+export const manageCustomerService = (productModelId: number, userIdList: Array<string | number>, avatar: string): Promise<Response<null>> =>
   instance.post('/wizz/aftersale/account/kf/setKfByModelId', {
     product_model_id: productModelId,
     user_id_list: userIdList,
