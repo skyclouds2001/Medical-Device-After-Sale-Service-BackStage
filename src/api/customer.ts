@@ -59,3 +59,11 @@ export const updateCustomerInfo = (companyId: number, customerId: number, custom
  * @returns - NULL
  */
 export const removeCustomerInfo = (customerId: number): Promise<Response<null>> => instance.delete(`/wizz/aftersale/account/customer/delete/${customerId}`)
+
+/**
+ * 根据企业ID查询客户信息接口
+ *
+ * @param companyId - 企业ID
+ * @returns - 客户信息
+ */
+export const getCustomerInfoByCompany = (companyId: number): Promise<Response<GetCustomerInfoResponse>> => instance.get(`/wizz/aftersale/account/customer/queryByCompany/${companyId}`)
