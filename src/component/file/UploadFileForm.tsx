@@ -70,7 +70,7 @@ const UploadFileForm: React.FC<UploadFileFormProps> = props => {
 
   return (
     <>
-      <Modal open={props.open} title="上传文件" closable okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} destroyOnClose onOk={submit} onCancel={cancel}>
+      <Modal open={props.open} title="上传文件" closable okText="确认" cancelText="取消" okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} destroyOnClose onOk={submit} onCancel={cancel}>
         <Upload name="file" listType="picture-card" fileList={files} onChange={handleChange} beforeUpload={() => false}>
           <div>
             {uploading ? <LoadingOutlined /> : <PlusOutlined />}

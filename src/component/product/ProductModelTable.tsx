@@ -18,7 +18,7 @@ const ProductModelTable: React.FC<ProductModelTableProps> = props => {
         <Table.Column
           width="200px"
           align="center"
-          title="产品图片"
+          title="产品图标"
           key="pic_url"
           render={(_, record: Product) => (
             <>

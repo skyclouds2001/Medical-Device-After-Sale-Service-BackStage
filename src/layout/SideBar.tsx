@@ -8,7 +8,7 @@ import logo from '@/asset/logo.png'
 const items: MenuProps['items'] = [
   {
     label: '客户管理',
-    key: '/customer',
+    key: '/client',
     icon: <UserOutlined />,
   },
   {

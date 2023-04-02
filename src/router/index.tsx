@@ -29,7 +29,7 @@ const Routes: React.FC = () => {
 
     // 客户管理
     {
-      path: '/customer',
+      path: '/client',
       element: (
         <Suspense>
           <ClientManage />

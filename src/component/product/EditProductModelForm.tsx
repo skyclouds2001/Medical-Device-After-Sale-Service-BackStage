@@ -66,7 +66,7 @@ const EditProductModelForm: React.FC<EditProductModelProps> = props => {
   }
 
   return (
-    <Modal open={props.open} title="修改产品" closable okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} destroyOnClose onOk={submit} onCancel={cancel}>
+    <Modal open={props.open} title="修改产品" closable okText="确认" cancelText="取消" okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} destroyOnClose onOk={submit} onCancel={cancel}>
       <Form labelCol={{ span: 8 }} colon={false} preserve={false}>
         <Form.Item label="产品名称" name="name">
           <Input name="name" value={name} className="rounded-xl" autoComplete="off" placeholder="请输入产品名称" onChange={e => setName(e.target.value)} />

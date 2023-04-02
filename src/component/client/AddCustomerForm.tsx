@@ -33,7 +33,7 @@ const AddCustomerForm: React.FC<AddCustomerProps> = props => {
   }
 
   return (
-    <Modal open={props.open} title="添加客户信息" closable okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} destroyOnClose onOk={submit} onCancel={cancel}>
+    <Modal open={props.open} title="添加客户信息" closable okText="确认" cancelText="取消" okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} destroyOnClose onOk={submit} onCancel={cancel}>
       <Form labelCol={{ span: 8 }} colon={false}>
         <Form.Item label="用户名" name="name">
           <Input ref={name} className="rounded-sm mx-2" autoComplete="off" placeholder="请输入账号名称" />
