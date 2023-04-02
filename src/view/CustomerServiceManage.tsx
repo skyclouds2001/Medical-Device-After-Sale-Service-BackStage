@@ -92,7 +92,6 @@ const CustomerServiceManage: React.FC = () => {
       {/* 产品客服信息表格 */}
       <Table dataSource={products} bordered rowKey="model_id" loading={isLoading} pagination={{ hideOnSinglePage: true }}>
         <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
-        <Table.Column width="200px" align="center" title="所属大类" dataIndex="type_name" key="type_name" />
         <Table.Column
           width="200px"
           align="center"
