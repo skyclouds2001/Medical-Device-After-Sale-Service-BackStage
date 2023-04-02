@@ -104,7 +104,7 @@ const WorkOrderManage: React.FC = () => {
   const orders =
     data?.data
       ?.filter(o => isSearch === null || ((isSearch.id === undefined || isSearch.id === o.model_id) && (isSearch.type === undefined || isSearch.type === o.order_type)))
-      .sort((a, b) => (a.appointment_time < b.appointment_time ? 1 : -1))
+      .sort((a, b) => (a.appointment_time > b.appointment_time ? 1 : -1))
       .sort((a, b) => (a.order_status < b.order_status ? -1 : 1)) ?? []
 
   return (
