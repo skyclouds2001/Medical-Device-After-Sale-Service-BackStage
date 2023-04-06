@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, Select, Button, Spin } from 'antd'
+import { SearchOutlined, CloseOutlined } from '@ant-design/icons'
 import useSwr from 'swr'
 import { getAllProductModels } from '@/api'
 import { services } from '@/data'
@@ -35,12 +36,12 @@ const WorkOrderSearch: React.FC<WorkOrderSearchProps> = props => {
           <Select placeholder="请选择工单类型" allowClear options={services.map(v => ({ label: v.text, value: v.id }))} style={{ width: '200px' }} />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" onClick={onSearch}>
+          <Button type="primary" className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent flex justify-center items-center" icon={<SearchOutlined />} onClick={onSearch}>
             搜索
           </Button>
         </Form.Item>
         <Form.Item>
-          <Button type="default" onClick={onReset}>
+          <Button danger className="flex justify-center items-center" icon={<CloseOutlined />} onClick={onReset}>
             重置
           </Button>
         </Form.Item>
