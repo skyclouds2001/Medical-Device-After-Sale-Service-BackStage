@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 import { App, Button, Image, Table } from 'antd'
 import useSwr from 'swr'
 import { getAllProductModels, manageCustomerService, getSingleServer } from '@/api'
-import img from '@/asset/img.svg'
 import ManageCustomerService from '@/component/customer-service/ManageCustomerService'
 import type { Product, Service } from '@/model'
 import type { CustomAction } from '@/store'
@@ -112,7 +111,7 @@ const CustomerServiceManage: React.FC = () => {
           key="avatar"
           render={(_, record: ProductModelWithService) => (
             <>
-              <Image width={record.avatar != null ? 100 : 50} alt={record.model_name} src={record.avatar ?? img} fallback={img} preview={false} />
+              <Image width={100} alt={record.model_name} src={record.avatar} preview={false} />
             </>
           )}
         />
