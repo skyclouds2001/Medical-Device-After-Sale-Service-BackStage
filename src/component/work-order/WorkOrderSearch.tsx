@@ -5,7 +5,7 @@ import { getAllProductModels } from '@/api'
 import { services } from '@/data'
 
 interface WorkOrderSearchProps {
-  onSearch: (params: { product_id?: number; work_order_type?: number }) => void
+  onSearch: (params: { product_id?: number; work_order_type?: number; sort?: 1 | -1 }) => void
   onReset: () => void
 }
 
@@ -25,6 +25,11 @@ const WorkOrderSearch: React.FC<WorkOrderSearchProps> = props => {
     props.onReset()
   }
 
+  const sorts = [
+    { label: '升序', value: 1 },
+    { label: '降序', value: -1 },
+  ]
+
   return (
     <>
       <Form form={form} name="work_order" layout="inline" className="my-5 self-start">
@@ -33,6 +38,9 @@ const WorkOrderSearch: React.FC<WorkOrderSearchProps> = props => {
         </Form.Item>
         <Form.Item name="work_order_type" label="工单类型">
           <Select placeholder="请选择工单类型" allowClear options={services.map(v => ({ label: v.text, value: v.id }))} style={{ width: '200px' }} />
+        </Form.Item>
+        <Form.Item name="sort" label="预约时间排序方式">
+          <Select options={sorts} style={{ width: '200px' }} />
         </Form.Item>
         <Form.Item>
           <Button type="primary" className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" onClick={onSearch}>
