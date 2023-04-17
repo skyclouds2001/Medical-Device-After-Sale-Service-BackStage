@@ -1,6 +1,5 @@
 import React from 'react'
 import { Table, Image, Button } from 'antd'
-import img from '@/asset/img.svg'
 import type { Product } from '@/model'
 
 interface ProductModelTableProps {
@@ -22,7 +21,7 @@ const ProductModelTable: React.FC<ProductModelTableProps> = props => {
           key="pic_url"
           render={(_, record: Product) => (
             <>
-              <Image width={100} alt={record.model_name} src={record.pic_url ?? img} fallback={img} preview={false} />
+              <Image width={100} alt={record.model_name} src={record.pic_url} preview={false} />
             </>
           )}
         />
