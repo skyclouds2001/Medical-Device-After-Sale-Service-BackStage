@@ -54,7 +54,6 @@ const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props =>
     try {
       const options = await transform(0)
       setOptions(options)
-      console.log(options)
     } catch (err) {
       console.error(err)
     }
@@ -64,7 +63,6 @@ const CustomerServiceSelector: React.FC<CustomerServiceSelectorProps> = props =>
   const [value, setValue] = useState<Array<Array<string | number>>>([])
 
   const handleOptionChange = (value: Array<Array<string | number>>): void => {
-    console.log(value)
     setValue(value)
     props.onSelect(value.map(v => v[v.length - 1]))
   }
