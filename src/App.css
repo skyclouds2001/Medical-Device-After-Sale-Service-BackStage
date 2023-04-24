@@ -5,3 +5,13 @@
   padding: 0;
   text-align: center;
 }
+
+table {
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+}
+
+th,
+td {
+  border: 1px solid #ccc !important;
+}
