@@ -14,4 +14,5 @@ table {
 th,
 td {
   border: 1px solid #ccc !important;
+  text-align: center !important;
 }
