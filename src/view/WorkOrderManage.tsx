@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { App } from 'antd'
 import useSwr from 'swr'
 import { getAllWorkOrder, removeWorkOrder, finishWorkOrder } from '@/api'
-import WorkOrderSearch from '@/component/work-order/WorkOrderSearch'
+import WorkOrderSearch, { initialValues, type SearchProps } from '@/component/work-order/WorkOrderSearch'
 import WorkOrderTable from '@/component/work-order/WorkOrderTable'
 import type { CustomAction } from '@/store'
 
@@ -77,42 +77,25 @@ const WorkOrderManage: React.FC = () => {
   /**
    * 是否搜索模式 - 携带搜索参数
    */
-  const [isSearch, setSearch] = useState<{ id?: number; type?: number; sort?: number } | null>(null)
+  const [search, setSearch] = useState<SearchProps>(initialValues)
 
   useEffect(() => {
     void mutate()
-  }, [isSearch])
-
-  /**
-   * 搜索工单方法
-   *
-   * @param params 搜索信息
-   * @param params.product_id 工单产品ID
-   * @param params.work_order_type 工单类型
-   * @param params.sort 排序方式
-   */
-  const handleSearch = (params?: { product_id?: number; work_order_type?: number; sort?: 1 | -1 }): void => {
-    if (params !== undefined) {
-      setSearch({
-        id: params.product_id,
-        type: params.work_order_type,
-        sort: params.sort,
-      })
-    } else {
-      setSearch(null)
-    }
-  }
+  }, [search])
 
   const orders =
     data?.data
-      ?.filter(o => isSearch === null || ((isSearch.id === undefined || isSearch.id === o.model_id) && (isSearch.type === undefined || isSearch.type === o.order_type)))
-      .sort((a, b) => ((isSearch?.sort === -1 ? a.appointment_time < b.appointment_time : a.appointment_time > b.appointment_time) ? 1 : -1))
-      .sort((a, b) => (a.order_status < b.order_status ? -1 : 1)) ?? []
+      .filter(o => o.customer_name.includes(search.customer))
+      .filter(o => search.product === undefined || o.model_id === search.product)
+      .filter(o => search.type === undefined || o.order_type === search.type)
+      .filter(o => search.status === undefined || o.order_status === search.status)
+      .sort((a, b) => (search.time === 1 ? (a.create_time > b.create_time ? 1 : -1) : a.appointment_time > b.appointment_time ? 1 : -1))
+      .sort((a, b) => (a.order_status > b.order_status ? 1 : -1)) ?? []
 
   return (
     <>
       {/* 工单搜索功能 */}
-      <WorkOrderSearch onSearch={handleSearch} onReset={handleSearch} />
+      <WorkOrderSearch onFilter={params => setSearch(params)} />
 
       {/* 工单表单 */}
       <WorkOrderTable workOrders={orders} loading={isLoading} onRemove={deleteWorkOrder} onFinish={closeWorkOrder} />

@@ -111,7 +111,7 @@ const CustomerServiceManage: React.FC = () => {
           key="avatar"
           render={(_, record: ProductModelWithService) => (
             <>
-              <Image width={100} alt={record.model_name} src={record.avatar} preview={false} />
+              <Image width={100} alt="" src={record.avatar} preview={false} />
             </>
           )}
         />
