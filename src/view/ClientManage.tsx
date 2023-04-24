@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { App, Row, Col, Button } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 import useSwr from 'swr'
 import { addCompanyInfo, addCustomerInfo, getCompanyInfo, getCustomerInfoByCompany, removeCompanyInfo, removeCustomerInfo, updateCompanyInfo, updateCustomerInfo } from '@/api'
 import CompanyTable from '@/component/client/CompanyTable'
@@ -199,15 +200,15 @@ const ClientManage: React.FC = () => {
     <>
       <Row className="w-full" gutter={40}>
         <Col span={10}>
-          <div className="w-full py-5 text-right">
-            <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setShowAddCompany(true)}>
+          <div className="w-full py-5 flex justify-end items-center">
+            <Button icon={<PlusOutlined />} className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent flex justify-center items-center" type="primary" onClick={() => setShowAddCompany(true)}>
               添加企业
             </Button>
           </div>
         </Col>
         <Col span={14}>
-          <div className="w-full py-5 text-right">
-            <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setShowAddCustomer(true)}>
+          <div className="w-full py-5 flex justify-end items-center">
+            <Button icon={<PlusOutlined />} className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent flex justify-center items-center" type="primary" onClick={() => setShowAddCustomer(true)}>
               添加客户
             </Button>
           </div>
