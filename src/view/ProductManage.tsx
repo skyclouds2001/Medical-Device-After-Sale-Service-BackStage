@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { App, Row, Col, Button } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 import useSwr from 'swr'
 import { getAllProductModels, removeProductModel, removeSingleServer, addProductModel, updateProductModel } from '@/api'
 import AddProductModelForm from '@/component/product/AddProductModelForm'
@@ -117,8 +118,8 @@ const ProductManage: React.FC = () => {
     <>
       <Row className="w-full" gutter={40}>
         <Col span={24}>
-          <div className="w-full py-5 text-right">
-            <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setShowAddProductModel(true)}>
+          <div className="w-full py-5 flex justify-end items-center">
+            <Button icon={<PlusOutlined />} className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent flex justify-center items-center" type="primary" onClick={() => setShowAddProductModel(true)}>
               添加产品
             </Button>
           </div>

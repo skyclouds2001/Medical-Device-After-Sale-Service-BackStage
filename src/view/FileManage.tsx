@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { App, Button, Menu, Row, Col, type MenuProps } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 import useSwr from 'swr'
 import { addFile, deleteFile, getFileList } from '@/api'
 import FileTable from '@/component/file/FileTable'
@@ -68,8 +69,8 @@ const FileManage: React.FC = () => {
     <>
       <Row className="w-full" gutter={40}>
         <Col span={24}>
-          <div className="w-full py-5 text-right">
-            <Button className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent" type="primary" onClick={() => setOpen(true)}>
+          <div className="w-full py-5 flex justify-end items-center">
+            <Button icon={<PlusOutlined />} className="text-blue-500 border-blue-500 hover:text-white hover:border-transparent active:text-white active:border-transparent flex justify-center items-center" type="primary" onClick={() => setOpen(true)}>
               上传文件
             </Button>
           </div>
