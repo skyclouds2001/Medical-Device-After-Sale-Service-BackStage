@@ -11,7 +11,7 @@ interface EditProductModelProps {
   properties?: Product
 }
 
-const EditProductModelForm: React.FC<EditProductModelProps> = props => {
+const EditProductForm: React.FC<EditProductModelProps> = props => {
   const { message } = App.useApp()
 
   /** 产品类型名称 */
@@ -90,4 +90,4 @@ const EditProductModelForm: React.FC<EditProductModelProps> = props => {
   )
 }
 
-export default EditProductModelForm
+export default EditProductForm

@@ -9,7 +9,7 @@ interface ProductModelTableProps {
   onRemove: (id: number) => void
 }
 
-const ProductModelTable: React.FC<ProductModelTableProps> = props => {
+const ProductTable: React.FC<ProductModelTableProps> = props => {
   return (
     <>
       <Table dataSource={props.products} bordered rowKey="model_id" loading={props.loading} pagination={{ hideOnSinglePage: true }}>
@@ -46,4 +46,4 @@ const ProductModelTable: React.FC<ProductModelTableProps> = props => {
   )
 }
 
-export default ProductModelTable
+export default ProductTable
