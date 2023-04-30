@@ -4,9 +4,9 @@ import { App, Row, Col, Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import useSwr from 'swr'
 import { getAllProductModels, removeProductModel, removeSingleServer, addProductModel, updateProductModel } from '@/api'
-import AddProductModelForm from '@/component/product/AddProductModelForm'
-import EditProductModelForm from '@/component/product/EditProductModelForm'
-import ProductModelTable from '@/component/product/ProductModelTable'
+import AddProductForm from '@/component/product/AddProductForm'
+import EditProductForm from '@/component/product/EditProductForm'
+import ProductTable from '@/component/product/ProductTable'
 import type { Product } from '@/model'
 import type { CustomAction } from '@/store'
 
@@ -128,13 +128,13 @@ const ProductManage: React.FC = () => {
 
       <Row className="w-full" gutter={40}>
         <Col span={24}>
-          <ProductModelTable products={Array.isArray(data?.data) ? data?.data ?? [] : []} loading={isLoading} onEdit={openEditModelForm} onRemove={handleRemoveProductModel} />
+          <ProductTable products={Array.isArray(data?.data) ? data?.data ?? [] : []} loading={isLoading} onEdit={openEditModelForm} onRemove={handleRemoveProductModel} />
         </Col>
       </Row>
 
-      <AddProductModelForm open={showAddProductModel} onSubmit={handleAddProductModel} onCancel={() => setShowAddProductModel(false)} />
+      <AddProductForm open={showAddProductModel} onSubmit={handleAddProductModel} onCancel={() => setShowAddProductModel(false)} />
 
-      <EditProductModelForm open={showEditProductModel} onSubmit={handleEditProductModel} onCancel={() => setShowEditProductModel(false)} properties={currentModel.current} />
+      <EditProductForm open={showEditProductModel} onSubmit={handleEditProductModel} onCancel={() => setShowEditProductModel(false)} properties={currentModel.current} />
     </>
   )
 }

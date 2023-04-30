@@ -11,7 +11,7 @@ interface AddProductModelProps {
   onCancel: () => void
 }
 
-const AddProductModelForm: React.FC<AddProductModelProps> = props => {
+const AddProductForm: React.FC<AddProductModelProps> = props => {
   const { message } = App.useApp()
 
   /** 产品类型名称 */
@@ -87,4 +87,4 @@ const AddProductModelForm: React.FC<AddProductModelProps> = props => {
   )
 }
 
-export default AddProductModelForm
+export default AddProductForm

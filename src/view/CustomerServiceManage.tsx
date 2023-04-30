@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import { App, Button, Image, Table } from 'antd'
+import { App, Button, Image, Table, Spin } from 'antd'
 import useSwr from 'swr'
 import { getAllProductModels, manageCustomerService, getSingleServer } from '@/api'
 import ManageCustomerService from '@/component/customer-service/ManageCustomerService'
@@ -91,30 +91,8 @@ const CustomerServiceManage: React.FC = () => {
       {/* 产品客服信息表格 */}
       <Table dataSource={products} bordered rowKey="model_id" loading={isLoading} pagination={{ hideOnSinglePage: true }}>
         <Table.Column width="200px" align="center" title="产品名称" dataIndex="model_name" key="model_name" />
-        <Table.Column
-          width="200px"
-          align="center"
-          title="产品客服"
-          key="customer-service"
-          render={(_, record: ProductModelWithService) => (
-            <>
-              {record.services?.map(v => (
-                <div key={v.user_id}>{v.server_name}</div>
-              ))}
-            </>
-          )}
-        />
-        <Table.Column
-          width="200px"
-          align="center"
-          title="客服头像"
-          key="avatar"
-          render={(_, record: ProductModelWithService) => (
-            <>
-              <Image width={100} alt="" src={record.avatar} preview={false} />
-            </>
-          )}
-        />
+        <Table.Column width="200px" align="center" title="产品客服" key="customer-service" render={(_, record: ProductModelWithService) => <>{record.services !== undefined ? record.services.map(v => <div key={v.user_id}>{v.server_name}</div>) : <Spin />}</>} />
+        <Table.Column width="200px" align="center" title="客服头像" key="avatar" render={(_, record: ProductModelWithService) => <>{record.avatar !== undefined ? <Image width={100} alt={record.model_name} src={record.avatar} placeholder={<Spin />} preview={false} /> : <Spin />}</>} />
         <Table.Column
           width="200px"
           align="center"
