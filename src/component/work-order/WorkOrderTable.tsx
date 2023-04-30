@@ -1,6 +1,6 @@
 import React from 'react'
-import { Button, Image, Table, Typography } from 'antd'
-import { RightOutlined, DownOutlined } from '@ant-design/icons'
+import { Button, Image, Spin, Table, Typography } from 'antd'
+import { DownOutlined, RightOutlined } from '@ant-design/icons'
 import { services } from '@/data'
 import type { WorkOrder } from '@/model'
 
@@ -16,7 +16,7 @@ const WorkOrderTableExpandable: React.FC<WorkOrderTableExpandableProps> = ({ ord
       <Typography.Paragraph className="text-left">工单图片：</Typography.Paragraph>
       <Typography.Paragraph className="text-left flex justify-start items-center gap-x-5">
         {order.order_attachment_list.map(v => (
-          <Image key={v.order_attachment_id} className="px-1 object-contain shadow" src={v.storage_path} alt={`${order.model_name}: ${order.servicer_name}`} width={200} height={200} decoding="async" loading="lazy" />
+          <Image key={v.order_attachment_id} className="px-1 object-contain shadow" src={v.storage_path} alt={`${order.model_name}: ${order.servicer_name}`} width={200} height={200} placeholder={<Spin />} decoding="async" loading="lazy" />
         ))}
       </Typography.Paragraph>
     </>
