@@ -11,6 +11,7 @@ interface ManageCustomerServiceProps {
     services?: Service[]
     avatar: string
   }
+  isUpdating: boolean
   onSubmit: (ids: Array<string | number>, avatar: string) => void
   onCancel: () => void
 }
@@ -67,7 +68,7 @@ const ManageCustomerService: React.FC<ManageCustomerServiceProps> = props => {
   }
 
   return (
-    <Modal open={props.open} title="管理产品客服" okText="确认" cancelText="取消" okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent' }} destroyOnClose closable onOk={submit} onCancel={cancel}>
+    <Modal open={props.open} title="管理产品客服" okText="确认" cancelText="取消" okButtonProps={{ className: 'text-blue-500 border-blue-500 hover:text-white hover:border-transparent', loading: props.isUpdating }} destroyOnClose closable onOk={submit} onCancel={cancel}>
       <Form labelCol={{ span: 8 }} colon={false}>
         <Form.Item label="客服" name="customer_service">
           <CustomerServiceSelector onSelect={ids => (groups.current = ids)} />
