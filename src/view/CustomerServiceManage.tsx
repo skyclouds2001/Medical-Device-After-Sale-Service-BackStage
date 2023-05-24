@@ -43,6 +43,8 @@ const CustomerServiceManage: React.FC = () => {
   /** 当前产品类型信息 */
   const current = useRef<ProductModelWithService>()
 
+  const [isUpdateLoading, setUpdateLoading] = useState(false)
+
   useEffect(() => {
     dispatch<CustomAction>({ type: 'title/update', title: '客服管理' })
   }, [])
@@ -56,6 +58,7 @@ const CustomerServiceManage: React.FC = () => {
   const handleEditService = async (ids: Array<string | number>, avatar: string): Promise<void> => {
     if (current.current === undefined) return
     try {
+      setUpdateLoading(true)
       const res = await manageCustomerService(current.current.model_id, ids, avatar)
       if (res.code === 0) {
         void message.success({
@@ -72,6 +75,7 @@ const CustomerServiceManage: React.FC = () => {
         content: '修改失败',
       })
     } finally {
+      setUpdateLoading(false)
       void mutate()
     }
   }
@@ -109,7 +113,7 @@ const CustomerServiceManage: React.FC = () => {
       </Table>
 
       {/* 管理客服表单 */}
-      <ManageCustomerService open={showEdit} current={current.current} onSubmit={handleEditService} onCancel={() => setShowEdit(false)} />
+      <ManageCustomerService open={showEdit} isUpdating={isUpdateLoading} current={current.current} onSubmit={handleEditService} onCancel={() => setShowEdit(false)} />
     </>
   )
 }
