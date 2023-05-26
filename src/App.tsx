@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { ConfigProvider, App as Main } from 'antd'
@@ -19,7 +19,9 @@ const App: React.FC = () => {
         <Provider store={store}>
           <Router>
             <Layout>
-              <Routes />
+              <Suspense>
+                <Routes />
+              </Suspense>
             </Layout>
           </Router>
         </Provider>
