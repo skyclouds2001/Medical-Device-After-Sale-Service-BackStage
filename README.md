@@ -24,11 +24,11 @@ React+Vite+TypeScript+Sass
     - work-order.ts 工单接口方法
   - asset/ 静态资源目录
   - components/ 自定义组件目录
-    - client
-    - customer-service
-    - file
-    - product
-    - work-order
+    - client/ 客户管理组件
+    - customer-service/ 客服管理组件
+    - file/ 文件管理组件
+    - product/ 产品管理组件
+    - work-order/ 工单管理组件
   - config/ 配置数据目录
     - index.ts
   - data/ 静态数据目录
