@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { App, Row, Col, Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import useSwr from 'swr'
-import { getAllProductModels, removeProductModel, removeSingleServer, addProductModel, updateProductModel } from '@/api'
+import { getAllProducts, removeProduct, removeSingleServer, addProduct, updateProduct } from '@/api'
 import AddProductForm from '@/component/product/AddProductForm'
 import EditProductForm from '@/component/product/EditProductForm'
 import ProductTable from '@/component/product/ProductTable'
@@ -14,7 +14,7 @@ const ProductManage: React.FC = () => {
   const { modal, message } = App.useApp()
   const dispatch = useDispatch()
 
-  const { data, isLoading, mutate } = useSwr('/wizz/aftersale/product-model/all', getAllProductModels)
+  const { data, isLoading, mutate } = useSwr('/wizz/aftersale/product-model/all', getAllProducts)
 
   const [showAddProductModel, setShowAddProductModel] = useState(false)
   const [showEditProductModel, setShowEditProductModel] = useState(false)
@@ -23,7 +23,7 @@ const ProductManage: React.FC = () => {
 
   const handleAddProductModel = async (params: Omit<Product, 'model_id'>): Promise<void> => {
     try {
-      const res = await addProductModel(params.model_name, params.pic_url)
+      const res = await addProduct(params.model_name, params.pic_url)
       if (res.code === 0) {
         void message.success({
           content: '添加成功',
@@ -45,7 +45,7 @@ const ProductManage: React.FC = () => {
 
   const handleEditProductModel = async (product: Product): Promise<void> => {
     try {
-      const res = await updateProductModel(product.model_id, product.model_name, product.pic_url)
+      const res = await updateProduct(product.model_id, product.model_name, product.pic_url)
       if (res.code === 0) {
         void message.success({
           content: '更新成功',
@@ -75,7 +75,7 @@ const ProductManage: React.FC = () => {
       closable: true,
       onOk: async () => {
         try {
-          const res1 = await removeProductModel(id)
+          const res1 = await removeProduct(id)
           if (res1.code !== 0) {
             void message.error({
               content: res1.data ?? '删除失败',
