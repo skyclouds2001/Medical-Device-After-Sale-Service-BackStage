@@ -6,7 +6,7 @@ export * from './company'
 
 export * from './service'
 
-export * from './product-model'
+export * from './product'
 
 export * from './work-order'
 

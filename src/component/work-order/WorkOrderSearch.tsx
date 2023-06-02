@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form, Input, Select, Spin } from 'antd'
 import useSwr from 'swr'
-import { getAllProductModels } from '@/api'
+import { getAllProducts } from '@/api'
 import { services } from '@/data'
 
 export interface SearchProps {
@@ -37,7 +37,7 @@ interface WorkOrderSearchProps {
 const WorkOrderSearch: React.FC<WorkOrderSearchProps> = props => {
   const [form] = Form.useForm<SearchProps>()
 
-  const { data: products, isLoading } = useSwr('/wizz/aftersale/product-model/all', getAllProductModels)
+  const { data: products, isLoading } = useSwr('/wizz/aftersale/product-model/all', getAllProducts)
 
   return (
     <>

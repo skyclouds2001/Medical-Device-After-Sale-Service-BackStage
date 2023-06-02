@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { App, Button, Image, Table, Spin } from 'antd'
 import useSwr from 'swr'
-import { getAllProductModels, manageCustomerService, getSingleServer } from '@/api'
+import { getAllProducts, manageCustomerService, getSingleServer } from '@/api'
 import ManageCustomerService from '@/component/customer-service/ManageCustomerService'
 import type { Product, Service } from '@/model'
 import type { CustomAction } from '@/store'
@@ -16,7 +16,7 @@ const CustomerServiceManage: React.FC = () => {
   const { message } = App.useApp()
   const dispatch = useDispatch()
 
-  const { isLoading, mutate } = useSwr('/wizz/aftersale/product-model/all | service', getAllProductModels, {
+  const { isLoading, mutate } = useSwr('/wizz/aftersale/product-model/all | service', getAllProducts, {
     onSuccess: data => {
       const pros = [{ model_name: '通用客服', model_id: -1 }, ...(data?.data ?? [])] as ProductModelWithService[]
       if (products.length === 0) setProducts(pros)

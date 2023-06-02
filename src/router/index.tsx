@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy } from 'react'
 import { useRoutes } from 'react-router-dom'
 
 const LoginPage = lazy(() => import('@/view/LoginPage'))
@@ -20,71 +20,43 @@ const Routes: React.FC = () => {
     // 登录
     {
       path: '/',
-      element: (
-        <Suspense>
-          <LoginPage />
-        </Suspense>
-      ),
+      element: <LoginPage />,
     },
 
     // 客户管理
     {
       path: '/client',
-      element: (
-        <Suspense>
-          <ClientManage />
-        </Suspense>
-      ),
+      element: <ClientManage />,
     },
 
     // 客服管理
     {
       path: '/service',
-      element: (
-        <Suspense>
-          <CustomerServiceManage />
-        </Suspense>
-      ),
+      element: <CustomerServiceManage />,
     },
 
     // 产品管理
     {
       path: '/product',
-      element: (
-        <Suspense>
-          <ProductManage />
-        </Suspense>
-      ),
+      element: <ProductManage />,
     },
 
     // 文件管理
     {
       path: '/file',
-      element: (
-        <Suspense>
-          <FileManage />
-        </Suspense>
-      ),
+      element: <FileManage />,
     },
 
     // 订单管理
     {
       path: '/order',
-      element: (
-        <Suspense>
-          <WorkOrderManage />
-        </Suspense>
-      ),
+      element: <WorkOrderManage />,
     },
 
     // 默认回退路由
     {
       path: '*',
-      element: (
-        <Suspense>
-          <NotFound />
-        </Suspense>
-      ),
+      element: <NotFound />,
     },
   ])
 }
