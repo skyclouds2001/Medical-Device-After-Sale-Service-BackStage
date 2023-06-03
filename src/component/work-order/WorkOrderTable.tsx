@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Image, Spin, Table, Typography } from 'antd'
+import { Button, Image, Spin, Table, type TableProps, Typography } from 'antd'
 import { DownOutlined, RightOutlined } from '@ant-design/icons'
 import { services } from '@/data'
 import type { WorkOrder } from '@/model'
@@ -39,9 +39,16 @@ interface WorkOrderTableProps {
 }
 
 const WorkOrderTable: React.FC<WorkOrderTableProps> = props => {
+  const expandable: TableProps<WorkOrder>['expandable'] = {
+    expandedRowRender: record => <WorkOrderTableExpandable order={record} />,
+    expandIcon: ({ expanded, onExpand, record }) => (expanded ? <DownOutlined onClick={e => onExpand(record, e)} /> : <RightOutlined onClick={e => onExpand(record, e)} />),
+    columnTitle: '',
+    columnWidth: '200px',
+  }
+
   return (
     <>
-      <Table dataSource={props.workOrders} bordered rowKey="order_id" loading={props.loading} pagination={{ hideOnSinglePage: true }} expandable={{ expandedRowRender: record => <WorkOrderTableExpandable order={record} />, expandIcon: ({ expanded, onExpand, record }) => (expanded ? <DownOutlined onClick={e => onExpand(record, e)} /> : <RightOutlined onClick={e => onExpand(record, e)} />), columnTitle: '工单详情', columnWidth: '200px' }}>
+      <Table dataSource={props.workOrders} bordered rowKey="order_id" loading={props.loading} pagination={{ hideOnSinglePage: true }} expandable={expandable}>
         <Table.Column
           width="200px"
           align="center"
