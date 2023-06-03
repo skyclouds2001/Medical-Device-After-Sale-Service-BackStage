@@ -96,9 +96,9 @@ const WorkOrderManage: React.FC = () => {
   const orders =
     data?.data
       .filter(o => o.customer_name.includes(search.customer))
-      .filter(o => search.product === undefined || o.model_id === search.product)
-      .filter(o => search.type === undefined || o.order_type === search.type)
-      .filter(o => search.status === undefined || o.order_status === search.status)
+      .filter(o => search.product === -1 || o.model_id === search.product)
+      .filter(o => search.type === -1 || o.order_type === search.type)
+      .filter(o => search.status === -1 || o.order_status === search.status)
       .sort((a, b) => (search.time === 1 ? (a.create_time > b.create_time ? 1 : -1) : a.appointment_time > b.appointment_time ? 1 : -1))
       .sort((a, b) => (a.order_status > b.order_status ? 1 : -1)) ?? []
 
