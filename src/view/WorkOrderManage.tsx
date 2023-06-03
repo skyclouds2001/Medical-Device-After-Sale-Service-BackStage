@@ -54,24 +54,34 @@ const WorkOrderManage: React.FC = () => {
   }
 
   const closeWorkOrder = async (id: number): Promise<void> => {
-    try {
-      const res = await finishWorkOrder(id)
-      if (res.code === 0) {
-        void message.success({
-          content: '处理完成',
-        })
-      } else {
-        void message.error({
-          content: res.data ?? '设置失败',
-        })
-      }
-    } catch {
-      void message.error({
-        content: '设置失败',
-      })
-    } finally {
-      void mutate()
-    }
+    modal.confirm({
+      title: '警告',
+      content: '确认设置当前工单状态为已完成？',
+      okText: '确认',
+      okType: 'danger',
+      cancelText: '取消',
+      closable: true,
+      onOk: async () => {
+        try {
+          const res = await finishWorkOrder(id)
+          if (res.code === 0) {
+            void message.success({
+              content: '处理完成',
+            })
+          } else {
+            void message.error({
+              content: res.data ?? '设置失败',
+            })
+          }
+        } catch {
+          void message.error({
+            content: '设置失败',
+          })
+        } finally {
+          void mutate()
+        }
+      },
+    })
   }
 
   /**
