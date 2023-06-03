@@ -11,9 +11,17 @@ interface WorkOrderTableExpandableProps {
 const WorkOrderTableExpandable: React.FC<WorkOrderTableExpandableProps> = ({ order }) => {
   return (
     <>
-      <Typography.Paragraph className="text-left">预约地址：{order.address ?? '预约地址'}</Typography.Paragraph>
-      <Typography.Paragraph className="text-left">工单描述：{order.order_description ?? '暂无'}</Typography.Paragraph>
-      <Typography.Paragraph className="text-left">工单图片：</Typography.Paragraph>
+      <Typography.Paragraph className="text-left">
+        <Typography.Text strong>预约地址：</Typography.Text>
+        {order.address ?? '预约地址'}
+      </Typography.Paragraph>
+      <Typography.Paragraph className="text-left">
+        <Typography.Text strong>工单描述：</Typography.Text>
+        {order.order_description ?? '暂无'}
+      </Typography.Paragraph>
+      <Typography.Paragraph className="text-left">
+        <Typography.Text strong>工单图片：</Typography.Text>
+      </Typography.Paragraph>
       <Typography.Paragraph className="text-left flex justify-start items-center gap-x-5">
         {order.order_attachment_list.map(v => (
           <Image key={v.order_attachment_id} className="px-1 object-contain shadow" src={v.storage_path} alt={`${order.model_name}: ${order.servicer_name}`} width={200} height={200} placeholder={<Spin />} decoding="async" loading="lazy" />
