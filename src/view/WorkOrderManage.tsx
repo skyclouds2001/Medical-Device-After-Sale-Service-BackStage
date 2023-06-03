@@ -58,7 +58,7 @@ const WorkOrderManage: React.FC = () => {
       const res = await finishWorkOrder(id)
       if (res.code === 0) {
         void message.success({
-          content: '设置成功',
+          content: '处理完成',
         })
       } else {
         void message.error({
