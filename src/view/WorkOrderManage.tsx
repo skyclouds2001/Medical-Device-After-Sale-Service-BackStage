@@ -54,24 +54,42 @@ const WorkOrderManage: React.FC = () => {
   }
 
   const closeWorkOrder = async (id: number): Promise<void> => {
-    try {
-      const res = await finishWorkOrder(id)
-      if (res.code === 0) {
-        void message.success({
-          content: '设置成功',
-        })
-      } else {
-        void message.error({
-          content: res.data ?? '设置失败',
-        })
-      }
-    } catch {
-      void message.error({
-        content: '设置失败',
-      })
-    } finally {
-      void mutate()
-    }
+    modal.confirm({
+      title: '警告',
+      content: '确认设置当前工单状态为已完成？',
+      okText: '确认',
+      okType: 'danger',
+      cancelText: '取消',
+      closable: true,
+      onOk: async () => {
+        try {
+          const res = await finishWorkOrder(id)
+          if (res.code === 0) {
+            void message.success({
+              content: '处理完成',
+            })
+
+            data?.data.forEach(v => {
+              if (v.model_id === id) {
+                v.order_status = 1
+              }
+            })
+          } else {
+            void message.error({
+              content: res.data ?? '设置失败',
+            })
+          }
+        } catch {
+          void message.error({
+            content: '设置失败',
+          })
+        } finally {
+          setTimeout(() => {
+            void mutate()
+          }, 1500)
+        }
+      },
+    })
   }
 
   /**
@@ -86,9 +104,9 @@ const WorkOrderManage: React.FC = () => {
   const orders =
     data?.data
       .filter(o => o.customer_name.includes(search.customer))
-      .filter(o => search.product === undefined || o.model_id === search.product)
-      .filter(o => search.type === undefined || o.order_type === search.type)
-      .filter(o => search.status === undefined || o.order_status === search.status)
+      .filter(o => search.product === -1 || o.model_id === search.product)
+      .filter(o => search.type === -1 || o.order_type === search.type)
+      .filter(o => search.status === -1 || o.order_status === search.status)
       .sort((a, b) => (search.time === 1 ? (a.create_time > b.create_time ? 1 : -1) : a.appointment_time > b.appointment_time ? 1 : -1))
       .sort((a, b) => (a.order_status > b.order_status ? 1 : -1)) ?? []
 
