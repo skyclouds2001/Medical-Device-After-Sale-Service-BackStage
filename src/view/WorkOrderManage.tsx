@@ -68,6 +68,12 @@ const WorkOrderManage: React.FC = () => {
             void message.success({
               content: '处理完成',
             })
+
+            data?.data.forEach(v => {
+              if (v.model_id === id) {
+                v.order_status = 1
+              }
+            })
           } else {
             void message.error({
               content: res.data ?? '设置失败',
@@ -78,7 +84,9 @@ const WorkOrderManage: React.FC = () => {
             content: '设置失败',
           })
         } finally {
-          void mutate()
+          setTimeout(() => {
+            void mutate()
+          }, 1500)
         }
       },
     })
