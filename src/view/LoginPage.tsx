@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Input, Checkbox, Modal, App, Image } from 'antd'
+import { Input, Checkbox, Modal, App, Image, Button } from 'antd'
 import { IdcardFilled, LockFilled } from '@ant-design/icons'
 import { adminLogin, resetPassword, manageCustomerService, getDepartmentsAndStaffs } from '@/api'
 import { DEFAULT_REDIRECT_PATH, SESSION_EXPIRE, LOGIN_PAGE_BACKGROUND_IMG as IMG } from '@/config'
@@ -13,6 +13,7 @@ const LoginPage: React.FC = () => {
 
   /** 标记重设密码表单是否显示 */
   const [isModalOpen, setModalOpen] = useState(false)
+  const [isLogining, setLogining] = useState(false)
 
   /** 用户名 */
   const [user, setUser] = useState('')
@@ -69,7 +70,9 @@ const LoginPage: React.FC = () => {
       password,
       remember,
     }
-    adminLogin(user, password)
+    setLogining(true)
+
+    void adminLogin(user, password)
       .then(res => {
         if (res.code === 0) {
           void message.success({
@@ -91,6 +94,9 @@ const LoginPage: React.FC = () => {
       })
       .catch(err => {
         console.error(err)
+      })
+      .finally(() => {
+        setLogining(false)
       })
   }
 
@@ -149,9 +155,9 @@ const LoginPage: React.FC = () => {
           </Checkbox>
         </div>
         <div className="mt-5 mb-2.5 mx-0">
-          <button className="w-40 text-base text-white tracking-widest leading-8 rounded-sm saturate-100 active:saturate-[.9] transition-all" onClick={handleLogin} style={{ backgroundImage: 'linear-gradient(135deg, rgb(70, 100, 230), rgb(70, 100, 190) 50%, rgb(40, 50, 150))' }}>
+          <Button loading={isLogining} disabled={isLogining} className="w-40 text-white rounded-sm saturate-100 active:saturate-[.9]" onClick={handleLogin} style={{ backgroundImage: 'linear-gradient(135deg, rgb(70, 100, 230), rgb(70, 100, 190) 50%, rgb(40, 50, 150))' }}>
             登录
-          </button>
+          </Button>
         </div>
         <div>
           <p className="text-right cursor-pointer select-none" onClick={() => setModalOpen(true)} style={{ color: 'rgb(86, 107, 217)' }}>
